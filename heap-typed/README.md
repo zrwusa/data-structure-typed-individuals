@@ -1,30 +1,132 @@
 # What
-## Brief
-This is a standalone Heap data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
+## Brief
+
+This is a standalone Heap data structure from the data-structure-typed collection. If you wish to access more data
+structures or advanced features, you can transition to directly installing the
+complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
 # How
 
 ## install
+
 ### npm
+
 ```bash
 npm i heap-typed
 ```
+
 ### yarn
+
 ```bash
 yarn add heap-typed
 ```
 
 ### snippet
+
 #### TS
+
 ```typescript
+    import {MinHeap, MaxHeap} from 'data-structure-typed';
+    // /* or if you prefer */ import {MinHeap, MaxHeap} from 'heap-typed';
 
+    const minNumHeap = new MinHeap<number>();
+    minNumHeap.add(1).add(6).add(2).add(0).add(5).add(9);
+    minNumHeap.poll()   // 0
+    minNumHeap.poll()   // 1
+    minNumHeap.peek()   // 2
+    minNumHeap.toArray().length   // 4
+    minNumHeap.toArray()[0]   // 2
+    minNumHeap.toArray()[1]   // 5
+    minNumHeap.toArray()[2]   // 9
+    minNumHeap.toArray()[3]   // 6
+    
+    
+    const maxHeap = new MaxHeap<{ keyA: string }>();
+    const myObj1 = {keyA: 'a1'}, myObj6 = {keyA: 'a6'}, myObj5 = {keyA: 'a5'}, myObj2 = {keyA: 'a2'},
+        myObj0 = {keyA: 'a0'}, myObj9 = {keyA: 'a9'};
+    maxHeap.add(1, myObj1);
+    maxHeap.has(myObj1)  // true
+    maxHeap.has(myObj9)  // false
+    maxHeap.add(6, myObj6);
+    maxHeap.has(myObj6)  // true
+    maxHeap.add(5, myObj5);
+    maxHeap.has(myObj5)  // true
+    maxHeap.add(2, myObj2);
+    maxHeap.has(myObj2)  // true
+    maxHeap.has(myObj6)  // true
+    maxHeap.add(0, myObj0);
+    maxHeap.has(myObj0)  // true
+    maxHeap.has(myObj9)  // false
+    maxHeap.add(9, myObj9);
+    maxHeap.has(myObj9)  // true
+    
+    const peek9 = maxHeap.peek(true);
+    peek9 && peek9.val && peek9.val.keyA  // 'a9'
+    
+    const heapToArr = maxHeap.toArray(true);
+    heapToArr.map(item => item?.val?.keyA)  // ['a9', 'a2', 'a6', 'a1', 'a0', 'a5']
+    
+    const values = ['a9', 'a6', 'a5', 'a2', 'a1', 'a0'];
+    let i = 0;
+    while (maxHeap.size > 0) {
+        const polled = maxHeap.poll(true);
+        polled && polled.val && polled.val.keyA  // values[i]
+        i++;
+    }
 ```
+
 #### JS
+
 ```javascript
+    const {MinHeap, MaxHeap} = require('data-structure-typed');
+    // /* or if you prefer */ const {MinHeap, MaxHeap} = require('heap-typed');
 
+    const minNumHeap = new MinHeap();
+    minNumHeap.add(1).add(6).add(2).add(0).add(5).add(9);
+    minNumHeap.poll()   // 0
+    minNumHeap.poll()   // 1
+    minNumHeap.peek()   // 2
+    minNumHeap.toArray().length   // 4
+    minNumHeap.toArray()[0]   // 2
+    minNumHeap.toArray()[1]   // 5
+    minNumHeap.toArray()[2]   // 9
+    minNumHeap.toArray()[3]   // 6
+    
+    
+    const maxHeap = new MaxHeap();
+    const myObj1 = {keyA: 'a1'}, myObj6 = {keyA: 'a6'}, myObj5 = {keyA: 'a5'}, myObj2 = {keyA: 'a2'},
+        myObj0 = {keyA: 'a0'}, myObj9 = {keyA: 'a9'};
+    maxHeap.add(1, myObj1);
+    maxHeap.has(myObj1)  // true
+    maxHeap.has(myObj9)  // false
+    maxHeap.add(6, myObj6);
+    maxHeap.has(myObj6)  // true
+    maxHeap.add(5, myObj5);
+    maxHeap.has(myObj5)  // true
+    maxHeap.add(2, myObj2);
+    maxHeap.has(myObj2)  // true
+    maxHeap.has(myObj6)  // true
+    maxHeap.add(0, myObj0);
+    maxHeap.has(myObj0)  // true
+    maxHeap.has(myObj9)  // false
+    maxHeap.add(9, myObj9);
+    maxHeap.has(myObj9)  // true
+    
+    const peek9 = maxHeap.peek(true);
+    peek9 && peek9.val && peek9.val.keyA  // 'a9'
+    
+    const heapToArr = maxHeap.toArray(true);
+    heapToArr.map(item => item?.val?.keyA)  // ['a9', 'a2', 'a6', 'a1', 'a0', 'a5']
+    
+    const values = ['a9', 'a6', 'a5', 'a2', 'a1', 'a0'];
+    let i = 0;
+    while (maxHeap.size > 0) {
+        const polled = maxHeap.poll(true);
+        polled && polled.val && polled.val.keyA  // values[i]
+        i++;
+    }
 ```
-
 
 ## API docs & Examples
 
@@ -226,7 +328,6 @@ yarn add heap-typed
 </tr>
 </tbody>
 </table>
-
 
 # Why
 

@@ -18,11 +18,67 @@ yarn add priority-queue-typed
 ### snippet
 #### TS
 ```typescript
+    import {PriorityQueue, MinPriorityQueue} from 'data-structure-typed';
+    // /* or if you prefer */ import {PriorityQueue, MinPriorityQueue} from 'priority-queue-typed';
 
+    const minPQ = new PriorityQueue<number>({nodes: [5, 2, 3, 4, 6, 1], comparator: (a, b) => a - b});
+    minPQ.toArray()             //  [1, 2, 3, 4, 6, 5]
+    minPQ.poll();
+    minPQ.poll();
+    minPQ.poll();
+    minPQ.toArray()             //  [4, 5, 6]
+    minPQ.peek()                //  4
+    PriorityQueue.heapify({
+        nodes: [3, 2, 1, 5, 6, 7, 8, 9, 10],
+        comparator: (a, b) => a - b
+    }).toArray()                //  [1, 2, 3, 5, 6, 7, 8, 9, 10]
+
+    const priorityQueue = new MinPriorityQueue<number>();
+    priorityQueue.add(5);
+    priorityQueue.add(3);
+    priorityQueue.add(7);
+    priorityQueue.add(1);
+    const sortedArray = priorityQueue.sort(); //  [1, 3, 5, 7]);
+
+    const minPQ1 = new PriorityQueue<number>({nodes: [2, 5, 8, 3, 1, 6, 7, 4], comparator: (a, b) => a - b});
+    const clonedPriorityQueue = minPQ1.clone();
+    clonedPriorityQueue.getNodes()  //  minPQ1.getNodes()
+    clonedPriorityQueue.sort()      //  [1, 2, 3, 4, 5, 6, 7, 8]
+    minPQ1.DFS('in')                //  [4, 3, 2, 5, 1, 8, 6, 7]
+    minPQ1.DFS('post')              //  [4, 3, 5, 2, 8, 7, 6, 1]
+    minPQ1.DFS('pre')               //  [1, 2, 3, 4, 5, 6, 8, 7]
 ```
 #### JS
 ```javascript
+    const {PriorityQueue, MinPriorityQueue} = require('data-structure-typed');
+    // /* or if you prefer */ const {PriorityQueue, MinPriorityQueue} = require('priority-queue-typed');
 
+    const minPQ = new PriorityQueue({nodes: [5, 2, 3, 4, 6, 1], comparator: (a, b) => a - b});
+    minPQ.toArray()             //  [1, 2, 3, 4, 6, 5]
+    minPQ.poll();
+    minPQ.poll();
+    minPQ.poll();
+    minPQ.toArray()             //  [4, 5, 6]
+    minPQ.peek()                //  4
+    PriorityQueue.heapify({
+        nodes: [3, 2, 1, 5, 6, 7, 8, 9, 10],
+        comparator: (a, b) => a - b
+    }).toArray()                //  [1, 2, 3, 5, 6, 7, 8, 9, 10]
+    
+    const priorityQueue = new MinPriorityQueue();
+    priorityQueue.add(5);
+    priorityQueue.add(3);
+    priorityQueue.add(7);
+    priorityQueue.add(1);
+    const sortedArray = priorityQueue.sort(); //  [1, 3, 5, 7]);
+    
+    const minPQ1 = new PriorityQueue<number>({nodes: [2, 5, 8, 3, 1, 6, 7, 4], comparator: (a, b) => a - b});
+    const clonedPriorityQueue = minPQ1.clone();
+    clonedPriorityQueue.getNodes()  //  minPQ1.getNodes()
+    clonedPriorityQueue.sort()      //  [1, 2, 3, 4, 5, 6, 7, 8]
+    minPQ1.DFS('in')                //  [4, 3, 2, 5, 1, 8, 6, 7]
+    minPQ1.DFS('post')              //  [4, 3, 5, 2, 8, 7, 6, 1]
+    minPQ1.DFS('pre')               //  [1, 2, 3, 4, 5, 6, 8, 7]
 ```
 
 

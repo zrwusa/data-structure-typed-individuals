@@ -8,10 +8,4 @@ node_modules/
 *.key
 *.mobileprovision
 *.orig.*
-dist/
 .DS_Store
-__tests__/
-
-notes/
-docs/
-backup/

@@ -1,6 +1,6 @@
 {
   "name": "tree-multiset-typed",
-  "version": "1.19.5",
+  "version": "1.19.7",
   "description": "Tree Multiset, AVLTree, BST, Binary Tree. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -56,7 +56,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.19.5",
+    "data-structure-typed": "^1.19.7",
     "zod": "^3.22.2"
   }
 }

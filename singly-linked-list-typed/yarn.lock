@@ -767,7 +767,7 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
-avl-tree-typed@^1.19.44:
+avl-tree-typed@^1.19.6:
   version "1.19.45"
   resolved "https://registry.npmjs.org/avl-tree-typed/-/avl-tree-typed-1.19.45.tgz"
   integrity sha512-/uluq7j+c5iTmcVzHHvuMKWdoIJ9ZqSfDgRXkPIqBHXxOEr05jxfwt1IRgdxJhsv3gOv4/mRzKJKfwNqjKv1Qg==
@@ -886,7 +886,7 @@ bser@2.1.1:
   dependencies:
     node-int64 "^0.4.0"
 
-bst-typed@^1.19.45:
+bst-typed@^1.19.6:
   version "1.19.45"
   resolved "https://registry.npmjs.org/bst-typed/-/bst-typed-1.19.45.tgz"
   integrity sha512-x/vLIaFDdgv4zcTVgpJmTwW6BanpPPM9eE/P8v72VE9eFgBEspDGOSJsd4Fel7fO8DF+MUqwksMreCln0ECy3g==
@@ -1041,13 +1041,24 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-data-structure-typed@^1.19.4, data-structure-typed@^1.19.5:
-  version "1.19.5"
-  resolved "https://registry.npmjs.org/data-structure-typed/-/data-structure-typed-1.19.5.tgz"
-  integrity sha512-Q6rn8ww6AN8es5FD49p1pRuka5TIH3bp/nb3LmsAuL0ChecskVf2V94iNk33aRQXnvQwN8R+4YBsEn2j1/xqQA==
+data-structure-typed@^1.19.4, data-structure-typed@^1.19.7:
+  version "1.19.7"
+  resolved "https://registry.npmjs.org/data-structure-typed/-/data-structure-typed-1.19.7.tgz"
+  integrity sha512-01z8P6DDXy044GitWYxds7sQzAYS1USxVAQEl7v8gSSa4YG7nzg0ZhL/xyU3QjzFjn+XsJWCOaiNG8eMFr54HQ==
   dependencies:
-    avl-tree-typed "^1.19.44"
-    bst-typed "^1.19.45"
+    avl-tree-typed "^1.19.6"
+    bst-typed "^1.19.6"
+    heap-typed "^1.19.6"
+    zod "^3.22.2"
+
+data-structure-typed@1.19.6:
+  version "1.19.6"
+  resolved "https://registry.npmjs.org/data-structure-typed/-/data-structure-typed-1.19.6.tgz"
+  integrity sha512-nRD0iNjGNLuQBSwpox+aHd5Renroep9+/u0SMtFbditPrZ+wbqJeRFlXQ6svOeyndZ6XMV2+cnWVkMnQlfEUQQ==
+  dependencies:
+    avl-tree-typed "^1.19.6"
+    bst-typed "^1.19.6"
+    heap-typed "^1.19.6"
     zod "^3.22.2"
 
 debug@^4.1.0, debug@^4.1.1:
@@ -1356,6 +1367,14 @@ has@^1.0.3:
   integrity sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==
   dependencies:
     function-bind "^1.1.1"
+
+heap-typed@^1.19.6:
+  version "1.19.6"
+  resolved "https://registry.npmjs.org/heap-typed/-/heap-typed-1.19.6.tgz"
+  integrity sha512-6Ok6XKECKcu6/Mnv/uQzNo6B1Z5K6K/UgmXyYZgQPvEBsF/9cX9Vcp+gybsTdzt4VSwbjzCSr3mktIaLTdH7jQ==
+  dependencies:
+    data-structure-typed "1.19.6"
+    zod "^3.22.2"
 
 html-escaper@^2.0.0:
   version "2.0.2"
