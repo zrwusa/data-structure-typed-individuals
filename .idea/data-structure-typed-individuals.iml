@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/.tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/avl-tree-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/avl-tree-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/binary-tree-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/binary-tree-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/bst-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/bst-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/deque-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/deque-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/directed-graph-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/directed-graph-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/doubly-linked-list-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/doubly-linked-list-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/graph-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/graph-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/heap-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/heap-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/linked-list-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/linked-list-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/max-heap-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/max-heap-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/max-priority-queue-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/max-priority-queue-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/min-heap-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/min-heap-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/min-priority-queue-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/min-priority-queue-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/priority-queue-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/priority-queue-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/singly-linked-list-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/singly-linked-list-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/stack-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/stack-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/tree-multiset-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/tree-multiset-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/trie-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/trie-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/undirected-graph-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/undirected-graph-typed/docs" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
