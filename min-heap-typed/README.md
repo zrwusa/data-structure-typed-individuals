@@ -14,15 +14,55 @@ npm i min-heap-typed
 ```bash
 yarn add min-heap-typed
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/min-heap.png?raw=true)
 ### snippet
 #### TS
+
 ```typescript
+    import {MinHeap} from 'data-structure-typed';
+    // /* or if you prefer */ import {MinHeap} from 'heap-typed';
 
+    const minNumHeap = new MinHeap<number>();
+    minNumHeap.add(1).add(6).add(2).add(0).add(5).add(9);
+    minNumHeap.has(1)        //  true
+    minNumHeap.has(2)        //  true
+    minNumHeap.poll()        //  0
+    minNumHeap.poll()        //  1
+    minNumHeap.peek()        //  2
+    minNumHeap.has(1);       // false
+    minNumHeap.has(2);       // true
+    const arrFromHeap = minNumHeap.toArray();
+    arrFromHeap.length       //  4
+    arrFromHeap[0]           //  2
+    arrFromHeap[1]           //  5
+    arrFromHeap[2]           //  9
+    arrFromHeap[3]           //  6
+    minNumHeap.sort()        //  [2, 5, 6, 9]
 ```
-#### JS
-```javascript
 
+#### JS
+
+```javascript
+    const {MinHeap} = require('data-structure-typed');
+    // /* or if you prefer */ const {MinHeap} = require('heap-typed');
+
+    const minNumHeap = new MinHeap();
+    minNumHeap.add(1).add(6).add(2).add(0).add(5).add(9);
+    minNumHeap.has(1)        //  true
+    minNumHeap.has(2)        //  true
+    minNumHeap.poll()        //  0
+    minNumHeap.poll()        //  1
+    minNumHeap.peek()        //  2
+    minNumHeap.has(1);       // false
+    minNumHeap.has(2);       // true
+    const arrFromHeap = minNumHeap.toArray();
+    arrFromHeap.length       //  4
+    arrFromHeap[0]           //  2
+    arrFromHeap[1]           //  5
+    arrFromHeap[2]           //  9
+    arrFromHeap[3]           //  6
+    minNumHeap.sort()        //  [2, 5, 6, 9]
 ```
 
 

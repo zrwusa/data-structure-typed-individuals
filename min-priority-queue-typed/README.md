@@ -14,7 +14,8 @@ npm i min-priority-queue-typed
 ```bash
 yarn add min-priority-queue-typed
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/min-priority-queue.png?raw=true)
 ### snippet
 #### TS
 ```typescript

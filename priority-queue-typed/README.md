@@ -14,7 +14,13 @@ npm i priority-queue-typed
 ```bash
 yarn add priority-queue-typed
 ```
-
+### methods
+Priority Queue
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/priority-queue.png?raw=true)
+Min Priority Queue
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/min-priority-queue.png?raw=true)
+Max Priority Queue
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/max-priority-queue.png?raw=true)
 ### snippet
 #### TS
 ```typescript

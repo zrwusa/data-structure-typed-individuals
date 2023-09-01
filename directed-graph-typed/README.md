@@ -14,7 +14,8 @@ npm i directed-graph-typed
 ```bash
 yarn add directed-graph-typed
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/directed-graph.png?raw=true)
 ### snippet
 #### TS
 ```typescript

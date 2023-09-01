@@ -14,7 +14,8 @@ npm i max-priority-queue
 ```bash
 yarn add max-priority-queue
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/max-priority-queue.png?raw=true)
 ### snippet
 #### TS
 ```typescript

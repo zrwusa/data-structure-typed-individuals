@@ -14,7 +14,12 @@ npm i linked-list-typed
 ```bash
 yarn add linked-list-typed
 ```
+### methods
+Singly Linked List
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/singly-linked-list.png?raw=true)
 
+Doubly Linked List
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/doubly-linked-list.png?raw=true)
 ### snippet
 #### TS
 ```typescript

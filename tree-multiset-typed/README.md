@@ -14,7 +14,8 @@ npm i tree-multiset-typed
 ```bash
 yarn add tree-multiset-typed
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/tree-multiset.png?raw=true)
 ### snippet
 #### TS
 ```typescript

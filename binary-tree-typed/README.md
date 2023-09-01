@@ -14,6 +14,8 @@ npm i binary-tree-typed
 ```bash
 yarn add binary-tree-typed
 ```
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/binary-tree.png?raw=true)
 
 ### snippet
 #### TS

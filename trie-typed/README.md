@@ -14,7 +14,8 @@ npm i trie-typed
 ```bash
 yarn add trie-typed
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/trie.png?raw=true)
 ### snippet
 #### TS
 ```typescript

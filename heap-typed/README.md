@@ -21,7 +21,11 @@ npm i heap-typed
 ```bash
 yarn add heap-typed
 ```
-
+### methods
+Min Heap
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/min-heap.png?raw=true)
+Max Heap
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/max-heap.png?raw=true)
 ### snippet
 
 #### TS
@@ -32,14 +36,20 @@ yarn add heap-typed
 
     const minNumHeap = new MinHeap<number>();
     minNumHeap.add(1).add(6).add(2).add(0).add(5).add(9);
-    minNumHeap.poll()   // 0
-    minNumHeap.poll()   // 1
-    minNumHeap.peek()   // 2
-    minNumHeap.toArray().length   // 4
-    minNumHeap.toArray()[0]   // 2
-    minNumHeap.toArray()[1]   // 5
-    minNumHeap.toArray()[2]   // 9
-    minNumHeap.toArray()[3]   // 6
+    minNumHeap.has(1)        //  true
+    minNumHeap.has(2)        //  true
+    minNumHeap.poll()        //  0
+    minNumHeap.poll()        //  1
+    minNumHeap.peek()        //  2
+    minNumHeap.has(1);       // false
+    minNumHeap.has(2);       // true
+    const arrFromHeap = minNumHeap.toArray();
+    arrFromHeap.length       //  4
+    arrFromHeap[0]           //  2
+    arrFromHeap[1]           //  5
+    arrFromHeap[2]           //  9
+    arrFromHeap[3]           //  6
+    minNumHeap.sort()        //  [2, 5, 6, 9]
     
     
     const maxHeap = new MaxHeap<{ keyA: string }>();
@@ -84,14 +94,20 @@ yarn add heap-typed
 
     const minNumHeap = new MinHeap();
     minNumHeap.add(1).add(6).add(2).add(0).add(5).add(9);
-    minNumHeap.poll()   // 0
-    minNumHeap.poll()   // 1
-    minNumHeap.peek()   // 2
-    minNumHeap.toArray().length   // 4
-    minNumHeap.toArray()[0]   // 2
-    minNumHeap.toArray()[1]   // 5
-    minNumHeap.toArray()[2]   // 9
-    minNumHeap.toArray()[3]   // 6
+    minNumHeap.has(1)        //  true
+    minNumHeap.has(2)        //  true
+    minNumHeap.poll()        //  0
+    minNumHeap.poll()        //  1
+    minNumHeap.peek()        //  2
+    minNumHeap.has(1);       // false
+    minNumHeap.has(2);       // true
+    const arrFromHeap = minNumHeap.toArray();
+    arrFromHeap.length       //  4
+    arrFromHeap[0]           //  2
+    arrFromHeap[1]           //  5
+    arrFromHeap[2]           //  9
+    arrFromHeap[3]           //  6
+    minNumHeap.sort()        //  [2, 5, 6, 9]
     
     
     const maxHeap = new MaxHeap();

@@ -14,7 +14,8 @@ npm i stack-typed
 ```bash
 yarn add stack-typed
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/stack.png?raw=true)
 ### snippet
 #### TS
 ```typescript

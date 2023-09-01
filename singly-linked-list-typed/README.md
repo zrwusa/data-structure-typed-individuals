@@ -14,7 +14,8 @@ npm i singly-linked-list-typed
 ```bash
 yarn add singly-linked-list-typed
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/singly-linked-list.png?raw=true)
 ### snippet
 #### TS
 ```typescript

@@ -14,7 +14,8 @@ npm i deque-typed
 ```bash
 yarn add deque-typed
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/deque.png?raw=true)
 ### snippet
 #### TS
 ```typescript

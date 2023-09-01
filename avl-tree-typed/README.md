@@ -14,15 +14,204 @@ npm i avl-tree-typed
 ```bash
 yarn add avl-tree-typed
 ```
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/avl-tree.png?raw=true)
 
 ### snippet
 #### TS
-```typescript
 
+```typescript
+import {AVLTree, AVLTreeNode} from 'data-structure-typed';
+// /* or if you prefer */ import {AVLTree} from 'avl-tree-typed';
+
+const avlTree = new AVLTree<AVLTreeNode<number>>();
+
+const idsOrVals = [11, 3, 15, 1, 8, 13, 16, 2, 6, 9, 12, 14, 4, 7, 10, 5];
+avlTree.addMany(idsOrVals, idsOrVals);
+
+const node6 = avlTree.get(6);
+node6 && avlTree.getHeight(node6)           // 3
+node6 && avlTree.getDepth(node6)            // 1
+const getNodeById = avlTree.get(10, 'id');
+getNodeById?.id                             // 10
+
+const getMinNodeByRoot = avlTree.getLeftMost();
+getMinNodeByRoot?.id                        // 1
+
+const node15 = avlTree.get(15);
+const getMinNodeBySpecificNode = node15 && avlTree.getLeftMost(node15);
+getMinNodeBySpecificNode?.id                // 12
+
+const subTreeSum = node15 && avlTree.subTreeSum(node15);
+subTreeSum                                  // 70
+
+const lesserSum = avlTree.lesserSum(10);
+lesserSum                                   // 45
+
+const node11 = avlTree.get(11);
+node11?.id                                  // 11
+
+const dfs = avlTree.DFS('in', 'node');
+dfs[0].id                                   // 1 
+avlTree.perfectlyBalance();
+const bfs = avlTree.BFS('node');
+avlTree.isPerfectlyBalanced() && bfs[0].id  // 8 
+
+avlTree.remove(11, true)[0].deleted?.id     // 11
+avlTree.isAVLBalanced();                    // true
+node15 && avlTree.getHeight(node15)         // 2
+avlTree.remove(1, true)[0].deleted?.id      // 1
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 4
+
+avlTree.remove(4, true)[0].deleted?.id      // 4
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 4
+
+avlTree.remove(10, true)[0].deleted?.id     // 10
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(15, true)[0].deleted?.id     // 15
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(5, true)[0].deleted?.id      // 5
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(13, true)[0].deleted?.id     // 13
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(3, true)[0].deleted?.id      // 3
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(8, true)[0].deleted?.id      // 8
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(6, true)[0].deleted?.id      // 6
+avlTree.remove(6, true).length              // 0
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 2
+
+avlTree.remove(7, true)[0].deleted?.id      // 7
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 2
+
+avlTree.remove(9, true)[0].deleted?.id      // 9
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 2
+
+avlTree.remove(14, true)[0].deleted?.id     // 14
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 1
+
+avlTree.isAVLBalanced();                    // true
+const lastBFSIds = avlTree.BFS();
+lastBFSIds[0]                               // 12 
+
+const lastBFSNodes = avlTree.BFS('node');
+lastBFSNodes[0].id                          // 12
 ```
 #### JS
 ```javascript
+const {AVLTree} = require('data-structure-typed');
+// /* or if you prefer */ const {AVLTree} = require('avl-tree-typed');
 
+const avlTree = new AVLTree();
+
+const idsOrVals = [11, 3, 15, 1, 8, 13, 16, 2, 6, 9, 12, 14, 4, 7, 10, 5];
+avlTree.addMany(idsOrVals, idsOrVals);
+
+const node6 = avlTree.get(6);
+node6 && avlTree.getHeight(node6)           // 3
+node6 && avlTree.getDepth(node6)            // 1
+const getNodeById = avlTree.get(10, 'id');
+getNodeById?.id                             // 10
+
+const getMinNodeByRoot = avlTree.getLeftMost();
+getMinNodeByRoot?.id                        // 1
+
+const node15 = avlTree.get(15);
+const getMinNodeBySpecificNode = node15 && avlTree.getLeftMost(node15);
+getMinNodeBySpecificNode?.id                // 12
+
+const subTreeSum = node15 && avlTree.subTreeSum(node15);
+subTreeSum                                  // 70
+
+const lesserSum = avlTree.lesserSum(10);
+lesserSum                                   // 45
+
+const node11 = avlTree.get(11);
+node11?.id                                  // 11
+
+const dfs = avlTree.DFS('in', 'node');
+dfs[0].id                                   // 1 
+avlTree.perfectlyBalance();
+const bfs = avlTree.BFS('node');
+avlTree.isPerfectlyBalanced() && bfs[0].id  // 8 
+
+avlTree.remove(11, true)[0].deleted?.id     // 11
+avlTree.isAVLBalanced();                    // true
+node15 && avlTree.getHeight(node15)         // 2
+avlTree.remove(1, true)[0].deleted?.id      // 1
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 4
+
+avlTree.remove(4, true)[0].deleted?.id      // 4
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 4
+
+avlTree.remove(10, true)[0].deleted?.id     // 10
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(15, true)[0].deleted?.id     // 15
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(5, true)[0].deleted?.id      // 5
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(13, true)[0].deleted?.id     // 13
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(3, true)[0].deleted?.id      // 3
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(8, true)[0].deleted?.id      // 8
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 3
+
+avlTree.remove(6, true)[0].deleted?.id      // 6
+avlTree.remove(6, true).length              // 0
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 2
+
+avlTree.remove(7, true)[0].deleted?.id      // 7
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 2
+
+avlTree.remove(9, true)[0].deleted?.id      // 9
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 2
+
+avlTree.remove(14, true)[0].deleted?.id     // 14
+avlTree.isAVLBalanced();                    // true
+avlTree.getHeight()                         // 1
+
+avlTree.isAVLBalanced();                    // true
+const lastBFSIds = avlTree.BFS();
+lastBFSIds[0]                               // 12 
+
+const lastBFSNodes = avlTree.BFS('node');
+lastBFSNodes[0].id                          // 12
 ```
 
 

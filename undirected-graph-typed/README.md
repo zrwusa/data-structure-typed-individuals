@@ -14,7 +14,8 @@ npm i undirected-graph-typed
 ```bash
 yarn add undirected-graph-typed
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/undirected-graph.png?raw=true)
 ### snippet
 #### TS
 ```typescript

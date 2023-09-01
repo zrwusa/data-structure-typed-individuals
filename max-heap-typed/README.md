@@ -14,15 +14,87 @@ npm i max-heap-typed
 ```bash
 yarn add max-heap-typed
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/max-heap.png?raw=true)
 ### snippet
 #### TS
+
 ```typescript
+    import {MaxHeap} from 'data-structure-typed';
+    // /* or if you prefer */ import {MaxHeap} from 'heap-typed';
 
+    const maxHeap = new MaxHeap<{ keyA: string }>();
+    const myObj1 = {keyA: 'a1'}, myObj6 = {keyA: 'a6'}, myObj5 = {keyA: 'a5'}, myObj2 = {keyA: 'a2'},
+        myObj0 = {keyA: 'a0'}, myObj9 = {keyA: 'a9'};
+    maxHeap.add(1, myObj1);
+    maxHeap.has(myObj1)  // true
+    maxHeap.has(myObj9)  // false
+    maxHeap.add(6, myObj6);
+    maxHeap.has(myObj6)  // true
+    maxHeap.add(5, myObj5);
+    maxHeap.has(myObj5)  // true
+    maxHeap.add(2, myObj2);
+    maxHeap.has(myObj2)  // true
+    maxHeap.has(myObj6)  // true
+    maxHeap.add(0, myObj0);
+    maxHeap.has(myObj0)  // true
+    maxHeap.has(myObj9)  // false
+    maxHeap.add(9, myObj9);
+    maxHeap.has(myObj9)  // true
+    
+    const peek9 = maxHeap.peek(true);
+    peek9 && peek9.val && peek9.val.keyA  // 'a9'
+    
+    const heapToArr = maxHeap.toArray(true);
+    heapToArr.map(item => item?.val?.keyA)  // ['a9', 'a2', 'a6', 'a1', 'a0', 'a5']
+    
+    const values = ['a9', 'a6', 'a5', 'a2', 'a1', 'a0'];
+    let i = 0;
+    while (maxHeap.size > 0) {
+        const polled = maxHeap.poll(true);
+        polled && polled.val && polled.val.keyA  // values[i]
+        i++;
+    }
 ```
-#### JS
-```javascript
 
+#### JS
+
+```javascript
+    const {MaxHeap} = require('data-structure-typed');
+    // /* or if you prefer */ const {MaxHeap} = require('heap-typed');
+
+    const maxHeap = new MaxHeap();
+    const myObj1 = {keyA: 'a1'}, myObj6 = {keyA: 'a6'}, myObj5 = {keyA: 'a5'}, myObj2 = {keyA: 'a2'},
+        myObj0 = {keyA: 'a0'}, myObj9 = {keyA: 'a9'};
+    maxHeap.add(1, myObj1);
+    maxHeap.has(myObj1)  // true
+    maxHeap.has(myObj9)  // false
+    maxHeap.add(6, myObj6);
+    maxHeap.has(myObj6)  // true
+    maxHeap.add(5, myObj5);
+    maxHeap.has(myObj5)  // true
+    maxHeap.add(2, myObj2);
+    maxHeap.has(myObj2)  // true
+    maxHeap.has(myObj6)  // true
+    maxHeap.add(0, myObj0);
+    maxHeap.has(myObj0)  // true
+    maxHeap.has(myObj9)  // false
+    maxHeap.add(9, myObj9);
+    maxHeap.has(myObj9)  // true
+    
+    const peek9 = maxHeap.peek(true);
+    peek9 && peek9.val && peek9.val.keyA  // 'a9'
+    
+    const heapToArr = maxHeap.toArray(true);
+    heapToArr.map(item => item?.val?.keyA)  // ['a9', 'a2', 'a6', 'a1', 'a0', 'a5']
+    
+    const values = ['a9', 'a6', 'a5', 'a2', 'a1', 'a0'];
+    let i = 0;
+    while (maxHeap.size > 0) {
+        const polled = maxHeap.poll(true);
+        polled && polled.val && polled.val.keyA  // values[i]
+        i++;
+    }
 ```
 
 

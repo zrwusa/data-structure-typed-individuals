@@ -14,7 +14,8 @@ npm i doubly-linked-list-typed
 ```bash
 yarn add doubly-linked-list-typed
 ```
-
+### methods
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/doubly-linked-list.png?raw=true)
 ### snippet
 #### TS
 ```typescript
