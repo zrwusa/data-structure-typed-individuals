@@ -13,7 +13,7 @@ complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typ
 ### npm
 
 ```bash
-npm i heap-typed
+npm i heap-typed --save
 ```
 
 ### yarn

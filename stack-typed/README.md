@@ -8,7 +8,7 @@ This is a standalone Stack data structure from the data-structure-typed collecti
 ## install
 ### npm
 ```bash
-npm i stack-typed
+npm i stack-typed --save
 ```
 ### yarn
 ```bash

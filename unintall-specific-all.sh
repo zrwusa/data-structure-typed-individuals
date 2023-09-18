@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Read the version number from the user
-read -p "Enter the version number: " version_prompted
+read -p "Enter the package name: " package_name
 
 # List of directories
 directories=(
@@ -31,17 +31,10 @@ directories=(
 for dir in "${directories[@]}"; do
     cd "$dir" || exit
 
-    # Update package.json version
-    npm version "$version_prompted"
-
-#    jq ".dependencies[\"data-structure-typed\"] = \"$version_prompted\"" package.json > temp.json
-#    mv temp.json package.json
-
-    # Install data-structure-typed package and build
-    npm i data-structure-typed@"$version_prompted"
-    npm run build:publish
+    # Uninstall package
+    npm uninstall "$package_name"
 
     cd ..
 done
 
-echo "All packages updated and built."
+echo "Uninstall $package_name from all libs success."

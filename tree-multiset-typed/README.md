@@ -8,7 +8,7 @@ This is a standalone Tree Multiset data structure from the data-structure-typed 
 ## install
 ### npm
 ```bash
-npm i tree-multiset-typed
+npm i tree-multiset-typed --save
 ```
 ### yarn
 ```bash

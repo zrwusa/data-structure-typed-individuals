@@ -8,7 +8,7 @@ This is a standalone Max Heap data structure from the data-structure-typed colle
 ## install
 ### npm
 ```bash
-npm i max-heap-typed
+npm i max-heap-typed --save
 ```
 ### yarn
 ```bash

@@ -8,7 +8,7 @@ This is a standalone Deque data structure from the data-structure-typed collecti
 ## install
 ### npm
 ```bash
-npm i deque-typed
+npm i deque-typed --save
 ```
 ### yarn
 ```bash

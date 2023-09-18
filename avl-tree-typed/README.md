@@ -8,7 +8,7 @@ This is a standalone AVL Tree data structure from the data-structure-typed colle
 ## install
 ### npm
 ```bash
-npm i avl-tree-typed
+npm i avl-tree-typed --save
 ```
 ### yarn
 ```bash

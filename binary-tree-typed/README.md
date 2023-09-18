@@ -8,7 +8,7 @@ This is a standalone Binary Tree data structure from the data-structure-typed co
 ## install
 ### npm
 ```bash
-npm i binary-tree-typed
+npm i binary-tree-typed --save
 ```
 ### yarn
 ```bash

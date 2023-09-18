@@ -8,7 +8,7 @@ This is a standalone Linked List data structure from the data-structure-typed co
 ## install
 ### npm
 ```bash
-npm i linked-list-typed
+npm i linked-list-typed --save
 ```
 ### yarn
 ```bash

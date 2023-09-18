@@ -8,7 +8,7 @@ This is a standalone Directed Graph data structure from the data-structure-typed
 ## install
 ### npm
 ```bash
-npm i directed-graph-typed
+npm i directed-graph-typed --save
 ```
 ### yarn
 ```bash

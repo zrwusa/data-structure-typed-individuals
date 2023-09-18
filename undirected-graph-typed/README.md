@@ -8,7 +8,7 @@ This is a standalone Undirected Graph data structure from the data-structure-typ
 ## install
 ### npm
 ```bash
-npm i undirected-graph-typed
+npm i undirected-graph-typed --save
 ```
 ### yarn
 ```bash

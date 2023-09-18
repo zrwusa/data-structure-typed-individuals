@@ -8,7 +8,7 @@ This is a standalone Min Priority Queue data structure from the data-structure-t
 ## install
 ### npm
 ```bash
-npm i min-priority-queue-typed
+npm i min-priority-queue-typed --save
 ```
 ### yarn
 ```bash

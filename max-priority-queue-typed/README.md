@@ -8,7 +8,7 @@ This is a standalone Max Priority Queue data structure from the data-structure-t
 ## install
 ### npm
 ```bash
-npm i max-priority-queue
+npm i max-priority-queue --save
 ```
 ### yarn
 ```bash

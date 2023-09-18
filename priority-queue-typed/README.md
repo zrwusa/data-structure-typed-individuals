@@ -8,7 +8,7 @@ This is a standalone Priority Queue data structure from the data-structure-typed
 ## install
 ### npm
 ```bash
-npm i priority-queue-typed
+npm i priority-queue-typed --save
 ```
 ### yarn
 ```bash

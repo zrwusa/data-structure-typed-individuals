@@ -8,7 +8,7 @@ This is a standalone Trie data structure from the data-structure-typed collectio
 ## install
 ### npm
 ```bash
-npm i trie-typed
+npm i trie-typed --save
 ```
 ### yarn
 ```bash

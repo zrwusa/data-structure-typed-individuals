@@ -8,7 +8,7 @@ This is a standalone Doubly Linked List data structure from the data-structure-t
 ## install
 ### npm
 ```bash
-npm i doubly-linked-list-typed
+npm i doubly-linked-list-typed --save
 ```
 ### yarn
 ```bash

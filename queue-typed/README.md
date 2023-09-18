@@ -1,160 +1,84 @@
 # What
-## Brief
-This is a standalone Graph data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
+## Brief
+
+<table>
+<thead>
+<tr><th>Data Structure</th><th>Enqueue Time Complexity</th><th>Dequeue Time Complexity</th><th>Element Access Time Complexity</th><th>Enqueue & Dequeue for 100000 elements</th><th>Access for 100000 elements</th></tr>
+</thead>
+<tbody>
+<tr><td>Queue</td><td>O(1)</td><td>O(1)</td><td>O(1)</td><td>22.60ms</td><td>10.60ms</td></tr>
+<tr><td>JavaScript Native Array</td><td>O(1)</td><td>O(n)</td><td>O(1)</td><td>931.10ms</td><td>8.60ms</td></tr>
+<tr><td>Other Queue</td><td>O(1)</td><td>O(1)</td><td>O(n)</td><td>28.90ms</td><td>17175.90ms</td></tr>
+</tbody>
+</table>
+
+## more data structures
+This is a standalone Queue data structure from the data-structure-typed collection. If you wish to access more data
+structures or advanced features, you can transition to directly installing the
+complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
 # How
 
 ## install
+
 ### npm
+
 ```bash
-npm i graph-typed --save
+npm i queue-typed --save
 ```
+
 ### yarn
+
 ```bash
-yarn add graph-typed
+yarn add queue-typed
 ```
+
 ### methods
-Directed Graph
-![directed-graph](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/directed-graph.png?raw=true)
-Undirected Graph
-![undirected-graph](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/undirected-graph.png?raw=true)
+Queue
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/array-queue.png?raw=true)
+LinkedListQueue
+![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/queue.png?raw=true)
+
 ### snippet
+
 #### TS
-##### DirectedGraph
+
 ```typescript
-import {DirectedGraph, DirectedVertex, DirectedEdge} from 'data-structure-typed';
-// /* or if you prefer */ import {DirectedGraph, DirectedVertex, DirectedEdge} from 'graph-typed';
+import {Queue} from 'queue-typed';
+// /* or if you prefer */ import {Queue} from 'queue-typed';
 
-const graph = new DirectedGraph();
-const vertexA = new DirectedVertex('A');
-const vertexB = new DirectedVertex('B');
-const vertexC = new DirectedVertex('C');
-const edgeAB = new DirectedEdge('A', 'B');
-const edgeBC = new DirectedEdge('B', 'C');
+const queue = new Queue<number>();
+for (let i = 0; i < magnitude; i++) {
+    queue.enqueue(i);
+}
+for (let i = 0; i < magnitude; i++) {
+    queue.dequeue();
+}
 
-graph.addVertex(vertexA);
-graph.addVertex(vertexB);
-graph.addVertex(vertexC);
-graph.addEdge(edgeAB);
-graph.addEdge(edgeBC);
-
-const topologicalOrder = graph.topologicalSort();
-if (topologicalOrder) expect(topologicalOrder).toEqual(['A', 'B', 'C'])
+for (let i = 0; i < magnitude; i++) {
+    console.log(queue.getAt(i));        // 0, 1, 2, 3, ...
+}
 ```
-##### MapGraph
-```typescript
-import {MapGraph, MapVertex} from 'data-structure-typed';
-// /* or if you prefer */ import {MapGraph, MapVertex} from 'graph-typed';
 
-const mapGraph = new MapGraph([5.500338, 100.173665]);
-
-mapGraph.addVertex(new MapVertex('Surin', 5.466724, 100.274805));
-mapGraph.addVertex(new MapVertex('Batu Feringgi Beach', 5.475141, 100.276670));
-mapGraph.addVertex(new MapVertex('Lotus', 5.459044, 100.308767));
-mapGraph.addVertex(new MapVertex('The Breeza', 5.454197, 100.307859));
-mapGraph.addVertex(new MapVertex('Hard Rock Hotel', 5.467850, 100.241876));
-mapGraph.addVertex(new MapVertex('Mira', 5.456749, 100.286650));
-mapGraph.addVertex(new MapVertex('Penang Bible Church', 5.428683, 100.314825));
-mapGraph.addVertex(new MapVertex('Queensbay', 5.332760, 100.306651));
-mapGraph.addVertex(new MapVertex('Saanen Goat Farm', 5.405738, 100.207699));
-mapGraph.addVertex(new MapVertex('Trinity Auto', 5.401126, 100.303739));
-mapGraph.addVertex(new MapVertex('Penang Airport', 5.293185, 100.265772));
-mapGraph.addEdge('Surin', 'Lotus', 4.7);
-mapGraph.addEdge('Lotus', 'The Breeza', 1);
-mapGraph.addEdge('Batu Feringgi Beach', 'Hard Rock Hotel', 5.2);
-mapGraph.addEdge('Surin', 'Mira', 2.8);
-mapGraph.addEdge('Mira', 'Penang Bible Church', 7.0);
-mapGraph.addEdge('Lotus', 'Penang Bible Church', 5.7);
-mapGraph.addEdge('Penang Bible Church', 'Queensbay', 13.9);
-mapGraph.addEdge('Hard Rock Hotel', 'Saanen Goat Farm', 18.5);
-mapGraph.addEdge('The Breeza', 'Trinity Auto', 9.1);
-mapGraph.addEdge('Trinity Auto', 'Saanen Goat Farm', 26.3);
-mapGraph.addEdge('The Breeza', 'Penang Airport', 24.8);
-mapGraph.addEdge('Penang Airport', 'Saanen Goat Farm', 21.2);
-const expected1 = ['Surin', 'Lotus', 'The Breeza', 'Trinity Auto', 'Saanen Goat Farm'];
-
-const minPathBetween = mapGraph.getMinPathBetween('Surin', 'Saanen Goat Farm');
-expect(minPathBetween?.map(v => v.id)).toEqual(expected1);
-const surinToSaanenGoatFarmDij = mapGraph.dijkstra('Surin', 'Saanen Goat Farm', true, true);
-expect(surinToSaanenGoatFarmDij?.minPath.map(v => v.id)).toEqual(expected1);
-expect(surinToSaanenGoatFarmDij?.minDist).toBe(41.1);
-mapGraph.addEdge('Surin', 'Batu Feringgi Beach', 1.5);
-const expected2 = ['Surin', 'Batu Feringgi Beach', 'Hard Rock Hotel', 'Saanen Goat Farm'];
-const minPathBetweenViaBFB = mapGraph.getMinPathBetween('Surin', 'Saanen Goat Farm', true);
-expect(minPathBetweenViaBFB?.map(v => v.id)).toEqual(expected2);
-const surinToSaanenGoatFarmViaDij = mapGraph.dijkstra('Surin', 'Saanen Goat Farm', true, true);
-expect(surinToSaanenGoatFarmViaDij?.minPath.map(v => v.id)).toEqual(expected2);
-expect(surinToSaanenGoatFarmViaDij?.minDist).toBe(25.2);
-```
 #### JS
-##### DirectedGraph
-```typescript
-const {DirectedGraph, DirectedVertex, DirectedEdge} = require('data-structure-typed');
-// /* or if you prefer */ const {DirectedGraph, DirectedVertex, DirectedEdge} = require('graph-typed');
 
-const graph = new DirectedGraph();
-const vertexA = new DirectedVertex('A');
-const vertexB = new DirectedVertex('B');
-const vertexC = new DirectedVertex('C');
-const edgeAB = new DirectedEdge('A', 'B');
-const edgeBC = new DirectedEdge('B', 'C');
-
-graph.addVertex(vertexA);
-graph.addVertex(vertexB);
-graph.addVertex(vertexC);
-graph.addEdge(edgeAB);
-graph.addEdge(edgeBC);
-
-const topologicalOrder = graph.topologicalSort();
-if (topologicalOrder) expect(topologicalOrder).toEqual(['A', 'B', 'C'])
-```
-##### MapGraph
 ```javascript
-const {MapGraph, MapVertex} =  require('data-structure-typed');
-// /* or if you prefer */ const {MapGraph, MapVertex} = require('graph-typed');
+const {Queue} = require('queue-typed');
+// /* or if you prefer */ const {Queue} = require('queue-typed');
 
-const mapGraph = new MapGraph([5.500338, 100.173665]);
+const queue = new Queue();
+for (let i = 0; i < magnitude; i++) {
+    queue.enqueue(i);
+}
+for (let i = 0; i < magnitude; i++) {
+    queue.dequeue();
+}
 
-mapGraph.addVertex(new MapVertex('Surin', 5.466724, 100.274805));
-mapGraph.addVertex(new MapVertex('Batu Feringgi Beach', 5.475141, 100.276670));
-mapGraph.addVertex(new MapVertex('Lotus', 5.459044, 100.308767));
-mapGraph.addVertex(new MapVertex('The Breeza', 5.454197, 100.307859));
-mapGraph.addVertex(new MapVertex('Hard Rock Hotel', 5.467850, 100.241876));
-mapGraph.addVertex(new MapVertex('Mira', 5.456749, 100.286650));
-mapGraph.addVertex(new MapVertex('Penang Bible Church', 5.428683, 100.314825));
-mapGraph.addVertex(new MapVertex('Queensbay', 5.332760, 100.306651));
-mapGraph.addVertex(new MapVertex('Saanen Goat Farm', 5.405738, 100.207699));
-mapGraph.addVertex(new MapVertex('Trinity Auto', 5.401126, 100.303739));
-mapGraph.addVertex(new MapVertex('Penang Airport', 5.293185, 100.265772));
-mapGraph.addEdge('Surin', 'Lotus', 4.7);
-mapGraph.addEdge('Lotus', 'The Breeza', 1);
-mapGraph.addEdge('Batu Feringgi Beach', 'Hard Rock Hotel', 5.2);
-mapGraph.addEdge('Surin', 'Mira', 2.8);
-mapGraph.addEdge('Mira', 'Penang Bible Church', 7.0);
-mapGraph.addEdge('Lotus', 'Penang Bible Church', 5.7);
-mapGraph.addEdge('Penang Bible Church', 'Queensbay', 13.9);
-mapGraph.addEdge('Hard Rock Hotel', 'Saanen Goat Farm', 18.5);
-mapGraph.addEdge('The Breeza', 'Trinity Auto', 9.1);
-mapGraph.addEdge('Trinity Auto', 'Saanen Goat Farm', 26.3);
-mapGraph.addEdge('The Breeza', 'Penang Airport', 24.8);
-mapGraph.addEdge('Penang Airport', 'Saanen Goat Farm', 21.2);
-const expected1 = ['Surin', 'Lotus', 'The Breeza', 'Trinity Auto', 'Saanen Goat Farm'];
-
-const minPathBetween = mapGraph.getMinPathBetween('Surin', 'Saanen Goat Farm');
-expect(minPathBetween?.map(v => v.id)).toEqual(expected1);
-const surinToSaanenGoatFarmDij = mapGraph.dijkstra('Surin', 'Saanen Goat Farm', true, true);
-expect(surinToSaanenGoatFarmDij?.minPath.map(v => v.id)).toEqual(expected1);
-expect(surinToSaanenGoatFarmDij?.minDist).toBe(41.1);
-mapGraph.addEdge('Surin', 'Batu Feringgi Beach', 1.5);
-const expected2 = ['Surin', 'Batu Feringgi Beach', 'Hard Rock Hotel', 'Saanen Goat Farm'];
-const minPathBetweenViaBFB = mapGraph.getMinPathBetween('Surin', 'Saanen Goat Farm', true);
-expect(minPathBetweenViaBFB?.map(v => v.id)).toEqual(expected2);
-const surinToSaanenGoatFarmViaDij = mapGraph.dijkstra('Surin', 'Saanen Goat Farm', true, true);
-expect(surinToSaanenGoatFarmViaDij?.minPath.map(v => v.id)).toEqual(expected2);
-expect(surinToSaanenGoatFarmViaDij?.minDist).toBe(25.2);
+for (let i = 0; i < magnitude; i++) {
+    console.log(queue.getAt(i));        // 0, 1, 2, 3, ...
+}
 ```
-
 
 ## API docs & Examples
 
@@ -356,7 +280,6 @@ expect(surinToSaanenGoatFarmViaDij?.minDist).toBe(25.2);
 </tr>
 </tbody>
 </table>
-
 
 # Why
 

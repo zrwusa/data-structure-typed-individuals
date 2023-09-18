@@ -8,7 +8,7 @@ This is a standalone BST (Binary Search Tree) data structure from the data-struc
 ## install
 ### npm
 ```bash
-npm i bst-typed
+npm i bst-typed --save
 ```
 ### yarn
 ```bash

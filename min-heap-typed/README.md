@@ -8,7 +8,7 @@ This is a standalone Min Heap data structure from the data-structure-typed colle
 ## install
 ### npm
 ```bash
-npm i min-heap-typed
+npm i min-heap-typed --save
 ```
 ### yarn
 ```bash
