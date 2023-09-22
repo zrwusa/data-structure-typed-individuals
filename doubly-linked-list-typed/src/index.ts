@@ -5,4 +5,4 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-export {DoublyLinkedListNode, DoublyLinkedList} from 'data-structure-typed';
+export { DoublyLinkedListNode, DoublyLinkedList } from 'data-structure-typed';

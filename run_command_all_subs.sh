@@ -1,7 +1,6 @@
 #!/bin/bash
-
-# Read the version number from the user
-read -p "Enter the package name: " package_name
+# Read the command from the user
+read -p "Enter the command: " command
 
 # List of directories
 directories=(
@@ -31,10 +30,10 @@ directories=(
 for dir in "${directories[@]}"; do
     cd "$dir" || exit
 
-    # Uninstall package
-    npm uninstall "$package_name"
+    # execute the command
+    $command
 
     cd ..
 done
 
-echo "Uninstall $package_name from all libs success."
+echo "$command in all libs executed success."
