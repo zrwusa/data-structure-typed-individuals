@@ -2,18 +2,26 @@
 
 ## Brief
 
+In the usual gig, we make do with Array.push and Array.shift to play Queue in JavaScript, but here's the kicker – native
+JavaScript Array isn't exactly Queue VIP. That shift move? It's a bit of a slow dance with a time complexity
+of [linear time complexity](https://medium.com/@ariel.salem1989/an-easy-to-use-guide-to-big-o-time-complexity-5dcf4be8a444#:~:text=O(N)%E2%80%94Linear%20Time) 
+*O(n)*. When you're working with big data, you don't want to be caught slow-shifting. So, we roll up our sleeves and
+craft a Queue that's got a speedy [constant time complexity](https://medium.com/@ariel.salem1989/an-easy-to-use-guide-to-big-o-time-complexity-5dcf4be8a444#:~:text=O(1)%20%E2%80%94%20Constant%20Time) O(1) Queue.enqueue(), a snappy O(1) Queue.dequeue(), and a lightning-fast O(1)
+Queue.getAt(). Yep, it's Queue-tastic!
+
 <table>
 <thead>
-<tr><th>Data Structure</th><th>Enqueue Time Complexity</th><th>Dequeue Time Complexity</th><th>Element Access Time Complexity</th><th>Enqueue & Dequeue for 100000 elements</th><th>Access for 100000 elements</th></tr>
+<tr><th>Data Structure</th><th>Enqueue</th><th>Dequeue</th><th>Access</th><th>Enqueue & Dequeue 100000</th><th>Access 100000</th></tr>
 </thead>
 <tbody>
-<tr><td>Queue</td><td>O(1)</td><td>O(1)</td><td>O(1)</td><td>22.60ms</td><td>10.60ms</td></tr>
+<tr><td>Queue Typed</td><td>O(1)</td><td>O(1)</td><td>O(1)</td><td>22.60ms</td><td>10.60ms</td></tr>
 <tr><td>JavaScript Native Array</td><td>O(1)</td><td>O(n)</td><td>O(1)</td><td>931.10ms</td><td>8.60ms</td></tr>
 <tr><td>Other Queue</td><td>O(1)</td><td>O(1)</td><td>O(n)</td><td>28.90ms</td><td>17175.90ms</td></tr>
 </tbody>
 </table>
 
 ## more data structures
+
 This is a standalone Queue data structure from the data-structure-typed collection. If you wish to access more data
 structures or advanced features, you can transition to directly installing the
 complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
@@ -35,6 +43,7 @@ yarn add queue-typed
 ```
 
 ### methods
+
 Queue
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/array-queue.png?raw=true)
 LinkedListQueue
