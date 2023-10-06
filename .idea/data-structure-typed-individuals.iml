@@ -43,6 +43,9 @@
       <excludeFolder url="file://$MODULE_DIR$/trie-typed/docs" />
       <excludeFolder url="file://$MODULE_DIR$/undirected-graph-typed/dist" />
       <excludeFolder url="file://$MODULE_DIR$/undirected-graph-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/queue-typed/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/queue-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/queue-typed/docs" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

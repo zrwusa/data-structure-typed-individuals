@@ -1,6 +1,4 @@
-/node_modules/
-.DS_Store/
-.idea/
+node_modules/**/*
 
 *.jks
 *.p8
@@ -9,3 +7,4 @@
 *.mobileprovision
 *.orig.*
 .DS_Store
+.idea

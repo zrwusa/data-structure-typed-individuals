@@ -1,6 +1,6 @@
 {
   "name": "min-priority-queue-typed",
-  "version": "1.32.2",
+  "version": "1.34.2",
   "description": "Min Priority Queue. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -21,7 +21,6 @@
     "min priority queue",
     "minpriorityqueue",
     "min-priority-queue",
-
     "Priority Queue",
     "priority queue",
     "priorityqueue",
@@ -106,7 +105,7 @@
   "bugs": {
     "url": "https://github.com/zrwusa/data-structure-typed/issues"
   },
-  "homepage": "https://github.com/zrwusa/data-structure-typed#readme",
+  "homepage": "https://data-structure-typed-docs.vercel.app",
   "types": "dist/index.d.ts",
   "devDependencies": {
     "@types/jest": "^29.5.3",
@@ -125,6 +124,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.32.2"
+    "data-structure-typed": "^1.34.2"
   }
 }
