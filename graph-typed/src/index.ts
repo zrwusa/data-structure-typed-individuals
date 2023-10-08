@@ -17,5 +17,6 @@ export {
   UndirectedGraph,
   MapGraph,
   MapVertex,
-  MapEdge
+  MapEdge,
+  VertexId
 } from 'data-structure-typed';

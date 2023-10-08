@@ -1,6 +1,6 @@
 {
   "name": "min-heap-typed",
-  "version": "1.34.2",
+  "version": "1.34.4",
   "description": "Min Heap. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -131,6 +131,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.34.2"
+    "data-structure-typed": "^1.34.4"
   }
 }

@@ -5,4 +5,4 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-export { MinHeap } from 'data-structure-typed';
+export { MinHeap, HeapItem } from 'data-structure-typed';
