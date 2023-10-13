@@ -1,6 +1,6 @@
 {
   "name": "max-heap-typed",
-  "version": "1.34.4",
+  "version": "1.40.0-rc",
   "description": "Max Heap. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -131,6 +131,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.34.4"
+    "data-structure-typed": "^1.40.0-rc"
   }
 }
