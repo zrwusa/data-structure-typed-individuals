@@ -1,3 +1,11 @@
+![NPM](https://img.shields.io/npm/l/heap-typed)
+![GitHub top language](https://img.shields.io/github/languages/top/zrwusa/data-structure-typed)
+![npm](https://img.shields.io/npm/dw/heap-typed)
+![eslint](https://aleen42.github.io/badges/src/eslint.svg)
+![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/heap-typed)
+![npm bundle size](https://img.shields.io/bundlephobia/min/heap-typed)
+![npm](https://img.shields.io/npm/v/heap-typed)
+
 # What
 
 ## Brief

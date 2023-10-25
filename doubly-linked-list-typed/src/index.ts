@@ -5,4 +5,7 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-export { DoublyLinkedListNode, DoublyLinkedList } from 'data-structure-typed';
+// export { DoublyLinkedListNode, DoublyLinkedList } from 'data-structure-typed';
+export * from './data-structures/linked-list/doubly-linked-list';
+export * from './types/data-structures/linked-list/doubly-linked-list';
+export * from './types/helpers';

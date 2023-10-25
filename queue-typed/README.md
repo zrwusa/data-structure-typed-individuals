@@ -1,3 +1,11 @@
+![NPM](https://img.shields.io/npm/l/queue-typed)
+![GitHub top language](https://img.shields.io/github/languages/top/zrwusa/data-structure-typed)
+![npm](https://img.shields.io/npm/dw/queue-typed)
+![eslint](https://aleen42.github.io/badges/src/eslint.svg)
+![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/queue-typed)
+![npm bundle size](https://img.shields.io/bundlephobia/min/queue-typed)
+![npm](https://img.shields.io/npm/v/queue-typed)
+
 # What
 
 ## Brief

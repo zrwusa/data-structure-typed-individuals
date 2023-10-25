@@ -1,3 +1,11 @@
+![NPM](https://img.shields.io/npm/l/deque-typed)
+![GitHub top language](https://img.shields.io/github/languages/top/zrwusa/data-structure-typed)
+![npm](https://img.shields.io/npm/dw/deque-typed)
+![eslint](https://aleen42.github.io/badges/src/eslint.svg)
+![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/deque-typed)
+![npm bundle size](https://img.shields.io/bundlephobia/min/deque-typed)
+![npm](https://img.shields.io/npm/v/deque-typed)
+
 # What
 ## Brief
 This is a standalone Deque data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package

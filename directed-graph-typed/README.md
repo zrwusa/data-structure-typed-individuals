@@ -1,3 +1,11 @@
+![NPM](https://img.shields.io/npm/l/directed-graph-typed)
+![GitHub top language](https://img.shields.io/github/languages/top/zrwusa/data-structure-typed)
+![npm](https://img.shields.io/npm/dw/directed-graph-typed)
+![eslint](https://aleen42.github.io/badges/src/eslint.svg)
+![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/directed-graph-typed)
+![npm bundle size](https://img.shields.io/bundlephobia/min/directed-graph-typed)
+![npm](https://img.shields.io/npm/v/directed-graph-typed)
+
 # What
 ## Brief
 This is a standalone Directed Graph data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package

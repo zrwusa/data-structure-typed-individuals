@@ -1,3 +1,11 @@
+![NPM](https://img.shields.io/npm/l/singly-linked-list-typed)
+![GitHub top language](https://img.shields.io/github/languages/top/zrwusa/data-structure-typed)
+![npm](https://img.shields.io/npm/dw/singly-linked-list-typed)
+![eslint](https://aleen42.github.io/badges/src/eslint.svg)
+![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/singly-linked-list-typed)
+![npm bundle size](https://img.shields.io/bundlephobia/min/singly-linked-list-typed)
+![npm](https://img.shields.io/npm/v/singly-linked-list-typed)
+
 # What
 ## Brief
 This is a standalone Singly Linked List data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package

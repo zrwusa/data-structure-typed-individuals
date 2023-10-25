@@ -5,4 +5,7 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-export { AVLTreeNode, AVLTree } from 'data-structure-typed';
+// export { AVLTreeNode, AVLTree, CP, FamilyPosition, TopologicalProperty, IterationType } from 'data-structure-typed';
+export * from './data-structures/binary-tree/avl-tree';
+export * from './types/data-structures/binary-tree/avl-tree';
+export * from './types/helpers';
