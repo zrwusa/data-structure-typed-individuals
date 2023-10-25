@@ -29,11 +29,14 @@ npm i heap-typed --save
 ```bash
 yarn add heap-typed
 ```
+
 ### methods
+
 Min Heap
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/min-heap.png?raw=true)
 Max Heap
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/max-heap.png?raw=true)
+
 ### snippet
 
 #### TS

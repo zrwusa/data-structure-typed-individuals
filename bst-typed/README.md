@@ -7,25 +7,37 @@
 ![npm](https://img.shields.io/npm/v/bst-typed)
 
 # What
-## Brief
-This is a standalone BST (Binary Search Tree) data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
+## Brief
+
+This is a standalone BST (Binary Search Tree) data structure from the data-structure-typed collection. If you wish to
+access more data structures or advanced features, you can transition to directly installing the
+complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
 # How
 
 ## install
+
 ### npm
+
 ```bash
 npm i bst-typed --save
 ```
+
 ### yarn
+
 ```bash
 yarn add bst-typed
 ```
+
 ### methods
+
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/bst.png?raw=true)
+
 ### snippet
+
 #### TS
+
 ```typescript
 import {BST, BSTNode} from 'data-structure-typed';
 // /* or if you prefer */ import {BST, BSTNode} from 'bst-typed';
@@ -178,7 +190,9 @@ bfsNodes[0].id;                                                // 2
 bfsNodes[1].id;                                                // 12
 bfsNodes[2].id;                                                // 16
 ```
+
 #### JS
+
 ```javascript
 const {BST, BSTNode} = require('data-structure-typed');
 // /* or if you prefer */ const {BST, BSTNode} = require('bst-typed');
@@ -331,7 +345,6 @@ bfsNodes[0].id;                                                // 2
 bfsNodes[1].id;                                                // 12
 bfsNodes[2].id;                                                // 16
 ```
-
 
 ## API docs & Examples
 
@@ -533,7 +546,6 @@ bfsNodes[2].id;                                                // 16
 </tr>
 </tbody>
 </table>
-
 
 # Why
 

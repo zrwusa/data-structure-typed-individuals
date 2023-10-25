@@ -1,4 +1,4 @@
-import {Deque, ArrayDeque, ObjectDeque} from '../src';
+import {ArrayDeque, Deque, ObjectDeque} from '../src';
 
 describe('Deque Tests', () => {
     // Test cases for the Deque class (DoublyLinkedList-based)

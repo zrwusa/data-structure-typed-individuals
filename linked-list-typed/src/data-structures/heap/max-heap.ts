@@ -10,15 +10,15 @@ import {Heap} from './heap';
 import type {Comparator} from '../../types';
 
 export class MaxHeap<E = any> extends Heap<E> {
-  constructor(
-    comparator: Comparator<E> = (a: E, b: E) => {
-      if (!(typeof a === 'number' && typeof b === 'number')) {
-        throw new Error('The a, b params of compare function must be number');
-      } else {
-        return b - a;
-      }
+    constructor(
+        comparator: Comparator<E> = (a: E, b: E) => {
+            if (!(typeof a === 'number' && typeof b === 'number')) {
+                throw new Error('The a, b params of compare function must be number');
+            } else {
+                return b - a;
+            }
+        }
+    ) {
+        super(comparator);
     }
-  ) {
-    super(comparator);
-  }
 }

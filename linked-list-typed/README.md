@@ -7,37 +7,50 @@
 ![npm](https://img.shields.io/npm/v/linked-list-typed)
 
 # What
-## Brief
-This is a standalone Linked List data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
+## Brief
+
+This is a standalone Linked List data structure from the data-structure-typed collection. If you wish to access more
+data structures or advanced features, you can transition to directly installing the
+complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
 # How
 
 ## install
+
 ### npm
+
 ```bash
 npm i linked-list-typed --save
 ```
+
 ### yarn
+
 ```bash
 yarn add linked-list-typed
 ```
+
 ### methods
+
 Singly Linked List
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/singly-linked-list.png?raw=true)
 
 Doubly Linked List
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/doubly-linked-list.png?raw=true)
+
 ### snippet
+
 #### TS
+
 ```typescript
 
 ```
+
 #### JS
+
 ```javascript
 
 ```
-
 
 ## API docs & Examples
 
@@ -239,7 +252,6 @@ Doubly Linked List
 </tr>
 </tbody>
 </table>
-
 
 # Why
 

@@ -7,30 +7,42 @@
 ![npm](https://img.shields.io/npm/v/priority-queue-typed)
 
 # What
-## Brief
-This is a standalone Priority Queue data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
+## Brief
+
+This is a standalone Priority Queue data structure from the data-structure-typed collection. If you wish to access more
+data structures or advanced features, you can transition to directly installing the
+complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
 # How
 
 ## install
+
 ### npm
+
 ```bash
 npm i priority-queue-typed --save
 ```
+
 ### yarn
+
 ```bash
 yarn add priority-queue-typed
 ```
+
 ### methods
+
 Priority Queue
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/priority-queue.png?raw=true)
 Min Priority Queue
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/min-priority-queue.png?raw=true)
 Max Priority Queue
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/max-priority-queue.png?raw=true)
+
 ### snippet
+
 #### TS
+
 ```typescript
     import {PriorityQueue, MinPriorityQueue} from 'data-structure-typed';
     // /* or if you prefer */ import {PriorityQueue, MinPriorityQueue} from 'priority-queue-typed';
@@ -62,7 +74,9 @@ Max Priority Queue
     minPQ1.DFS('post')              //  [4, 3, 5, 2, 8, 7, 6, 1]
     minPQ1.DFS('pre')               //  [1, 2, 3, 4, 5, 6, 8, 7]
 ```
+
 #### JS
+
 ```javascript
     const {PriorityQueue, MinPriorityQueue} = require('data-structure-typed');
     // /* or if you prefer */ const {PriorityQueue, MinPriorityQueue} = require('priority-queue-typed');
@@ -94,7 +108,6 @@ Max Priority Queue
     minPQ1.DFS('post')              //  [4, 3, 5, 2, 8, 7, 6, 1]
     minPQ1.DFS('pre')               //  [1, 2, 3, 4, 5, 6, 8, 7]
 ```
-
 
 ## API docs & Examples
 
@@ -296,7 +309,6 @@ Max Priority Queue
 </tr>
 </tbody>
 </table>
-
 
 # Why
 

@@ -203,7 +203,7 @@ describe('TreeMultiset operations test', () => {
     });
 
     it('should perform various operations on a Binary Search Tree with object values', () => {
-        const objTreeMultiset = new TreeMultiset<TreeMultisetNode<{id: number; keyA: number}>>();
+        const objTreeMultiset = new TreeMultiset<TreeMultisetNode<{ id: number; keyA: number }>>();
         expect(objTreeMultiset).toBeInstanceOf(TreeMultiset);
         objTreeMultiset.add(11, {id: 11, keyA: 11});
         objTreeMultiset.add(3, {id: 3, keyA: 3});

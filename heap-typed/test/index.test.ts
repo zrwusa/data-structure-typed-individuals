@@ -1,4 +1,4 @@
-import {MinHeap, MaxHeap} from '../src';
+import {MaxHeap, MinHeap} from '../src';
 
 describe('Heap Operation Test', () => {
     it('should numeric heap work well', function () {
@@ -21,7 +21,7 @@ describe('Heap Operation Test', () => {
     });
 
     it('should object heap work well', function () {
-        const minHeap = new MinHeap<{a: string}>();
+        const minHeap = new MinHeap<{ a: string }>();
         minHeap.add(1, {a: 'a1'});
         minHeap.add(6, {a: 'a6'});
         minHeap.add(2, {a: 'a2'});
@@ -36,7 +36,7 @@ describe('Heap Operation Test', () => {
             i++;
         }
 
-        const maxHeap = new MaxHeap<{a: string}>();
+        const maxHeap = new MaxHeap<{ a: string }>();
         maxHeap.add(1, {a: 'a1'});
         maxHeap.add(6, {a: 'a6'});
         maxHeap.add(5, {a: 'a5'});

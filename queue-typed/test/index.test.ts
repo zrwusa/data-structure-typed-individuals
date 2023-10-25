@@ -1,4 +1,4 @@
-import {Queue, LinkedListQueue} from '../src';
+import {LinkedListQueue, Queue} from '../src';
 
 describe('Queue Operation Test', () => {
     it('should validate a queue', () => {

@@ -1,6 +1,6 @@
 {
   "name": "priority-queue-typed",
-  "version": "1.38.0",
+  "version": "1.38.2",
   "description": "Priority Queue, Min Priority Queue, Max Priority Queue. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -117,8 +117,5 @@
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.1",
     "typedoc": "^0.25.1"
-  },
-  "dependencies": {
-    "data-structure-typed": "^1.38.0"
   }
 }

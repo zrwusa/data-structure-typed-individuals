@@ -7,25 +7,35 @@
 ![npm](https://img.shields.io/npm/v/avl-tree-typed)
 
 # What
-## Brief
-This is a standalone AVL Tree data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
+## Brief
+
+This is a standalone AVL Tree data structure from the data-structure-typed collection. If you wish to access more data
+structures or advanced features, you can transition to directly installing the
+complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
 # How
 
 ## install
+
 ### npm
+
 ```bash
 npm i avl-tree-typed --save
 ```
+
 ### yarn
+
 ```bash
 yarn add avl-tree-typed
 ```
+
 ### methods
+
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/avl-tree.png?raw=true)
 
 ### snippet
+
 #### TS
 
 ```typescript
@@ -124,7 +134,9 @@ lastBFSIds[0]                               // 12
 const lastBFSNodes = avlTree.BFS('node');
 lastBFSNodes[0].id                          // 12
 ```
+
 #### JS
+
 ```javascript
 const {AVLTree} = require('data-structure-typed');
 // /* or if you prefer */ const {AVLTree} = require('avl-tree-typed');
@@ -221,7 +233,6 @@ lastBFSIds[0]                               // 12
 const lastBFSNodes = avlTree.BFS('node');
 lastBFSNodes[0].id                          // 12
 ```
-
 
 ## API docs & Examples
 
@@ -423,7 +434,6 @@ lastBFSNodes[0].id                          // 12
 </tr>
 </tbody>
 </table>
-
 
 # Why
 

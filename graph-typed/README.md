@@ -7,29 +7,42 @@
 ![npm](https://img.shields.io/npm/v/graph-typed)
 
 # What
-## Brief
-This is a standalone Graph data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
+## Brief
+
+This is a standalone Graph data structure from the data-structure-typed collection. If you wish to access more data
+structures or advanced features, you can transition to directly installing the
+complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
 # How
 
 ## install
+
 ### npm
+
 ```bash
 npm i graph-typed --save
 ```
+
 ### yarn
+
 ```bash
 yarn add graph-typed
 ```
+
 ### methods
+
 Directed Graph
 ![directed-graph](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/directed-graph.png?raw=true)
 Undirected Graph
 ![undirected-graph](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/undirected-graph.png?raw=true)
+
 ### snippet
+
 #### TS
+
 ##### DirectedGraph
+
 ```typescript
 import {DirectedGraph, DirectedVertex, DirectedEdge} from 'data-structure-typed';
 // /* or if you prefer */ import {DirectedGraph, DirectedVertex, DirectedEdge} from 'graph-typed';
@@ -50,7 +63,9 @@ graph.addEdge(edgeBC);
 const topologicalOrder = graph.topologicalSort();
 if (topologicalOrder) expect(topologicalOrder).toEqual(['A', 'B', 'C'])
 ```
+
 ##### MapGraph
+
 ```typescript
 import {MapGraph, MapVertex} from 'data-structure-typed';
 // /* or if you prefer */ import {MapGraph, MapVertex} from 'graph-typed';
@@ -95,8 +110,11 @@ const surinToSaanenGoatFarmViaDij = mapGraph.dijkstra('Surin', 'Saanen Goat Farm
 expect(surinToSaanenGoatFarmViaDij?.minPath.map(v => v.id)).toEqual(expected2);
 expect(surinToSaanenGoatFarmViaDij?.minDist).toBe(25.2);
 ```
+
 #### JS
+
 ##### DirectedGraph
+
 ```typescript
 const {DirectedGraph, DirectedVertex, DirectedEdge} = require('data-structure-typed');
 // /* or if you prefer */ const {DirectedGraph, DirectedVertex, DirectedEdge} = require('graph-typed');
@@ -117,7 +135,9 @@ graph.addEdge(edgeBC);
 const topologicalOrder = graph.topologicalSort();
 if (topologicalOrder) expect(topologicalOrder).toEqual(['A', 'B', 'C'])
 ```
+
 ##### MapGraph
+
 ```javascript
 const {MapGraph, MapVertex} =  require('data-structure-typed');
 // /* or if you prefer */ const {MapGraph, MapVertex} = require('graph-typed');
@@ -162,7 +182,6 @@ const surinToSaanenGoatFarmViaDij = mapGraph.dijkstra('Surin', 'Saanen Goat Farm
 expect(surinToSaanenGoatFarmViaDij?.minPath.map(v => v.id)).toEqual(expected2);
 expect(surinToSaanenGoatFarmViaDij?.minDist).toBe(25.2);
 ```
-
 
 ## API docs & Examples
 
@@ -364,7 +383,6 @@ expect(surinToSaanenGoatFarmViaDij?.minDist).toBe(25.2);
 </tr>
 </tbody>
 </table>
-
 
 # Why
 

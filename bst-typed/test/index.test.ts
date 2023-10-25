@@ -181,7 +181,7 @@ describe('BST operations test', () => {
     });
 
     it('should perform various operations on a Binary Search Tree with object values', () => {
-        const objBST = new BST<BSTNode<{id: number; keyA: number}>>();
+        const objBST = new BST<BSTNode<{ id: number; keyA: number }>>();
         expect(objBST).toBeInstanceOf(BST);
         objBST.add(11, {id: 11, keyA: 11});
         objBST.add(3, {id: 3, keyA: 3});

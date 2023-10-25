@@ -7,24 +7,35 @@
 ![npm](https://img.shields.io/npm/v/max-heap-typed)
 
 # What
-## Brief
-This is a standalone Max Heap data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
+## Brief
+
+This is a standalone Max Heap data structure from the data-structure-typed collection. If you wish to access more data
+structures or advanced features, you can transition to directly installing the
+complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
 # How
 
 ## install
+
 ### npm
+
 ```bash
 npm i max-heap-typed --save
 ```
+
 ### yarn
+
 ```bash
 yarn add max-heap-typed
 ```
+
 ### methods
+
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/max-heap.png?raw=true)
+
 ### snippet
+
 #### TS
 
 ```typescript
@@ -104,7 +115,6 @@ yarn add max-heap-typed
         i++;
     }
 ```
-
 
 ## API docs & Examples
 
@@ -306,7 +316,6 @@ yarn add max-heap-typed
 </tr>
 </tbody>
 </table>
-
 
 # Why
 

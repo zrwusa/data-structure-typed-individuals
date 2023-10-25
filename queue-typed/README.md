@@ -12,9 +12,11 @@
 
 In the usual gig, we make do with Array.push and Array.shift to play Queue in JavaScript, but here's the kicker – native
 JavaScript Array isn't exactly Queue VIP. That shift move? It's a bit of a slow dance with a time complexity
-of [linear time complexity](https://medium.com/@ariel.salem1989/an-easy-to-use-guide-to-big-o-time-complexity-5dcf4be8a444#:~:text=O(N)%E2%80%94Linear%20Time) 
+of [linear time complexity](https://medium.com/@ariel.salem1989/an-easy-to-use-guide-to-big-o-time-complexity-5dcf4be8a444#:~:text=O(N)%E2%80%94Linear%20Time)
 *O(n)*. When you're working with big data, you don't want to be caught slow-shifting. So, we roll up our sleeves and
-craft a Queue that's got a speedy [constant time complexity](https://medium.com/@ariel.salem1989/an-easy-to-use-guide-to-big-o-time-complexity-5dcf4be8a444#:~:text=O(1)%20%E2%80%94%20Constant%20Time) O(1) Queue.enqueue(), a snappy O(1) Queue.dequeue(), and a lightning-fast O(1)
+craft a Queue that's got a
+speedy [constant time complexity](https://medium.com/@ariel.salem1989/an-easy-to-use-guide-to-big-o-time-complexity-5dcf4be8a444#:~:text=O(1)%20%E2%80%94%20Constant%20Time)
+O(1) Queue.enqueue(), a snappy O(1) Queue.dequeue(), and a lightning-fast O(1)
 Queue.getAt(). Yep, it's Queue-tastic!
 
 <table>

@@ -8,18 +8,18 @@ import {BinaryTreeNode} from '../../../data-structures';
  */
 
 export enum IterationType {
-  ITERATIVE = 'ITERATIVE',
-  RECURSIVE = 'RECURSIVE'
+    ITERATIVE = 'ITERATIVE',
+    RECURSIVE = 'RECURSIVE'
 }
 
 export enum FamilyPosition {
-  ROOT = 'ROOT',
-  LEFT = 'LEFT',
-  RIGHT = 'RIGHT',
-  ROOT_LEFT = 'ROOT_LEFT',
-  ROOT_RIGHT = 'ROOT_RIGHT',
-  ISOLATED = 'ISOLATED',
-  MAL_NODE = 'MAL_NODE'
+    ROOT = 'ROOT',
+    LEFT = 'LEFT',
+    RIGHT = 'RIGHT',
+    ROOT_LEFT = 'ROOT_LEFT',
+    ROOT_RIGHT = 'ROOT_RIGHT',
+    ISOLATED = 'ISOLATED',
+    MAL_NODE = 'MAL_NODE'
 }
 
 export type BinaryTreeNodeKey = number;

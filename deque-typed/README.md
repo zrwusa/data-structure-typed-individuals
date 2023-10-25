@@ -7,33 +7,46 @@
 ![npm](https://img.shields.io/npm/v/deque-typed)
 
 # What
-## Brief
-This is a standalone Deque data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
+## Brief
+
+This is a standalone Deque data structure from the data-structure-typed collection. If you wish to access more data
+structures or advanced features, you can transition to directly installing the
+complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
 # How
 
 ## install
+
 ### npm
+
 ```bash
 npm i deque-typed --save
 ```
+
 ### yarn
+
 ```bash
 yarn add deque-typed
 ```
+
 ### methods
+
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/deque.png?raw=true)
+
 ### snippet
+
 #### TS
+
 ```typescript
 
 ```
+
 #### JS
+
 ```javascript
 
 ```
-
 
 ## API docs & Examples
 
@@ -235,7 +248,6 @@ yarn add deque-typed
 </tr>
 </tbody>
 </table>
-
 
 # Why
 

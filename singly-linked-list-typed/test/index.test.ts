@@ -2,10 +2,10 @@ import {SinglyLinkedList} from '../src';
 
 describe('SinglyLinkedList Operation Test', () => {
     let list: SinglyLinkedList<number>;
-    let objectList: SinglyLinkedList<{keyA: number}>;
+    let objectList: SinglyLinkedList<{ keyA: number }>;
     beforeEach(() => {
         list = new SinglyLinkedList<number>();
-        objectList = new SinglyLinkedList<{keyA: number}>();
+        objectList = new SinglyLinkedList<{ keyA: number }>();
     });
 
     describe('push', () => {

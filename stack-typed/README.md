@@ -7,33 +7,46 @@
 ![npm](https://img.shields.io/npm/v/stack-typed)
 
 # What
-## Brief
-This is a standalone Stack data structure from the data-structure-typed collection. If you wish to access more data structures or advanced features, you can transition to directly installing the complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
+## Brief
+
+This is a standalone Stack data structure from the data-structure-typed collection. If you wish to access more data
+structures or advanced features, you can transition to directly installing the
+complete [data-structure-typed](https://www.npmjs.com/package/data-structure-typed) package
 
 # How
 
 ## install
+
 ### npm
+
 ```bash
 npm i stack-typed --save
 ```
+
 ### yarn
+
 ```bash
 yarn add stack-typed
 ```
+
 ### methods
+
 ![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/stack.png?raw=true)
+
 ### snippet
+
 #### TS
+
 ```typescript
 
 ```
+
 #### JS
+
 ```javascript
 
 ```
-
 
 ## API docs & Examples
 
@@ -235,7 +248,6 @@ yarn add stack-typed
 </tr>
 </tbody>
 </table>
-
 
 # Why
 
