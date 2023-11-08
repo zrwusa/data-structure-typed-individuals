@@ -1,11 +1,11 @@
 import {BSTNode} from '../../../data-structures';
-import type {BinaryTreeNodeKey, BinaryTreeOptions} from './binary-tree';
+import type {BinaryTreeOptions, BTNKey} from './binary-tree';
 
-export type BSTComparator = (a: BinaryTreeNodeKey, b: BinaryTreeNodeKey) => number;
+export type BSTComparator = (a: BTNKey, b: BTNKey) => number;
 
 // prettier-ignore
 export type BSTNodeNested<T> = BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 export type BSTOptions = BinaryTreeOptions & {
-    comparator?: BSTComparator,
+  comparator?: BSTComparator,
 }

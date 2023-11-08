@@ -2,12 +2,10 @@ export type Comparator<T> = (a: T, b: T) => number;
 
 export type DFSOrderPattern = 'pre' | 'in' | 'post';
 
-export type MapCallback<N> = (node: N) => any;
-
-export type MapCallbackReturn<N> = ReturnType<MapCallback<N>>;
+export type BTNCallback<N, D = any> = (node: N) => D;
 
 export enum CP {
-    lt = 'lt',
-    eq = 'eq',
-    gt = 'gt'
+  lt = 'lt',
+  eq = 'eq',
+  gt = 'gt'
 }

@@ -1,6 +1,6 @@
 {
   "name": "doubly-linked-list-typed",
-  "version": "1.38.2",
+  "version": "1.42.5",
   "description": "Doubly Linked List. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -62,5 +62,8 @@
     "ts-jest": "^29.1.1",
     "typedoc": "^0.25.1",
     "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "data-structure-typed": "^1.42.5"
   }
 }

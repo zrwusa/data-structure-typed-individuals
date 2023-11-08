@@ -8,27 +8,23 @@ import {BinaryTreeNode} from '../../../data-structures';
  */
 
 export enum IterationType {
-    ITERATIVE = 'ITERATIVE',
-    RECURSIVE = 'RECURSIVE'
+  ITERATIVE = 'ITERATIVE',
+  RECURSIVE = 'RECURSIVE'
 }
 
 export enum FamilyPosition {
-    ROOT = 'ROOT',
-    LEFT = 'LEFT',
-    RIGHT = 'RIGHT',
-    ROOT_LEFT = 'ROOT_LEFT',
-    ROOT_RIGHT = 'ROOT_RIGHT',
-    ISOLATED = 'ISOLATED',
-    MAL_NODE = 'MAL_NODE'
+  ROOT = 'ROOT',
+  LEFT = 'LEFT',
+  RIGHT = 'RIGHT',
+  ROOT_LEFT = 'ROOT_LEFT',
+  ROOT_RIGHT = 'ROOT_RIGHT',
+  ISOLATED = 'ISOLATED',
+  MAL_NODE = 'MAL_NODE'
 }
 
-export type BinaryTreeNodeKey = number;
+export type BTNKey = number;
 
-export type BFSCallback<N> = (node: N, level?: number) => any;
-
-export type BFSCallbackReturn<N> = ReturnType<BFSCallback<N>>;
-
-export type BinaryTreeDeletedResult<N> = { deleted: N | null | undefined; needBalanced: N | null };
+export type BinaryTreeDeletedResult<N> = { deleted: N | null | undefined; needBalanced: N | null | undefined };
 
 export type BinaryTreeNodeNested<T> = BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 

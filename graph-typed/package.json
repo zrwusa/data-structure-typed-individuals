@@ -1,6 +1,6 @@
 {
   "name": "graph-typed",
-  "version": "1.38.2",
+  "version": "1.42.5",
   "description": "Graph. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -94,11 +94,12 @@
     "UMD",
     "esmodule",
     "java.util",
+    "c++ stl",
     "c++ std",
     "Python collections",
     "System.Collections.Generic",
-    "STD",
-    "std",
+    "STL",
+    "stl",
     "util",
     "collection",
     "Collection",
@@ -133,5 +134,8 @@
     "ts-jest": "^29.1.1",
     "typedoc": "^0.25.1",
     "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "data-structure-typed": "^1.42.5"
   }
 }
