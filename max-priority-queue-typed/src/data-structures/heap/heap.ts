@@ -5,21 +5,21 @@
  * @license MIT License
  */
 
-import type {Comparator, DFSOrderPattern} from '../../types';
+import type { Comparator, DFSOrderPattern } from '../../types';
 
 export class Heap<E = any> {
-  constructor(options: {comparator: Comparator<E>; nodes?: E[]}) {
+  constructor(options: { comparator: Comparator<E>; elements?: E[] }) {
     this._comparator = options.comparator;
-    if (options.nodes && options.nodes.length > 0) {
-      this._nodes = options.nodes;
+    if (options.elements && options.elements.length > 0) {
+      this._elements = options.elements;
       this.fix();
     }
   }
 
-  protected _nodes: E[] = [];
+  protected _elements: E[] = [];
 
-  get nodes(): E[] {
-    return this._nodes;
+  get elements(): E[] {
+    return this._elements;
   }
 
   protected _comparator: Comparator<E>;
@@ -32,7 +32,7 @@ export class Heap<E = any> {
    * Get the size (number of elements) of the heap.
    */
   get size(): number {
-    return this.nodes.length;
+    return this.elements.length;
   }
 
   /**
@@ -40,19 +40,27 @@ export class Heap<E = any> {
    * @returns The last element or undefined if the heap is empty.
    */
   get leaf(): E | undefined {
-    return this.nodes[this.size - 1] ?? undefined;
+    return this.elements[this.size - 1] ?? undefined;
   }
 
   /**
-   * Static method that creates a binary heap from an array of nodes and a comparison function.
+   * Static method that creates a binary heap from an array of elements and a comparison function.
    * @returns A new Heap instance.
    * @param options
    */
-  static heapify<E>(options: {nodes: E[]; comparator: Comparator<E>}): Heap<E> {
+  static heapify<E>(options: { elements: E[]; comparator: Comparator<E> }): Heap<E> {
     return new Heap<E>(options);
   }
 
   /**
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   *
    * Insert an element into the heap and maintain the heap properties.
    * @param element - The element to be inserted.
    */
@@ -61,34 +69,55 @@ export class Heap<E = any> {
   }
 
   /**
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   *
    * Insert an element into the heap and maintain the heap properties.
    * @param element - The element to be inserted.
    */
   push(element: E): Heap<E> {
-    this.nodes.push(element);
-    this.bubbleUp(this.nodes.length - 1);
+    this._elements.push(element);
+    this._bubbleUp(this.elements.length - 1);
     return this;
   }
 
   /**
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   *
    * Remove and return the top element (smallest or largest element) from the heap.
    * @returns The top element or undefined if the heap is empty.
    */
   poll(): E | undefined {
-    if (this.nodes.length === 0) {
-      return undefined;
+    if (this.elements.length === 0) return;
+    const value = this.elements[0];
+    const last = this.elements.pop()!;
+    if (this.elements.length) {
+      this.elements[0] = last;
+      this._sinkDown(0, this.elements.length >> 1);
     }
-    if (this.nodes.length === 1) {
-      return this.nodes.pop() as E;
-    }
-
-    const topValue = this.nodes[0];
-    this.nodes[0] = this.nodes.pop() as E;
-    this.sinkDown(0);
-    return topValue;
+    return value;
   }
 
   /**
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   *
    * Remove and return the top element (smallest or largest element) from the heap.
    * @returns The top element or undefined if the heap is empty.
    */
@@ -101,10 +130,7 @@ export class Heap<E = any> {
    * @returns The top element or undefined if the heap is empty.
    */
   peek(): E | undefined {
-    if (this.nodes.length === 0) {
-      return undefined;
-    }
-    return this.nodes[0];
+    return this.elements[0];
   }
 
   /**
@@ -116,31 +142,86 @@ export class Heap<E = any> {
   }
 
   /**
-   * Reset the nodes of the heap. Make the nodes empty.
+   * Reset the elements of the heap. Make the elements empty.
    */
   clear() {
-    this._nodes = [];
+    this._elements = [];
   }
 
   /**
-   * Clear and add nodes of the heap
-   * @param nodes
+   * Time Complexity: O(n), where n is the number of elements in the elements array.
+   * Space Complexity: O(n)
    */
-  refill(nodes: E[]) {
-    this._nodes = nodes;
+
+  /**
+   * Time Complexity: O(n), where n is the number of elements in the elements array.
+   * Space Complexity: O(n)
+   *
+   * Clear and add elements of the heap
+   * @param elements
+   */
+  refill(elements: E[]) {
+    this._elements = elements;
     this.fix();
   }
 
   /**
+   * Time Complexity: O(n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   *
    * Use a comparison function to check whether a binary heap contains a specific element.
    * @param element - the element to check.
    * @returns Returns true if the specified element is contained; otherwise, returns false.
    */
   has(element: E): boolean {
-    return this.nodes.includes(element);
+    return this.elements.includes(element);
   }
 
   /**
+   * Time Complexity:  O(n). The worst-case  O(n), where n is the number of elements in the heap. This is because, in the worst case, the element to be deleted is located at the end of the heap (not the root), and after deletion, we may need to reorganize the elements by performing a sinkDown operation.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity:  O(n). The worst-case  O(n), where n is the number of elements in the heap. This is because, in the worst case, the element to be deleted is located at the end of the heap (not the root), and after deletion, we may need to reorganize the elements by performing a sinkDown operation.
+   * Space Complexity: O(1)
+   *
+   * The `delete` function removes an element from an array-like data structure, maintaining the order
+   * and structure of the remaining elements.
+   * @param {E} element - The `element` parameter represents the element that you want to delete from
+   * the array `this.elements`.
+   * @returns The `delete` function is returning a boolean value. It returns `true` if the element was
+   * successfully deleted from the array, and `false` if the element was not found in the array.
+   */
+  delete(element: E) {
+    const index = this.elements.indexOf(element);
+    if (index < 0) return false;
+    if (index === 0) {
+      this.pop();
+    } else if (index === this.elements.length - 1) {
+      this.elements.pop();
+    } else {
+      this.elements.splice(index, 1, this.elements.pop()!);
+      this._bubbleUp(index);
+      this._sinkDown(index, this.elements.length >> 1);
+    }
+    return true;
+  }
+
+  /**
+   * Time Complexity: O(n), where n is the number of elements in the heap.
+   * Space Complexity: O(h), where h is the height of the heap.
+   */
+
+  /**
+   * Time Complexity: O(n), where n is the number of elements in the heap.
+   * Space Complexity: O(h), where h is the height of the heap.
+   *
    * Depth-first search (DFS) method, different traversal orders can be selected。
    * @param order - Traverse order parameter: 'in' (in-order), 'pre' (pre-order) or 'post' (post-order).
    * @returns An array containing elements traversed in the specified order.
@@ -153,16 +234,16 @@ export class Heap<E = any> {
       if (index < this.size) {
         if (order === 'in') {
           dfsHelper(2 * index + 1);
-          result.push(this.nodes[index]);
+          result.push(this.elements[index]);
           dfsHelper(2 * index + 2);
         } else if (order === 'pre') {
-          result.push(this.nodes[index]);
+          result.push(this.elements[index]);
           dfsHelper(2 * index + 1);
           dfsHelper(2 * index + 2);
         } else if (order === 'post') {
           dfsHelper(2 * index + 1);
           dfsHelper(2 * index + 2);
-          result.push(this.nodes[index]);
+          result.push(this.elements[index]);
         }
       }
     };
@@ -173,28 +254,48 @@ export class Heap<E = any> {
   }
 
   /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   *
    * Convert the heap to an array.
    * @returns An array containing the elements of the heap.
    */
   toArray(): E[] {
-    return [...this.nodes];
-  }
-
-  getNodes(): E[] {
-    return this.nodes;
+    return [...this.elements];
   }
 
   /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   *
    * Clone the heap, creating a new heap with the same elements.
    * @returns A new Heap instance containing the same elements.
    */
   clone(): Heap<E> {
-    const clonedHeap = new Heap<E>({comparator: this.comparator});
-    clonedHeap._nodes = [...this.nodes];
+    const clonedHeap = new Heap<E>({ comparator: this.comparator });
+    clonedHeap._elements = [...this.elements];
     return clonedHeap;
   }
 
   /**
+   * Time Complexity: O(n log n)
+   * Space Complexity: O(n)
+   */
+
+  /**
+   * Time Complexity: O(n log n)
+   * Space Complexity: O(n)
+   *
    * Sort the elements in the heap and return them as an array.
    * @returns An array containing the elements sorted in ascending order.
    */
@@ -209,54 +310,75 @@ export class Heap<E = any> {
   }
 
   /**
+   * Time Complexity: O(log n)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
+   * Fix the entire heap to maintain heap properties.
+   */
+  fix() {
+    for (let i = Math.floor(this.size / 2); i >= 0; i--) this._sinkDown(i, this.elements.length >> 1);
+  }
+
+  /**
+   * Time Complexity: O(log n)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(log n)
+   * Space Complexity: O(1)
+   *
    * Float operation to maintain heap properties after adding an element.
    * @param index - The index of the newly added element.
    */
-  protected bubbleUp(index: number): void {
-    const element = this.nodes[index];
+  protected _bubbleUp(index: number) {
+    const element = this.elements[index];
     while (index > 0) {
-      const parentIndex = Math.floor((index - 1) / 2);
-      const parent = this.nodes[parentIndex];
-      if (this.comparator(element, parent) < 0) {
-        this.nodes[index] = parent;
-        this.nodes[parentIndex] = element;
-        index = parentIndex;
-      } else {
-        break;
-      }
+      const parent = (index - 1) >> 1;
+      const parentItem = this.elements[parent];
+      if (this._comparator(parentItem, element) <= 0) break;
+      this.elements[index] = parentItem;
+      index = parent;
     }
+    this.elements[index] = element;
   }
 
   /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(log n)
+   * Space Complexity: O(1)
+   *
    * Sinking operation to maintain heap properties after removing the top element.
    * @param index - The index from which to start sinking.
+   * @param halfLength
    */
-  protected sinkDown(index: number): void {
-    const leftChildIndex = 2 * index + 1;
-    const rightChildIndex = 2 * index + 2;
-    const length = this.nodes.length;
-    let targetIndex = index;
-
-    if (leftChildIndex < length && this.comparator(this.nodes[leftChildIndex], this.nodes[targetIndex]) < 0) {
-      targetIndex = leftChildIndex;
+  protected _sinkDown(index: number, halfLength: number) {
+    const element = this.elements[index];
+    while (index < halfLength) {
+      let left = index << 1 | 1;
+      const right = left + 1;
+      let minItem = this.elements[left];
+      if (
+        right < this.elements.length &&
+        this._comparator(minItem, this.elements[right]) > 0
+      ) {
+        left = right;
+        minItem = this.elements[right];
+      }
+      if (this._comparator(minItem, element) >= 0) break;
+      this.elements[index] = minItem;
+      index = left;
     }
-    if (rightChildIndex < length && this.comparator(this.nodes[rightChildIndex], this.nodes[targetIndex]) < 0) {
-      targetIndex = rightChildIndex;
-    }
-
-    if (targetIndex !== index) {
-      const temp = this.nodes[index];
-      this.nodes[index] = this.nodes[targetIndex];
-      this.nodes[targetIndex] = temp;
-      this.sinkDown(targetIndex);
-    }
-  }
-
-  /**
-   * Fix the entire heap to maintain heap properties.
-   */
-  protected fix() {
-    for (let i = Math.floor(this.size / 2); i >= 0; i--) this.sinkDown(i);
+    this.elements[index] = element;
   }
 }
 
@@ -321,7 +443,14 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * O(1) time operation.
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * Insert an element into the heap and maintain the heap properties.
    * @param element
    * @returns {FibonacciHeap<E>} FibonacciHeap<E> - The heap itself.
@@ -331,7 +460,14 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * O(1) time operation.
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * Insert an element into the heap and maintain the heap properties.
    * @param element
    * @returns {FibonacciHeap<E>} FibonacciHeap<E> - The heap itself.
@@ -351,7 +487,14 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * O(1) time operation.
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * Peek at the top element of the heap without removing it.
    * @returns The top element or undefined if the heap is empty.
    * @protected
@@ -361,15 +504,22 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * O(1) time operation.
+   * Time Complexity: O(n), where n is the number of elements in the linked list.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(n), where n is the number of elements in the linked list.
+   * Space Complexity: O(1)
+   *
    * Get the size (number of elements) of the heap.
    * @param {FibonacciHeapNode<E>} head - The head of the linked list.
    * @protected
-   * @returns FibonacciHeapNode<E>[] - An array containing the nodes of the linked list.
+   * @returns FibonacciHeapNode<E>[] - An array containing the elements of the linked list.
    */
   consumeLinkedList(head?: FibonacciHeapNode<E>): FibonacciHeapNode<E>[] {
-    const nodes: FibonacciHeapNode<E>[] = [];
-    if (!head) return nodes;
+    const elements: FibonacciHeapNode<E>[] = [];
+    if (!head) return elements;
 
     let node: FibonacciHeapNode<E> | undefined = head;
     let flag = false;
@@ -379,17 +529,18 @@ export class FibonacciHeap<E> {
       else if (node === head) flag = true;
 
       if (node) {
-        nodes.push(node);
+        elements.push(node);
         node = node.right;
       }
     }
 
-    return nodes;
+    return elements;
   }
 
   /**
-   * O(log n) time operation.
-   * Remove and return the top element (smallest or largest element) from the heap.
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * @param parent
    * @param node
    */
@@ -405,7 +556,14 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * O(log n) time operation.
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   *
    * Remove and return the top element (smallest or largest element) from the heap.
    * @returns The top element or undefined if the heap is empty.
    */
@@ -414,7 +572,14 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * O(log n) time operation.
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Space Complexity: O(1)
+   *
    * Remove and return the top element (smallest or largest element) from the heap.
    * @returns The top element or undefined if the heap is empty.
    */
@@ -423,8 +588,8 @@ export class FibonacciHeap<E> {
 
     const z = this.min!;
     if (z.child) {
-      const nodes = this.consumeLinkedList(z.child);
-      for (const node of nodes) {
+      const elements = this.consumeLinkedList(z.child);
+      for (const node of elements) {
         this.mergeWithRoot(node);
         node.parent = undefined;
       }
@@ -446,7 +611,14 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * O(log n) time operation.
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * merge two heaps. The heap that is merged will be cleared. The heap that is merged into will remain.
    * @param heapToMerge
    */
@@ -504,6 +676,14 @@ export class FibonacciHeap<E> {
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * Merge the given node with the root list.
    * @param node - The node to be merged.
    */
@@ -519,7 +699,14 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * O(log n) time operation.
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *.
    * Remove and return the top element (smallest or largest element) from the heap.
    * @param node - The node to be removed.
    * @protected
@@ -531,7 +718,14 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * O(log n) time operation.
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * Remove and return the top element (smallest or largest element) from the heap.
    * @param y
    * @param x
@@ -547,19 +741,26 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * O(log n) time operation.
+   * Time Complexity: O(n log n), where n is the number of elements in the heap.
+   * Space Complexity: O(n)
+   */
+
+  /**
+   * Time Complexity: O(n log n), where n is the number of elements in the heap.
+   * Space Complexity: O(n)
+   *
    * Remove and return the top element (smallest or largest element) from the heap.
    * @protected
    */
   protected consolidate(): void {
     const A: (FibonacciHeapNode<E> | undefined)[] = new Array(this.size);
-    const nodes = this.consumeLinkedList(this.root);
+    const elements = this.consumeLinkedList(this.root);
     let x: FibonacciHeapNode<E> | undefined,
       y: FibonacciHeapNode<E> | undefined,
       d: number,
       t: FibonacciHeapNode<E> | undefined;
 
-    for (const node of nodes) {
+    for (const node of elements) {
       x = node;
       d = x.degree;
 

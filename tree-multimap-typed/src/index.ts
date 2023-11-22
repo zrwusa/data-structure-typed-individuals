@@ -7,4 +7,4 @@
  */
 export * from './data-structures/binary-tree/tree-multimap';
 export * from './types/data-structures/binary-tree/tree-multimap';
-export * from './types/helpers';
+export * from './types/common';

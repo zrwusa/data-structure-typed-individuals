@@ -5,11 +5,11 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-import {uuidV4} from '../../utils';
-import {PriorityQueue} from '../priority-queue';
-import type {DijkstraResult, VertexKey} from '../../types';
-import {IGraph} from '../../interfaces';
-import {Queue} from '../queue';
+import { uuidV4 } from '../../utils';
+import { PriorityQueue } from '../priority-queue';
+import type { DijkstraResult, VertexKey } from '../../types';
+import { IGraph } from '../../interfaces';
+import { Queue } from '../queue';
 
 export abstract class AbstractVertex<V = any> {
   key: VertexKey;
@@ -64,8 +64,7 @@ export abstract class AbstractGraph<
   E = any,
   VO extends AbstractVertex<V> = AbstractVertex<V>,
   EO extends AbstractEdge<E> = AbstractEdge<E>
-> implements IGraph<V, E, VO, EO>
-{
+> implements IGraph<V, E, VO, EO> {
   protected _vertices: Map<VertexKey, VO> = new Map<VertexKey, VO>();
 
   get vertices(): Map<VertexKey, VO> {
@@ -105,6 +104,14 @@ export abstract class AbstractGraph<
   abstract getEndsOfEdge(edge: EO): [VO, VO] | null;
 
   /**
+   * Time Complexity: O(1) - Constant time for Map lookup.
+   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
+   */
+
+  /**
+   * Time Complexity: O(1) - Constant time for Map lookup.
+   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
+   *
    * The function "getVertex" returns the vertex with the specified ID or null if it doesn't exist.
    * @param {VertexKey} vertexKey - The `vertexKey` parameter is the identifier of the vertex that you want to retrieve from
    * the `_vertices` map.
@@ -116,6 +123,14 @@ export abstract class AbstractGraph<
   }
 
   /**
+   * Time Complexity: O(1) - Constant time for Map lookup.
+   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
+   */
+
+  /**
+   * Time Complexity: O(1) - Constant time for Map lookup.
+   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
+   *
    * The function checks if a vertex exists in a graph.
    * @param {VO | VertexKey} vertexOrKey - The parameter `vertexOrKey` can be either a vertex object (`VO`) or a vertex ID
    * (`VertexKey`).
@@ -129,6 +144,11 @@ export abstract class AbstractGraph<
 
   addVertex(key: VertexKey, value?: V): boolean;
 
+  /**
+   * Time Complexity: O(1) - Constant time for Map operations.
+   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
+   */
+
   addVertex(keyOrVertex: VertexKey | VO, value?: V): boolean {
     if (keyOrVertex instanceof AbstractVertex) {
       return this._addVertexOnly(keyOrVertex);
@@ -139,6 +159,14 @@ export abstract class AbstractGraph<
   }
 
   /**
+   * Time Complexity: O(1) - Constant time for Map operations.
+   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
+   */
+
+  /**
+   * Time Complexity: O(1) - Constant time for Map operations.
+   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
+   *
    * The `deleteVertex` function removes a vertex from a graph by its ID or by the vertex object itself.
    * @param {VO | VertexKey} vertexOrKey - The parameter `vertexOrKey` can be either a vertex object (`VO`) or a vertex ID
    * (`VertexKey`).
@@ -150,6 +178,14 @@ export abstract class AbstractGraph<
   }
 
   /**
+   * Time Complexity: O(K), where K is the number of vertices to be removed.
+   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
+   */
+
+  /**
+   * Time Complexity: O(K), where K is the number of vertices to be removed.
+   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
+   *
    * The function removes all vertices from a graph and returns a boolean indicating if any vertices were removed.
    * @param {VO[] | VertexKey[]} vertices - The `vertices` parameter can be either an array of vertices (`VO[]`) or an array
    * of vertex IDs (`VertexKey[]`).
@@ -165,6 +201,14 @@ export abstract class AbstractGraph<
   }
 
   /**
+   * Time Complexity: O(1) - Depends on the implementation in the concrete class.
+   * Space Complexity: O(1) - Depends on the implementation in the concrete class.
+   */
+
+  /**
+   * Time Complexity: O(1) - Depends on the implementation in the concrete class.
+   * Space Complexity: O(1) - Depends on the implementation in the concrete class.
+   *
    * The function checks if there is an edge between two vertices and returns a boolean value indicating the result.
    * @param {VertexKey | VO} v1 - The parameter v1 can be either a VertexKey or a VO. A VertexKey represents the unique
    * identifier of a vertex in a graph, while VO represents the type of the vertex object itself.
@@ -180,6 +224,11 @@ export abstract class AbstractGraph<
   addEdge(edge: EO): boolean;
 
   addEdge(src: VO | VertexKey, dest: VO | VertexKey, weight?: number, value?: E): boolean;
+
+  /**
+   * Time Complexity: O(1) - Depends on the implementation in the concrete class.
+   * Space Complexity: O(1) - Depends on the implementation in the concrete class.
+   */
 
   addEdge(srcOrEdge: VO | VertexKey | EO, dest?: VO | VertexKey, weight?: number, value?: E): boolean {
     if (srcOrEdge instanceof AbstractEdge) {
@@ -198,6 +247,14 @@ export abstract class AbstractGraph<
   }
 
   /**
+   * Time Complexity: O(1) - Constant time for Map and Edge operations.
+   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
+   */
+
+  /**
+   * Time Complexity: O(1) - Constant time for Map and Edge operations.
+   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
+   *
    * The function sets the weight of an edge between two vertices in a graph.
    * @param {VertexKey | VO} srcOrKey - The `srcOrKey` parameter can be either a `VertexKey` or a `VO` object. It represents
    * the source vertex of the edge.
@@ -219,6 +276,14 @@ export abstract class AbstractGraph<
   }
 
   /**
+   * Time Complexity: O(P), where P is the number of paths found (in the worst case, exploring all paths).
+   * Space Complexity: O(P) - Linear space, where P is the number of paths found.
+   */
+
+  /**
+   * Time Complexity: O(P), where P is the number of paths found (in the worst case, exploring all paths).
+   * Space Complexity: O(P) - Linear space, where P is the number of paths found.
+   *
    * The function `getAllPathsBetween` finds all paths between two vertices in a graph using depth-first search.
    * @param {VO | VertexKey} v1 - The parameter `v1` represents either a vertex object (`VO`) or a vertex ID (`VertexKey`).
    * It is the starting vertex for finding paths.
@@ -235,11 +300,11 @@ export abstract class AbstractGraph<
       return [];
     }
 
-    const stack: {vertex: VO; path: VO[]}[] = [];
-    stack.push({vertex: vertex1, path: [vertex1]});
+    const stack: { vertex: VO; path: VO[] }[] = [];
+    stack.push({ vertex: vertex1, path: [vertex1] });
 
     while (stack.length > 0) {
-      const {vertex, path} = stack.pop()!;
+      const { vertex, path } = stack.pop()!;
 
       if (vertex === vertex2) {
         paths.push(path);
@@ -250,7 +315,7 @@ export abstract class AbstractGraph<
       for (const neighbor of neighbors) {
         if (!path.includes(neighbor)) {
           const newPath = [...path, neighbor];
-          stack.push({vertex: neighbor, path: newPath});
+          stack.push({ vertex: neighbor, path: newPath });
         }
       }
     }
@@ -258,6 +323,14 @@ export abstract class AbstractGraph<
   }
 
   /**
+   * Time Complexity: O(L), where L is the length of the path.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(L), where L is the length of the path.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The function calculates the sum of weights along a given path.
    * @param {VO[]} path - An array of vertices (VO) representing a path in a graph.
    * @returns The function `getPathSumWeight` returns the sum of the weights of the edges in the given path.
@@ -271,6 +344,14 @@ export abstract class AbstractGraph<
   }
 
   /**
+   * Time Complexity: O(V + E) - Depends on the implementation (Dijkstra's algorithm).
+   * Space Complexity: O(V + E) - Depends on the implementation (Dijkstra's algorithm).
+   */
+
+  /**
+   * Time Complexity: O(V + E) - Depends on the implementation (Dijkstra's algorithm).
+   * Space Complexity: O(V + E) - Depends on the implementation (Dijkstra's algorithm).
+   *
    * The function `getMinCostBetween` calculates the minimum cost between two vertices in a graph, either based on edge
    * weights or using a breadth-first search algorithm.
    * @param {VO | VertexKey} v1 - The parameter `v1` represents the starting vertex or its ID.
@@ -330,6 +411,14 @@ export abstract class AbstractGraph<
   }
 
   /**
+   * Time Complexity: O(V + E) - Depends on the implementation (Dijkstra's algorithm or DFS).
+   * Space Complexity: O(V + E) - Depends on the implementation (Dijkstra's algorithm or DFS).
+   */
+
+  /**
+   * Time Complexity: O(V + E) - Depends on the implementation (Dijkstra's algorithm or DFS).
+   * Space Complexity: O(V + E) - Depends on the implementation (Dijkstra's algorithm or DFS).
+   *
    * The function `getMinPathBetween` returns the minimum path between two vertices in a graph, either based on weight or
    * using a breadth-first search algorithm.
    * @param {VO | VertexKey} v1 - The parameter `v1` represents the starting vertex of the path. It can be either a vertex
@@ -398,11 +487,18 @@ export abstract class AbstractGraph<
   }
 
   /**
-   * Dijkstra algorithm time: O(VE) space: O(VO + EO)
+   *  Dijkstra algorithm time: O(VE) space: O(VO + EO)
    * /
 
    /**
-   * Dijkstra algorithm time: O(VE) space: O(VO + EO)
+   * Time Complexity: O(V^2 + E) - Quadratic time in the worst case (no heap optimization).
+   * Space Complexity: O(V + E) - Depends on the implementation (Dijkstra's algorithm).
+   */
+
+  /**
+   * Time Complexity: O(V^2 + E) - Quadratic time in the worst case (no heap optimization).
+   * Space Complexity: O(V + E) - Depends on the implementation (Dijkstra's algorithm).
+   *
    * The function `dijkstraWithoutHeap` implements Dijkstra's algorithm to find the shortest path between two vertices in
    * a graph without using a heap data structure.
    * @param {VO | VertexKey} src - The source vertex from which to start the Dijkstra's algorithm. It can be either a
@@ -495,7 +591,7 @@ export abstract class AbstractGraph<
           if (genPaths) {
             getPaths(destVertex);
           }
-          return {distMap, preMap, seen, paths, minDist, minPath};
+          return { distMap, preMap, seen, paths, minDist, minPath };
         }
         const neighbors = this.getNeighbors(cur);
         for (const neighbor of neighbors) {
@@ -518,22 +614,22 @@ export abstract class AbstractGraph<
     }
 
     getMinDist &&
-      distMap.forEach((d, v) => {
-        if (v !== srcVertex) {
-          if (d < minDist) {
-            minDist = d;
-            if (genPaths) minDest = v;
-          }
+    distMap.forEach((d, v) => {
+      if (v !== srcVertex) {
+        if (d < minDist) {
+          minDist = d;
+          if (genPaths) minDest = v;
         }
-      });
+      }
+    });
 
     genPaths && getPaths(minDest);
 
-    return {distMap, preMap, seen, paths, minDist, minPath};
+    return { distMap, preMap, seen, paths, minDist, minPath };
   }
 
   /**
-   * Dijkstra algorithm time: O(logVE) space: O(VO + EO)
+   *  Dijkstra algorithm time: O(logVE) space: O(VO + EO)
    *
    * Dijkstra's algorithm only solves the single-source shortest path problem, while the Bellman-Ford algorithm and Floyd-Warshall algorithm can address shortest paths between all pairs of nodes.
    * Dijkstra's algorithm is suitable for graphs with non-negative edge weights, whereas the Bellman-Ford algorithm and Floyd-Warshall algorithm can handle negative-weight edges.
@@ -542,6 +638,14 @@ export abstract class AbstractGraph<
    * /
 
    /**
+   * Time Complexity: O((V + E) * log(V)) - Depends on the implementation (using a binary heap).
+   * Space Complexity: O(V + E) - Depends on the implementation (using a binary heap).
+   */
+
+  /**
+   * Time Complexity: O((V + E) * log(V)) - Depends on the implementation (using a binary heap).
+   * Space Complexity: O(V + E) - Depends on the implementation (using a binary heap).
+   *
    * Dijkstra's algorithm is used to find the shortest paths from a source node to all other nodes in a graph. Its basic idea is to repeatedly choose the node closest to the source node and update the distances of other nodes using this node as an intermediary. Dijkstra's algorithm requires that the edge weights in the graph are non-negative.
    * The `dijkstra` function implements Dijkstra's algorithm to find the shortest path between a source vertex and an
    * optional destination vertex, and optionally returns the minimum distance, the paths, and other information.
@@ -587,8 +691,8 @@ export abstract class AbstractGraph<
       if (vertexOrKey instanceof AbstractVertex) distMap.set(vertexOrKey, Infinity);
     }
 
-    const heap = new PriorityQueue<{key: number; value: VO}>({comparator: (a, b) => a.key - b.key});
-    heap.add({key: 0, value: srcVertex});
+    const heap = new PriorityQueue<{ key: number; value: VO }>({ comparator: (a, b) => a.key - b.key });
+    heap.add({ key: 0, value: srcVertex });
 
     distMap.set(srcVertex, 0);
     preMap.set(srcVertex, null);
@@ -629,7 +733,7 @@ export abstract class AbstractGraph<
             if (genPaths) {
               getPaths(destVertex);
             }
-            return {distMap, preMap, seen, paths, minDist, minPath};
+            return { distMap, preMap, seen, paths, minDist, minPath };
           }
           const neighbors = this.getNeighbors(cur);
           for (const neighbor of neighbors) {
@@ -639,7 +743,7 @@ export abstract class AbstractGraph<
                 const distSrcToNeighbor = distMap.get(neighbor);
                 if (distSrcToNeighbor) {
                   if (dist + weight < distSrcToNeighbor) {
-                    heap.add({key: dist + weight, value: neighbor});
+                    heap.add({ key: dist + weight, value: neighbor });
                     preMap.set(neighbor, cur);
                     distMap.set(neighbor, dist + weight);
                   }
@@ -666,16 +770,19 @@ export abstract class AbstractGraph<
       getPaths(minDest);
     }
 
-    return {distMap, preMap, seen, paths, minDist, minPath};
+    return { distMap, preMap, seen, paths, minDist, minPath };
   }
 
   /**
-   * BellmanFord time:O(VE) space:O(VO)
+   * Time Complexity: O(V * E) - Quadratic time in the worst case (Bellman-Ford algorithm).
+   * Space Complexity: O(V + E) - Depends on the implementation (Bellman-Ford algorithm).
    * one to rest pairs
    * /
 
    /**
-   * BellmanFord time:O(VE) space:O(VO)
+   * Time Complexity: O(V * E) - Quadratic time in the worst case (Bellman-Ford algorithm).
+   * Space Complexity: O(V + E) - Depends on the implementation (Bellman-Ford algorithm).
+   *
    * one to rest pairs
    * The Bellman-Ford algorithm is also used to find the shortest paths from a source node to all other nodes in a graph. Unlike Dijkstra's algorithm, it can handle edge weights that are negative. Its basic idea involves iterative relaxation of all edges for several rounds to gradually approximate the shortest paths. Due to its ability to handle negative-weight edges, the Bellman-Ford algorithm is more flexible in some scenarios.
    * The `bellmanFord` function implements the Bellman-Ford algorithm to find the shortest path from a source vertex to
@@ -703,7 +810,7 @@ export abstract class AbstractGraph<
     // TODO
     let hasNegativeCycle: boolean | undefined;
     if (scanNegativeCycle) hasNegativeCycle = false;
-    if (!srcVertex) return {hasNegativeCycle, distMap, preMap, paths, min, minPath};
+    if (!srcVertex) return { hasNegativeCycle, distMap, preMap, paths, min, minPath };
 
     const vertices = this._vertices;
     const numOfVertices = vertices.size;
@@ -775,7 +882,7 @@ export abstract class AbstractGraph<
       }
     }
 
-    return {hasNegativeCycle, distMap, preMap, paths, min, minPath};
+    return { hasNegativeCycle, distMap, preMap, paths, min, minPath };
   }
 
   /**
@@ -795,13 +902,18 @@ export abstract class AbstractGraph<
    */
 
   /**
-   * Floyd algorithm time: O(VO^3) space: O(VO^2), not support graph with negative weight cycle
+   * Time Complexity: O(V^3) - Cubic time (Floyd-Warshall algorithm).
+   * Space Complexity: O(V^2) - Quadratic space (Floyd-Warshall algorithm).
+   * Not support graph with negative weight cycle
    * all pairs
    * The Floyd-Warshall algorithm is used to find the shortest paths between all pairs of nodes in a graph. It employs dynamic programming to compute the shortest paths from any node to any other node. The Floyd-Warshall algorithm's advantage lies in its ability to handle graphs with negative-weight edges, and it can simultaneously compute shortest paths between any two nodes.
    * /
 
    /**
-   * Floyd algorithm time: O(VO^3) space: O(VO^2), not support graph with negative weight cycle
+   * Time Complexity: O(V^3) - Cubic time (Floyd-Warshall algorithm).
+   * Space Complexity: O(V^2) - Quadratic space (Floyd-Warshall algorithm).
+   *
+   * Not support graph with negative weight cycle
    * all pairs
    * The Floyd-Warshall algorithm is used to find the shortest paths between all pairs of nodes in a graph. It employs dynamic programming to compute the shortest paths from any node to any other node. The Floyd-Warshall algorithm's advantage lies in its ability to handle graphs with negative-weight edges, and it can simultaneously compute shortest paths between any two nodes.
    * The function implements the Floyd-Warshall algorithm to find the shortest path between all pairs of vertices in a
@@ -811,7 +923,7 @@ export abstract class AbstractGraph<
    * `predecessor` property is a 2D array of vertices (or `null`) representing the predecessor vertices in the shortest
    * path between vertices in the
    */
-  floydWarshall(): {costs: number[][]; predecessor: (VO | null)[][]} {
+  floydWarshall(): { costs: number[][]; predecessor: (VO | null)[][] } {
     const idAndVertices = [...this._vertices];
     const n = idAndVertices.length;
 
@@ -843,10 +955,12 @@ export abstract class AbstractGraph<
         }
       }
     }
-    return {costs, predecessor};
+    return { costs, predecessor };
   }
 
   /**
+   * Time Complexity: O(V + E) - Linear time (Tarjan's algorithm).
+   * Space Complexity: O(V) - Linear space (Tarjan's algorithm).
    * Tarjan is an algorithm based on dfs,which is used to solve the connectivity problem of graphs.
    * Tarjan can find cycles in directed or undirected graph
    * Tarjan can find the articulation points and bridges(critical edges) of undirected graphs in linear time,
@@ -855,6 +969,9 @@ export abstract class AbstractGraph<
    * /
 
    /**
+   * Time Complexity: O(V + E) - Linear time (Tarjan's algorithm).
+   * Space Complexity: O(V) - Linear space (Tarjan's algorithm).
+   *
    * Tarjan is an algorithm based on dfs,which is used to solve the connectivity problem of graphs.
    * Tarjan can find cycles in directed or undirected graph
    * Tarjan can find the articulation points and bridges(critical edges) of undirected graphs in linear time,
@@ -979,10 +1096,18 @@ export abstract class AbstractGraph<
       });
     }
 
-    return {dfnMap, lowMap, bridges, cutVertexes, SCCs, cycles};
+    return { dfnMap, lowMap, bridges, cutVertexes, SCCs, cycles };
   }
 
   /**
+   * Time Complexity: O(V + E) - Depends on the implementation (Tarjan's algorithm).
+   * Space Complexity: O(V) - Depends on the implementation (Tarjan's algorithm).
+   */
+
+  /**
+   * Time Complexity: O(V + E) - Depends on the implementation (Tarjan's algorithm).
+   * Space Complexity: O(V) - Depends on the implementation (Tarjan's algorithm).
+   *
    * The function returns a map that associates each vertex object with its corresponding depth-first
    * number.
    * @returns A Map object with keys of type VO and values of type number.

@@ -1,5 +1,3 @@
-import {HashFunction} from '../../types';
-
 /**
  * data-structure-typed
  *
@@ -7,179 +5,397 @@ import {HashFunction} from '../../types';
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-export class HashMap<K, V> {
+
+import { isWeakKey, rangeCheck } from '../../utils';
+import { HashMapLinkedNode, HashMapOptions } from '../../types';
+
+export class HashMap<K = any, V = any> {
+
+  protected _noObjMap: Record<string, HashMapLinkedNode<K, V | undefined>> = {};
+  protected _objMap = new WeakMap<object, HashMapLinkedNode<K, V | undefined>>();
+  protected _head: HashMapLinkedNode<K, V | undefined>;
+  protected _tail: HashMapLinkedNode<K, V | undefined>;
+  protected readonly _sentinel: HashMapLinkedNode<K, V | undefined>;
+  protected _hashFn: (key: K) => string;
+  protected _objHashFn: (key: K) => object;
+
   /**
-   * The constructor initializes the properties of a hash table, including the initial capacity, load factor, capacity
-   * multiplier, size, table array, and hash function.
-   * @param [initialCapacity=16] - The initial capacity is the initial size of the hash table. It determines the number of
-   * buckets or slots available for storing key-value pairs. The default value is 16.
-   * @param [loadFactor=0.75] - The load factor is a measure of how full the hash table can be before it is resized. It is
-   * a value between 0 and 1, where 1 means the hash table is completely full and 0 means it is completely empty. When the
-   * load factor is reached, the hash table will
-   * @param [hashFn] - The `hashFn` parameter is an optional parameter that represents the hash function used to calculate
-   * the index of a key in the hash table. If a custom hash function is not provided, a default hash function is used. The
-   * default hash function converts the key to a string, calculates the sum of the
+   * The constructor initializes a HashMapLinkedNode with an optional iterable of key-value pairs.
+   * @param options - The `options` parameter is an object that contains the `elements` property. The
+   * `elements` property is an iterable that contains key-value pairs represented as arrays `[K, V]`.
    */
-  constructor(initialCapacity = 16, loadFactor = 0.75, hashFn?: HashFunction<K>) {
-    this._initialCapacity = initialCapacity;
-    this._loadFactor = loadFactor;
-    this._capacityMultiplier = 2;
-    this._size = 0;
-    this._table = new Array(initialCapacity);
-    this._hashFn =
-      hashFn ||
-      ((key: K) => {
-        const strKey = String(key);
-        let hash = 0;
-        for (let i = 0; i < strKey.length; i++) {
-          hash += strKey.charCodeAt(i);
-        }
-        return hash % this.table.length;
-      });
+  constructor(options: HashMapOptions<K, V> = {
+    elements: [],
+    hashFn: (key: K) => String(key),
+    objHashFn: (key: K) => (<object>key)
+  }) {
+    this._sentinel = <HashMapLinkedNode<K, V>>{};
+    this._sentinel.prev = this._sentinel.next = this._head = this._tail = this._sentinel;
+
+    const { elements, hashFn, objHashFn } = options;
+    this._hashFn = hashFn;
+    this._objHashFn = objHashFn;
+    if (elements) {
+      for (const el of elements) {
+        this.set(el[0], el[1]);
+      }
+    }
+
   }
 
-  protected _initialCapacity: number;
+  protected _size = 0;
 
-  get initialCapacity(): number {
-    return this._initialCapacity;
-  }
-
-  protected _loadFactor: number;
-
-  get loadFactor(): number {
-    return this._loadFactor;
-  }
-
-  protected _capacityMultiplier: number;
-
-  get capacityMultiplier(): number {
-    return this._capacityMultiplier;
-  }
-
-  protected _size: number;
-
-  get size(): number {
+  get size() {
     return this._size;
   }
 
-  protected _table: Array<Array<[K, V]>>;
-
-  get table(): Array<Array<[K, V]>> {
-    return this._table;
-  }
-
-  protected _hashFn: HashFunction<K>;
-
-  get hashFn(): HashFunction<K> {
-    return this._hashFn;
-  }
-
-  set(key: K, value: V): void {
-    const loadFactor = this.size / this.table.length;
-    if (loadFactor >= this.loadFactor) {
-      this.resizeTable(this.table.length * this.capacityMultiplier);
-    }
-
-    const index = this._hash(key);
-    if (!this.table[index]) {
-      this.table[index] = [];
-    }
-
-    // Check if the key already exists in the bucket
-    for (let i = 0; i < this.table[index].length; i++) {
-      if (this.table[index][i][0] === key) {
-        this.table[index][i][1] = value;
-        return;
-      }
-    }
-
-    this.table[index].push([key, value]);
-    this._size++;
-  }
-
-  get(key: K): V | undefined {
-    const index = this._hash(key);
-    if (!this.table[index]) {
-      return undefined;
-    }
-
-    for (const [k, v] of this.table[index]) {
-      if (k === key) {
-        return v;
-      }
-    }
-
-    return undefined;
-  }
-
-  delete(key: K): void {
-    const index = this._hash(key);
-    if (!this.table[index]) {
-      return;
-    }
-
-    for (let i = 0; i < this.table[index].length; i++) {
-      if (this.table[index][i][0] === key) {
-        this.table[index].splice(i, 1);
-        this._size--;
-
-        // Check if the table needs to be resized down
-        const loadFactor = this.size / this.table.length;
-        if (loadFactor < this.loadFactor / this.capacityMultiplier) {
-          this.resizeTable(this.table.length / this.capacityMultiplier);
-        }
-        return;
-      }
-    }
-  }
-
-  *entries(): IterableIterator<[K, V]> {
-    for (const bucket of this.table) {
-      if (bucket) {
-        for (const [key, value] of bucket) {
-          yield [key, value];
-        }
-      }
-    }
-  }
-
-  [Symbol.iterator](): IterableIterator<[K, V]> {
-    return this.entries();
-  }
-
-  clear(): void {
-    this._size = 0;
-    this._table = new Array(this.initialCapacity);
-  }
-
-  isEmpty(): boolean {
-    return this.size === 0;
-  }
-
-  protected _hash(key: K): number {
-    return this._hashFn(key);
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The function returns the key-value pair at the front of a data structure.
+   * @returns The front element of the data structure, represented as a tuple with a key (K) and a
+   * value (V).
+   */
+  get first() {
+    if (this._size === 0) return;
+    return <[K, V]>[this._head.key, this._head.value];
   }
 
   /**
-   * The `resizeTable` function resizes the table used in a hash map by creating a new table with a specified capacity and
-   * rehashing the key-value pairs from the old table into the new table.
-   * @param {number} newCapacity - The newCapacity parameter is the desired capacity for the resized table. It represents
-   * the number of buckets that the new table should have.
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The function returns the key-value pair at the end of a data structure.
+   * @returns The method is returning an array containing the key-value pair of the tail element in the
+   * data structure.
    */
-  protected resizeTable(newCapacity: number): void {
-    const newTable = new Array(newCapacity);
-    for (const bucket of this._table) {
-      // Note that this is this._table
-      if (bucket) {
-        for (const [key, value] of bucket) {
-          const newIndex = this._hash(key) % newCapacity;
-          if (!newTable[newIndex]) {
-            newTable[newIndex] = [];
-          }
-          newTable[newIndex].push([key, value]);
-        }
+  get last() {
+    if (this._size === 0) return;
+    return <[K, V]>[this._tail.key, this._tail.value];
+  }
+
+  /**
+   * The `begin()` function in TypeScript iterates over a linked list and yields key-value pairs.
+   */
+  * begin() {
+    let node = this._head;
+    while (node !== this._sentinel) {
+      yield [node.key, node.value];
+      node = node.next;
+    }
+  }
+
+  /**
+   * The function `reverseBegin()` iterates over a linked list in reverse order, yielding each node's
+   * key and value.
+   */
+  * reverseBegin() {
+    let node = this._tail;
+    while (node !== this._sentinel) {
+      yield [node.key, node.value];
+      node = node.prev;
+    }
+  }
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The `set` function adds a new key-value pair to a data structure, either using an object key or a
+   * string key.
+   * @param {K} key - The `key` parameter is the key to be set in the data structure. It can be of any
+   * type, but typically it is a string or symbol.
+   * @param {V} [value] - The `value` parameter is an optional parameter of type `V`. It represents the
+   * value associated with the key being set in the data structure.
+   * @returns the size of the data structure after the key-value pair has been set.
+   */
+  set(key: K, value?: V) {
+    let node;
+
+    if (isWeakKey(key)) {
+      const hash = this._objHashFn(key);
+      node = this._objMap.get(hash);
+
+      if (node) {
+        // If the node already exists, update its value
+        node.value = value;
+      } else {
+        // Create new node
+        node = { key: <K>hash, value, prev: this._tail, next: this._sentinel };
+
+        // Add new nodes to _objMap and linked list
+        this._objMap.set(hash, node);
+      }
+    } else {
+      const hash = this._hashFn(key);
+      // Non-object keys are handled in the same way as the original implementation
+      node = this._noObjMap[hash];
+      if (node) {
+        node.value = value;
+      } else {
+        this._noObjMap[hash] = node = {
+          key,
+          value,
+          prev: this._tail,
+          next: this._sentinel
+        };
       }
     }
-    this._table = newTable; // Again, here is this._table
+
+    if (this._size === 0) {
+      this._head = node;
+      this._sentinel.next = node;
+    } else {
+      this._tail.next = node;
+    }
+
+    this._tail = node;
+    this._sentinel.prev = node;
+    this._size++;
+
+    return this._size;
+  }
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The function `get` retrieves the value associated with a given key from a map, either by using the
+   * key directly or by using an index stored in the key object.
+   * @param {K} key - The `key` parameter is the key used to retrieve a value from the map. It can be
+   * of any type, but typically it is a string or symbol.
+   * @returns The value associated with the given key is being returned. If the key is an object key,
+   * the value is retrieved from the `_nodes` array using the index stored in the `OBJ_KEY_INDEX`
+   * property of the key. If the key is a string key, the value is retrieved from the `_noObjMap` object
+   * using the key itself. If the key is not found, `undefined` is
+   */
+  get(key: K): V | undefined {
+    if (isWeakKey(key)) {
+      const hash = this._objHashFn(key);
+      const node = this._objMap.get(hash);
+      return node ? node.value : undefined;
+    } else {
+      const hash = this._hashFn(key);
+      const node = this._noObjMap[hash];
+      return node ? node.value : undefined;
+    }
+  }
+
+  /**
+   * Time Complexity: O(n), where n is the index.
+   * Space Complexity: O(1)
+   *
+   * The function `getAt` retrieves the key-value pair at a specified index in a linked list.
+   * @param {number} index - The index parameter is a number that represents the position of the
+   * element we want to retrieve from the data structure.
+   * @returns The method `getAt(index: number)` is returning an array containing the key-value pair at
+   * the specified index in the data structure. The key-value pair is represented as a tuple `[K, V]`,
+   * where `K` is the key and `V` is the value.
+   */
+  getAt(index: number) {
+    rangeCheck(index, 0, this._size - 1);
+    let node = this._head;
+    while (index--) {
+      node = node.next;
+    }
+    return <[K, V]>[node.key, node.value];
+  }
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The `delete` function removes a key-value pair from a map-like data structure.
+   * @param {K} key - The `key` parameter is the key that you want to delete from the data structure.
+   * It can be of any type, but typically it is a string or an object.
+   * @returns a boolean value. It returns `true` if the deletion was successful, and `false` if the key
+   * was not found.
+   */
+  delete(key: K) {
+    let node;
+
+    if (isWeakKey(key)) {
+      const hash = this._objHashFn(key);
+      // Get nodes from WeakMap
+      node = this._objMap.get(hash);
+
+      if (!node) {
+        return false; // If the node does not exist, return false
+      }
+
+      // Remove nodes from WeakMap
+      this._objMap.delete(hash);
+    } else {
+      const hash = this._hashFn(key);
+      // Get nodes from noObjMap
+      node = this._noObjMap[hash];
+
+      if (!node) {
+        return false; // If the node does not exist, return false
+      }
+
+      // Remove nodes from orgMap
+      delete this._noObjMap[hash];
+    }
+
+    // Remove node from doubly linked list
+    this._deleteNode(node);
+    return true;
+  }
+
+  /**
+   * Time Complexity: O(n), where n is the index.
+   * Space Complexity: O(1)
+   *
+   * The `deleteAt` function deletes a node at a specified index in a linked list.
+   * @param {number} index - The index parameter represents the position at which the node should be
+   * deleted in the linked list.
+   * @returns The size of the list after deleting the element at the specified index.
+   */
+  deleteAt(index: number) {
+    rangeCheck(index, 0, this._size - 1);
+    let node = this._head;
+    while (index--) {
+      node = node.next;
+    }
+    this._deleteNode(node);
+    return this._size;
+  }
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The function checks if a data structure is empty by comparing its size to zero.
+   * @returns The method is returning a boolean value indicating whether the size of the object is 0 or
+   * not.
+   */
+  isEmpty() {
+    return this._size === 0;
+  }
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The `clear` function clears all the elements in a data structure and resets its properties.
+   */
+  clear() {
+    this._noObjMap = {};
+    this._size = 0;
+    this._head = this._tail = this._sentinel.prev = this._sentinel.next = this._sentinel;
+  }
+
+  /**
+   * Time Complexity: O(n), where n is the number of elements in the HashMap.
+   * Space Complexity: O(1)
+   *
+   * The `forEach` function iterates over each element in a HashMap and executes a callback function on
+   * each element.
+   * @param callback - The callback parameter is a function that will be called for each element in the
+   * HashMap. It takes three arguments:
+   */
+  forEach(callback: (element: [K, V], index: number, hashMap: HashMap<K, V>) => void) {
+    let index = 0;
+    let node = this._head;
+    while (node !== this._sentinel) {
+      callback(<[K, V]>[node.key, node.value], index++, this);
+      node = node.next;
+    }
+  }
+
+  /**
+   * The `filter` function takes a predicate function and returns a new HashMap containing only the
+   * key-value pairs that satisfy the predicate.
+   * @param predicate - The `predicate` parameter is a function that takes two arguments: `element` and
+   * `map`.
+   * @returns a new HashMap object that contains the key-value pairs from the original HashMap that
+   * satisfy the given predicate function.
+   */
+  filter(predicate: (element: [K, V], map: HashMap<K, V>) => boolean): HashMap<K, V> {
+    const filteredMap = new HashMap<K, V>();
+    for (const [key, value] of this) {
+      if (predicate([key, value], this)) {
+        filteredMap.set(key, value);
+      }
+    }
+    return filteredMap;
+  }
+
+  /**
+   * The `map` function takes a callback function and returns a new HashMap with the values transformed
+   * by the callback.
+   * @param callback - The `callback` parameter is a function that takes two arguments: `element` and
+   * `map`.
+   * @returns a new HashMap object with the values mapped according to the provided callback function.
+   */
+  map<NV>(callback: (element: [K, V], map: HashMap<K, V>) => NV): HashMap<K, NV> {
+    const mappedMap = new HashMap<K, NV>();
+    for (const [key, value] of this) {
+      const newValue = callback([key, value], this);
+      mappedMap.set(key, newValue);
+    }
+    return mappedMap;
+  }
+
+  /**
+   * The `reduce` function iterates over the elements of a HashMap and applies a callback function to
+   * each element, accumulating a single value.
+   * @param callback - The callback parameter is a function that takes three arguments: accumulator,
+   * element, and map. It is called for each element in the HashMap and is used to accumulate a single
+   * result.
+   * @param {A} initialValue - The `initialValue` parameter is the initial value of the accumulator. It
+   * is the value that will be passed as the first argument to the `callback` function when reducing
+   * the elements of the map.
+   * @returns The `reduce` function is returning the final value of the accumulator after iterating
+   * over all the elements in the HashMap and applying the callback function to each element.
+   */
+  reduce<A>(callback: (accumulator: A, element: [K, V], map: HashMap<K, V>) => A, initialValue: A): A {
+    let accumulator = initialValue;
+    for (const element of this) {
+      accumulator = callback(accumulator, element, this);
+    }
+    return accumulator;
+  }
+
+  /**
+   * Time Complexity: O(n), where n is the number of elements in the HashMap.
+   * Space Complexity: O(1)
+   *
+   * The above function is an iterator that yields key-value pairs from a linked list.
+   */
+  * [Symbol.iterator]() {
+    let node = this._head;
+    while (node !== this._sentinel) {
+      yield <[K, V]>[node.key, node.value];
+      node = node.next;
+    }
+  }
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The `_deleteNode` function removes a node from a doubly linked list and updates the head and tail
+   * pointers if necessary.
+   * @param node - The `node` parameter is an instance of the `HashMapLinkedNode` class, which
+   * represents a node in a linked list. It contains a key-value pair and references to the previous
+   * and next nodes in the list.
+   */
+  protected _deleteNode(node: HashMapLinkedNode<K, V | undefined>) {
+    const { prev, next } = node;
+    prev.next = next;
+    next.prev = prev;
+
+    if (node === this._head) {
+      this._head = next;
+    }
+
+    if (node === this._tail) {
+      this._tail = prev;
+    }
+
+    this._size -= 1;
   }
 }

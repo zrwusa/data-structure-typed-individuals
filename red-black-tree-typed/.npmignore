@@ -1,0 +1,9 @@
+.editorconfig
+.dependency-cruiser.js
+package-lock.json
+rename-clear-files.sh
+
+/.idea
+/notes
+/backup
+

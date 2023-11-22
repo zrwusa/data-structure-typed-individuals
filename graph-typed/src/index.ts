@@ -21,4 +21,4 @@
 // } from 'data-structure-typed';
 export * from './data-structures/graph';
 export * from './types/data-structures/graph';
-export * from './types/helpers';
+export * from './types/common';

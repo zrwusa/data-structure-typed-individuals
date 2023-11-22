@@ -8,4 +8,4 @@
 // export { Stack } from 'data-structure-typed';
 export * from './data-structures/stack';
 export * from './types/data-structures/stack';
-export * from './types/helpers';
+export * from './types/common';

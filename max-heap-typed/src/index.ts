@@ -8,4 +8,4 @@
 // export { MaxHeap } from 'data-structure-typed';
 export * from './data-structures/heap/max-heap';
 export * from './types/data-structures/heap/max-heap';
-export * from './types/helpers';
+export * from './types/common';

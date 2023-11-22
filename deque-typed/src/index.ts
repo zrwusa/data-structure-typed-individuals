@@ -8,4 +8,4 @@
 // export { Deque, ObjectDeque, ArrayDeque } from 'data-structure-typed';
 export * from './data-structures/queue/deque';
 export * from './types/data-structures/queue/deque';
-export * from './types/helpers';
+export * from './types/common';

@@ -5,10 +5,10 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-import {arrayRemove} from '../../utils';
-import {AbstractEdge, AbstractGraph, AbstractVertex} from './abstract-graph';
-import type {VertexKey} from '../../types';
-import {IGraph} from '../../interfaces';
+import { arrayRemove } from '../../utils';
+import { AbstractEdge, AbstractGraph, AbstractVertex } from './abstract-graph';
+import type { VertexKey } from '../../types';
+import { IGraph } from '../../interfaces';
 
 export class UndirectedVertex<V = any> extends AbstractVertex<V> {
   /**
@@ -43,14 +43,13 @@ export class UndirectedEdge<E = number> extends AbstractEdge<E> {
 }
 
 export class UndirectedGraph<
-    V = any,
-    E = any,
-    VO extends UndirectedVertex<V> = UndirectedVertex<V>,
-    EO extends UndirectedEdge<E> = UndirectedEdge<E>
-  >
+  V = any,
+  E = any,
+  VO extends UndirectedVertex<V> = UndirectedVertex<V>,
+  EO extends UndirectedEdge<E> = UndirectedEdge<E>
+>
   extends AbstractGraph<V, E, VO, EO>
-  implements IGraph<V, E, VO, EO>
-{
+  implements IGraph<V, E, VO, EO> {
   /**
    * The constructor initializes a new Map object to store edges.
    */
@@ -93,6 +92,14 @@ export class UndirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|E|), where |E| is the number of edges incident to the given vertex.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(|E|), where |E| is the number of edges incident to the given vertex.
+   * Space Complexity: O(1)
+   *
    * The function `getEdge` returns the first edge that connects two vertices, or null if no such edge exists.
    * @param {VO | VertexKey | null} v1 - The parameter `v1` represents a vertex or vertex ID. It can be of type `VO` (vertex
    * object), `null`, or `VertexKey` (a string or number representing the ID of a vertex).
@@ -116,6 +123,14 @@ export class UndirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|E|), where |E| is the number of edges incident to the given vertex.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(|E|), where |E| is the number of edges incident to the given vertex.
+   * Space Complexity: O(1)
+   *
    * The function removes an edge between two vertices in a graph and returns the removed edge.
    * @param {VO | VertexKey} v1 - The parameter `v1` represents either a vertex object (`VO`) or a vertex ID (`VertexKey`).
    * @param {VO | VertexKey} v2 - VO | VertexKey - This parameter can be either a vertex object (VO) or a vertex ID
@@ -143,6 +158,14 @@ export class UndirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|E|), where |E| is the number of edges incident to the given vertex.
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(|E|), where |E| is the number of edges incident to the given vertex.
+   * Space Complexity: O(1)
+   *
    * The deleteEdge function removes an edge between two vertices in a graph.
    * @param {EO} edge - The parameter "edge" is of type EO, which represents an edge in a graph.
    * @returns The method is returning either the removed edge (of type EO) or null if the edge was not found.
@@ -152,6 +175,14 @@ export class UndirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function `degreeOf` returns the degree of a vertex in a graph, which is the number of edges connected to that
    * vertex.
    * @param {VertexKey | VO} vertexOrKey - The parameter `vertexOrKey` can be either a `VertexKey` or a `VO`.
@@ -168,6 +199,14 @@ export class UndirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function returns the edges of a given vertex or vertex ID.
    * @param {VertexKey | VO} vertexOrKey - The parameter `vertexOrKey` can be either a `VertexKey` or a `VO`. A `VertexKey` is a
    * unique identifier for a vertex in a graph, while `VO` represents the type of the vertex.
@@ -183,6 +222,14 @@ export class UndirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|V| + |E|), where |V| is the number of vertices and |E| is the number of edges.
+   * Space Complexity: O(|E|)
+   */
+
+  /**
+   * Time Complexity: O(|V| + |E|), where |V| is the number of vertices and |E| is the number of edges.
+   * Space Complexity: O(|E|)
+   *
    * The function "edgeSet" returns an array of unique edges from a set of edges.
    * @returns The method `edgeSet()` returns an array of type `EO[]`.
    */
@@ -197,6 +244,14 @@ export class UndirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|V| + |E|), where |V| is the number of vertices and |E| is the number of edges.
+   * Space Complexity: O(|E|)
+   */
+
+  /**
+   * Time Complexity: O(|V| + |E|), where |V| is the number of vertices and |E| is the number of edges.
+   * Space Complexity: O(|E|)
+   *
    * The function "getNeighbors" returns an array of neighboring vertices for a given vertex or vertex ID.
    * @param {VO | VertexKey} vertexOrKey - The parameter `vertexOrKey` can be either a vertex object (`VO`) or a vertex ID
    * (`VertexKey`).
@@ -218,6 +273,14 @@ export class UndirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function "getEndsOfEdge" returns the vertices at the ends of an edge if the edge exists in the graph, otherwise
    * it returns null.
    * @param {EO} edge - The parameter "edge" is of type EO, which represents an edge in a graph.
@@ -238,6 +301,14 @@ export class UndirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function adds an edge to the graph by updating the adjacency list with the vertices of the edge.
    * @param {EO} edge - The parameter "edge" is of type EO, which represents an edge in a graph.
    * @returns a boolean value.

@@ -8,4 +8,4 @@
 // export { UndirectedVertex, UndirectedEdge, UndirectedGraph } from 'data-structure-typed';
 export * from './data-structures/graph/undirected-graph';
 export * from './types/data-structures/graph/undirected-graph';
-export * from './types/helpers';
+export * from './types/common';

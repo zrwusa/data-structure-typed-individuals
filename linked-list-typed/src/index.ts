@@ -8,4 +8,4 @@
 // export { DoublyLinkedListNode, DoublyLinkedList, SinglyLinkedListNode, SinglyLinkedList } from 'data-structure-typed';
 export * from './data-structures/linked-list';
 export * from './types/data-structures/linked-list';
-export * from './types/helpers';
+export * from './types/common';

@@ -8,4 +8,4 @@
 // export { PriorityQueue, MaxPriorityQueue, MinPriorityQueue } from 'data-structure-typed';
 export * from './data-structures/priority-queue';
 export * from './types/data-structures/priority-queue';
-export * from './types/helpers';
+export * from './types/common';

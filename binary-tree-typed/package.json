@@ -1,6 +1,6 @@
 {
   "name": "binary-tree-typed",
-  "version": "1.42.5",
+  "version": "1.47.3",
   "description": "Binary Tree. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zrwusa/data-structure-typed"
+    "url": "git+https://github.com/zrwusa/data-structure-typed.git"
   },
   "keywords": [
     "binary tree",
@@ -140,6 +140,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.42.5"
+    "data-structure-typed": "^1.47.3"
   }
 }

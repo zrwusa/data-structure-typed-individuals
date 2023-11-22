@@ -1251,10 +1251,10 @@ cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-data-structure-typed@^1.42.5:
-  version "1.42.5"
-  resolved "https://registry.npmjs.org/data-structure-typed/-/data-structure-typed-1.42.5.tgz"
-  integrity sha512-LJ+j4yOSgOUq5N0bv3lzxJp31nNz65aT9CTy2EuuRlBzoRXL4DAuE1LkXyPSupEo4rDXs9lDZh+Tb4uQTPClKA==
+data-structure-typed@^1.47.3:
+  version "1.47.3"
+  resolved "https://registry.npmjs.org/data-structure-typed/-/data-structure-typed-1.47.3.tgz"
+  integrity sha512-TYSzY+FDmdicJkPyCVqo/58wpDdC/HGcSoPDhEjkQlWohzgo+pCk+HSCK1ZO6ux/LlVckUUlNwa9kWZ6wMTsnA==
 
 debug@^3.2.7:
   version "3.2.7"

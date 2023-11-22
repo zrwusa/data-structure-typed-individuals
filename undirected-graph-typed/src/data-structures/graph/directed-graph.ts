@@ -5,10 +5,10 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-import {arrayRemove} from '../../utils';
-import {AbstractEdge, AbstractGraph, AbstractVertex} from './abstract-graph';
-import type {TopologicalStatus, VertexKey} from '../../types';
-import {IGraph} from '../../interfaces';
+import { arrayRemove } from '../../utils';
+import { AbstractEdge, AbstractGraph, AbstractVertex } from './abstract-graph';
+import type { TopologicalStatus, VertexKey } from '../../types';
+import { IGraph } from '../../interfaces';
 
 export class DirectedVertex<V = any> extends AbstractVertex<V> {
   /**
@@ -46,14 +46,13 @@ export class DirectedEdge<E = any> extends AbstractEdge<E> {
 }
 
 export class DirectedGraph<
-    V = any,
-    E = any,
-    VO extends DirectedVertex<V> = DirectedVertex<V>,
-    EO extends DirectedEdge<E> = DirectedEdge<E>
-  >
+  V = any,
+  E = any,
+  VO extends DirectedVertex<V> = DirectedVertex<V>,
+  EO extends DirectedEdge<E> = DirectedEdge<E>
+>
   extends AbstractGraph<V, E, VO, EO>
-  implements IGraph<V, E, VO, EO>
-{
+  implements IGraph<V, E, VO, EO> {
   /**
    * The constructor function initializes an instance of a class.
    */
@@ -111,6 +110,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|V|) where |V| is the number of vertices
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(|V|) where |V| is the number of vertices
+   * Space Complexity: O(1)
+   *
    * The `getEdge` function retrieves an edge between two vertices based on their source and destination IDs.
    * @param {VO | VertexKey | null} srcOrKey - The source vertex or its ID. It can be either a vertex object or a vertex ID.
    * @param {VO | VertexKey | null} destOrKey - The `destOrKey` parameter in the `getEdge` function represents the
@@ -137,6 +144,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(1)
+   *
    * The function removes an edge between two vertices in a graph and returns the removed edge.
    * @param {VO | VertexKey} srcOrKey - The source vertex or its ID.
    * @param {VO | VertexKey} destOrKey - The `destOrKey` parameter represents the destination vertex or its ID.
@@ -163,6 +178,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(1)
+   *
    * The function removes an edge from a graph and returns the removed edge, or null if the edge was not found.
    * @param {EO} edge - The `edge` parameter is an object that represents an edge in a graph. It has two properties: `src`
    * and `dest`, which represent the source and destination vertices of the edge, respectively.
@@ -188,6 +211,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(1)
+   *
    * The function removes edges between two vertices and returns the removed edges.
    * @param {VertexKey | VO} v1 - The parameter `v1` can be either a `VertexKey` or a `VO`. A `VertexKey` represents the
    * unique identifier of a vertex in a graph, while `VO` represents the actual vertex object.
@@ -210,6 +241,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function `incomingEdgesOf` returns an array of incoming edges for a given vertex or vertex ID.
    * @param {VO | VertexKey} vertexOrKey - The parameter `vertexOrKey` can be either a vertex object (`VO`) or a vertex ID
    * (`VertexKey`).
@@ -224,6 +263,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function `outgoingEdgesOf` returns an array of outgoing edges from a given vertex or vertex ID.
    * @param {VO | VertexKey} vertexOrKey - The parameter `vertexOrKey` can accept either a vertex object (`VO`) or a vertex ID
    * (`VertexKey`).
@@ -238,6 +285,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function "degreeOf" returns the total degree of a vertex, which is the sum of its out-degree and in-degree.
    * @param {VertexKey | VO} vertexOrKey - The parameter `vertexOrKey` can be either a `VertexKey` or a `VO`.
    * @returns The sum of the out-degree and in-degree of the specified vertex or vertex ID.
@@ -247,6 +302,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function "inDegreeOf" returns the number of incoming edges for a given vertex.
    * @param {VertexKey | VO} vertexOrKey - The parameter `vertexOrKey` can be either a `VertexKey` or a `VO`.
    * @returns The number of incoming edges of the specified vertex or vertex ID.
@@ -256,6 +319,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function `outDegreeOf` returns the number of outgoing edges from a given vertex.
    * @param {VertexKey | VO} vertexOrKey - The parameter `vertexOrKey` can be either a `VertexKey` or a `VO`.
    * @returns The number of outgoing edges from the specified vertex or vertex ID.
@@ -265,6 +336,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function "edgesOf" returns an array of both outgoing and incoming edges of a given vertex or vertex ID.
    * @param {VertexKey | VO} vertexOrKey - The parameter `vertexOrKey` can be either a `VertexKey` or a `VO`.
    * @returns The function `edgesOf` returns an array of edges.
@@ -274,6 +353,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function "getEdgeSrc" returns the source vertex of an edge, or null if the edge does not exist.
    * @param {EO} e - The parameter "e" is of type EO, which represents an edge in a graph.
    * @returns either a vertex object (VO) or null.
@@ -283,6 +370,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function "getEdgeDest" returns the destination vertex of an edge.
    * @param {EO} e - The parameter "e" is of type "EO", which represents an edge in a graph.
    * @returns either a vertex object of type VO or null.
@@ -292,6 +387,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(1)
+   *
    * The function `getDestinations` returns an array of destination vertices connected to a given vertex.
    * @param {VO | VertexKey | null} vertex - The `vertex` parameter represents the starting vertex from which we want to
    * find the destinations. It can be either a `VO` object, a `VertexKey` value, or `null`.
@@ -313,6 +416,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|V| + |E|) where |V| is the number of vertices and |E| is the number of edges
+   * Space Complexity: O(|V|)
+   */
+
+  /**
+   * Time Complexity: O(|V| + |E|) where |V| is the number of vertices and |E| is the number of edges
+   * Space Complexity: O(|V|)
+   *
    * The `topologicalSort` function performs a topological sort on a graph and returns an array of vertices or vertex IDs
    * in the sorted order, or null if the graph contains a cycle.
    * @param {'vertex' | 'key'} [propertyName] - The `propertyName` parameter is an optional parameter that specifies the
@@ -359,6 +470,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(|E|)
+   */
+
+  /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(|E|)
+   *
    * The `edgeSet` function returns an array of all the edges in the graph.
    * @returns The `edgeSet()` method returns an array of edges (`EO[]`).
    */
@@ -371,6 +490,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(|E|) where |E| is the number of edges
+   * Space Complexity: O(1)
+   *
    * The function `getNeighbors` returns an array of neighboring vertices of a given vertex or vertex ID in a graph.
    * @param {VO | VertexKey} vertexOrKey - The parameter `vertexOrKey` can be either a vertex object (`VO`) or a vertex ID
    * (`VertexKey`).
@@ -393,6 +520,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function "getEndsOfEdge" returns the source and destination vertices of an edge if it exists in the graph,
    * otherwise it returns null.
    * @param {EO} edge - The parameter `edge` is of type `EO`, which represents an edge in a graph.
@@ -413,6 +548,14 @@ export class DirectedGraph<
   }
 
   /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
    * The function `_addEdgeOnly` adds an edge to a graph if the source and destination vertices exist.
    * @param {EO} edge - The parameter `edge` is of type `EO`, which represents an edge in a graph. It is the edge that
    * needs to be added to the graph.

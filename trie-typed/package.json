@@ -1,6 +1,6 @@
 {
   "name": "trie-typed",
-  "version": "1.42.5",
+  "version": "1.47.3",
   "description": "Trie, Prefix tree. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zrwusa/data-structure-typed"
+    "url": "git+https://github.com/zrwusa/data-structure-typed.git"
   },
   "keywords": [
     "Trie",
@@ -128,6 +128,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.42.5"
+    "data-structure-typed": "^1.47.3"
   }
 }

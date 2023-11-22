@@ -8,4 +8,4 @@
 // export { TrieNode, Trie } from 'data-structure-typed';
 export * from './data-structures/trie';
 export * from './types/data-structures/trie';
-export * from './types/helpers';
+export * from './types/common';

@@ -5,10 +5,10 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-import {BST, BSTNode} from './bst';
-import type {AVLTreeNodeNested, AVLTreeOptions, BinaryTreeDeletedResult, BTNKey} from '../../types';
-import {BTNCallback} from '../../types';
-import {IBinaryTree} from '../../interfaces';
+import { BST, BSTNode } from './bst';
+import type { AVLTreeNested, AVLTreeNodeNested, AVLTreeOptions, BiTreeDeleteResult, BTNKey } from '../../types';
+import { BTNCallback, IterationType } from '../../types';
+import { IBinaryTree } from '../../interfaces';
 
 export class AVLTreeNode<V = any, N extends AVLTreeNode<V, N> = AVLTreeNodeNested<V>> extends BSTNode<V, N> {
   height: number;
@@ -19,10 +19,12 @@ export class AVLTreeNode<V = any, N extends AVLTreeNode<V, N> = AVLTreeNodeNeste
   }
 }
 
-export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTreeNodeNested<V>>>
-  extends BST<V, N>
-  implements IBinaryTree<V, N>
-{
+export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTreeNodeNested<V>>, TREE extends AVLTree<V, N, TREE> = AVLTree<V, N, AVLTreeNested<V, N>>>
+  extends BST<V, N, TREE>
+  implements IBinaryTree<V, N, TREE> {
+
+  override options: AVLTreeOptions;
+
   /**
    * This is a constructor function for an AVL tree data structure in TypeScript.
    * @param {AVLTreeOptions} [options] - The `options` parameter is an optional object that can be passed to the
@@ -31,6 +33,11 @@ export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTr
    */
   constructor(options?: AVLTreeOptions) {
     super(options);
+    if (options) {
+      this.options = { iterationType: IterationType.ITERATIVE, comparator: (a, b) => a - b, ...options }
+    } else {
+      this.options = { iterationType: IterationType.ITERATIVE, comparator: (a, b) => a - b };
+    }
   }
 
   /**
@@ -46,14 +53,26 @@ export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTr
     return new AVLTreeNode<V, N>(key, value) as N;
   }
 
+  override createTree(options?: AVLTreeOptions): TREE {
+    return new AVLTree<V, N, TREE>({ ...this.options, ...options }) as TREE;
+  }
+
   /**
-   * The function overrides the add method of a binary tree node and balances the tree after inserting
-   * a new node.
-   * @param {BTNKey | N | undefined} keyOrNode - The `keyOrNode` parameter can accept either a
-   * `BTNKey` or a `N` (which represents a node in the binary tree) or `null`.
-   * @param [value] - The `value` parameter is the value that you want to assign to the new node that you
-   * are adding to the binary search tree.
-   * @returns The method is returning the inserted node (`N`), `null`, or `undefined`.
+   * Time Complexity: O(log n) - logarithmic time, where "n" is the number of nodes in the tree. The add method of the superclass (BST) has logarithmic time complexity.
+   * Space Complexity: O(1) - constant space, as it doesn't use additional data structures that scale with input size.
+   */
+
+  /**
+   * Time Complexity: O(log n) - logarithmic time, where "n" is the number of nodes in the tree. The add method of the superclass (BST) has logarithmic time complexity.
+   * Space Complexity: O(1) - constant space, as it doesn't use additional data structures that scale with input size.
+   *
+   * The function overrides the add method of a class, adds a key-value pair to a data structure, and
+   * balances the structure if necessary.
+   * @param {BTNKey | N | null | undefined} keyOrNode - The `keyOrNode` parameter can be of type
+   * `BTNKey`, `N`, `null`, or `undefined`.
+   * @param {V} [value] - The `value` parameter is the value associated with the key that is being
+   * added to the binary search tree.
+   * @returns The method is returning either a node (N) or undefined.
    */
   override add(keyOrNode: BTNKey | N | null | undefined, value?: V): N | undefined {
     if (keyOrNode === null) return undefined;
@@ -63,24 +82,32 @@ export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTr
   }
 
   /**
-   * The function overrides the delete method of a binary tree and balances the tree after deleting a
-   * node if necessary.
-   * @param {ReturnType<C>} identifier - The `identifier` parameter is either a
-   * `BTNKey` or a generic type `N`. It represents the property of the node that we are
-   * searching for. It can be a specific key value or any other property of the node.
-   * @param callback - The `callback` parameter is a function that takes a node as input and returns a
-   * value. This value is compared with the `identifier` parameter to determine if the node should be
-   * included in the result. The `callback` parameter has a default value of
-   * `this.defaultOneParamCallback`
-   * @returns The method is returning an array of `BinaryTreeDeletedResult<N>` objects.
+   * Time Complexity: O(log n) - logarithmic time, where "n" is the number of nodes in the tree. The delete method of the superclass (BST) has logarithmic time complexity.
+   * Space Complexity: O(1) - constant space, as it doesn't use additional data structures that scale with input size.
+   */
+
+  /**
+   * Time Complexity: O(log n) - logarithmic time, where "n" is the number of nodes in the tree. The delete method of the superclass (BST) has logarithmic time complexity.
+   * Space Complexity: O(1) - constant space, as it doesn't use additional data structures that scale with input size.
+   *
+   * The function overrides the delete method of a binary tree, performs the deletion, and then
+   * balances the tree if necessary.
+   * @param identifier - The `identifier` parameter is the value or condition used to identify the
+   * node(s) to be deleted from the binary tree. It can be of any type and is the return type of the
+   * `callback` function.
+   * @param {C} callback - The `callback` parameter is a function that will be called for each node
+   * that is deleted from the binary tree. It is an optional parameter and if not provided, it will
+   * default to the `_defaultOneParamCallback` function. The `callback` function should have a single
+   * parameter of type `N
+   * @returns The method is returning an array of `BiTreeDeleteResult<N>`.
    */
   override delete<C extends BTNCallback<N>>(
     identifier: ReturnType<C>,
-    callback: C = this.defaultOneParamCallback as C
-  ): BinaryTreeDeletedResult<N>[] {
+    callback: C = this._defaultOneParamCallback as C
+  ): BiTreeDeleteResult<N>[] {
     if ((identifier as any) instanceof AVLTreeNode) callback = (node => node) as C;
     const deletedResults = super.delete(identifier, callback);
-    for (const {needBalanced} of deletedResults) {
+    for (const { needBalanced } of deletedResults) {
       if (needBalanced) {
         this._balancePath(needBalanced);
       }
@@ -89,33 +116,49 @@ export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTr
   }
 
   /**
-   * The function swaps the key, value, and height properties between two nodes in a binary tree.
-   * @param {N} srcNode - The `srcNode` parameter represents the source node that needs to be swapped
-   * with the `destNode`.
-   * @param {N} destNode - The `destNode` parameter represents the destination node where the values
-   * from the source node (`srcNode`) will be swapped to.
-   * @returns The method is returning the `destNode` after swapping its properties with the `srcNode`.
+   * The `_swap` function swaps the key, value, and height properties between two nodes in a binary
+   * tree.
+   * @param {BTNKey | N | undefined} srcNode - The `srcNode` parameter represents the source node that
+   * needs to be swapped with the destination node. It can be of type `BTNKey`, `N`, or `undefined`.
+   * @param {BTNKey | N  | undefined} destNode - The `destNode` parameter represents the destination
+   * node where the values from the source node will be swapped to.
+   * @returns either the `destNode` object if both `srcNode` and `destNode` are defined, or `undefined`
+   * if either `srcNode` or `destNode` is undefined.
    */
-  protected override _swap(srcNode: N, destNode: N): N {
-    const {key, value, height} = destNode;
-    const tempNode = this.createNode(key, value);
+  protected override _swap(srcNode: BTNKey | N | undefined, destNode: BTNKey | N | undefined): N | undefined {
+    srcNode = this.ensureNotKey(srcNode);
+    destNode = this.ensureNotKey(destNode);
 
-    if (tempNode) {
-      tempNode.height = height;
+    if (srcNode && destNode) {
+      const { key, value, height } = destNode;
+      const tempNode = this.createNode(key, value);
 
-      destNode.key = srcNode.key;
-      destNode.value = srcNode.value;
-      destNode.height = srcNode.height;
+      if (tempNode) {
+        tempNode.height = height;
 
-      srcNode.key = tempNode.key;
-      srcNode.value = tempNode.value;
-      srcNode.height = tempNode.height;
+        destNode.key = srcNode.key;
+        destNode.value = srcNode.value;
+        destNode.height = srcNode.height;
+
+        srcNode.key = tempNode.key;
+        srcNode.value = tempNode.value;
+        srcNode.height = tempNode.height;
+      }
+
+      return destNode;
     }
-
-    return destNode;
+    return undefined;
   }
 
   /**
+   * Time Complexity: O(1) - constant time, as it performs a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as it only uses a constant amount of memory.
+   */
+
+  /**
+   * Time Complexity: O(1) - constant time, as it performs a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as it only uses a constant amount of memory.
+   *
    * The function calculates the balance factor of a node in a binary tree.
    * @param {N} node - The parameter "node" represents a node in a binary tree data structure.
    * @returns the balance factor of a given node. The balance factor is calculated by subtracting the
@@ -132,6 +175,14 @@ export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTr
   }
 
   /**
+   * Time Complexity: O(1) - constant time, as it performs a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as it only uses a constant amount of memory.
+   */
+
+  /**
+   * Time Complexity: O(1) - constant time, as it performs a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as it only uses a constant amount of memory.
+   *
    * The function updates the height of a node in a binary tree based on the heights of its left and
    * right children.
    * @param {N} node - The parameter "node" represents a node in a binary tree data structure.
@@ -146,6 +197,14 @@ export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTr
   }
 
   /**
+   * Time Complexity: O(log n) - logarithmic time, where "n" is the number of nodes in the tree. The method traverses the path from the inserted node to the root.
+   * Space Complexity: O(1) - constant space, as it doesn't use additional data structures that scale with input size.
+   */
+
+  /**
+   * Time Complexity: O(log n) - logarithmic time, where "n" is the number of nodes in the tree. The method traverses the path from the inserted node to the root.
+   * Space Complexity: O(1) - constant space, as it doesn't use additional data structures that scale with input size.
+   *
    * The `_balancePath` function is used to update the heights of nodes and perform rotation operations
    * to restore balance in an AVL tree after inserting a node.
    * @param {N} node - The `node` parameter in the `_balancePath` function represents the node in the
@@ -162,7 +221,7 @@ export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTr
       // Balance Restoration: If a balance issue is discovered after inserting a node, it requires balance restoration operations. Balance restoration includes four basic cases where rotation operations need to be performed to fix the balance:
       switch (
         this._balanceFactor(A) // second O(1)
-      ) {
+        ) {
         case -2:
           if (A && A.left) {
             if (this._balanceFactor(A.left) <= 0) {
@@ -191,6 +250,14 @@ export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTr
   }
 
   /**
+   * Time Complexity: O(1) - constant time, as these methods perform a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as they only use a constant amount of memory.
+   */
+
+  /**
+   * Time Complexity: O(1) - constant time, as these methods perform a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as they only use a constant amount of memory.
+   *
    * The function `_balanceLL` performs a left-left rotation to balance a binary tree.
    * @param {N} A - A is a node in a binary tree.
    */
@@ -221,6 +288,14 @@ export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTr
   }
 
   /**
+   * Time Complexity: O(1) - constant time, as these methods perform a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as they only use a constant amount of memory.
+   */
+
+  /**
+   * Time Complexity: O(1) - constant time, as these methods perform a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as they only use a constant amount of memory.
+   *
    * The `_balanceLR` function performs a left-right rotation to balance a binary tree.
    * @param {N} A - A is a node in a binary tree.
    */
@@ -269,6 +344,14 @@ export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTr
   }
 
   /**
+   * Time Complexity: O(1) - constant time, as these methods perform a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as they only use a constant amount of memory.
+   */
+
+  /**
+   * Time Complexity: O(1) - constant time, as these methods perform a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as they only use a constant amount of memory.
+   *
    * The function `_balanceRR` performs a right-right rotation to balance a binary tree.
    * @param {N} A - A is a node in a binary tree.
    */
@@ -304,6 +387,14 @@ export class AVLTree<V = any, N extends AVLTreeNode<V, N> = AVLTreeNode<V, AVLTr
   }
 
   /**
+   * Time Complexity: O(1) - constant time, as these methods perform a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as they only use a constant amount of memory.
+   */
+
+  /**
+   * Time Complexity: O(1) - constant time, as these methods perform a fixed number of operations.
+   * Space Complexity: O(1) - constant space, as they only use a constant amount of memory.
+   *
    * The function `_balanceRL` performs a right-left rotation to balance a binary tree.
    * @param {N} A - A is a node in a binary tree.
    */

@@ -1,0 +1,96 @@
+{
+  "/Users/revone/projects/data-structure-typed-individuals/red-black-tree-typed/src/index.ts": {
+    "path": "/Users/revone/projects/data-structure-typed-individuals/red-black-tree-typed/src/index.ts",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 8,
+          "column": 0
+        },
+        "end": {
+          "line": 8,
+          "column": 9
+        }
+      },
+      "1": {
+        "start": {
+          "line": 8,
+          "column": 9
+        },
+        "end": {
+          "line": 8,
+          "column": 22
+        }
+      },
+      "2": {
+        "start": {
+          "line": 8,
+          "column": 22
+        },
+        "end": {
+          "line": 8,
+          "column": 60
+        }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": {
+            "line": 8,
+            "column": 9
+          },
+          "end": {
+            "line": 8,
+            "column": 20
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 8,
+            "column": 9
+          },
+          "end": {
+            "line": 8,
+            "column": 22
+          }
+        }
+      },
+      "1": {
+        "name": "(anonymous_1)",
+        "decl": {
+          "start": {
+            "line": 8,
+            "column": 22
+          },
+          "end": {
+            "line": 8,
+            "column": 29
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 8,
+            "column": 22
+          },
+          "end": {
+            "line": 8,
+            "column": 60
+          }
+        }
+      }
+    },
+    "branchMap": {},
+    "s": {
+      "0": 1,
+      "1": 1,
+      "2": 2
+    },
+    "f": {
+      "0": 0,
+      "1": 1
+    },
+    "b": {}
+  }
+}

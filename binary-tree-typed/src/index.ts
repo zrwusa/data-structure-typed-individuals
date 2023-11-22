@@ -8,4 +8,4 @@
 // export { BinaryTreeNode, BinaryTree, CP, FamilyPosition, TopologicalProperty, IterationType  } from 'data-structure-typed';
 export * from './data-structures/binary-tree/binary-tree';
 export * from './types/data-structures/binary-tree/binary-tree';
-export * from './types/helpers';
+export * from './types/common';

@@ -8,4 +8,4 @@
 // export { AVLTreeNode, AVLTree, CP, FamilyPosition, TopologicalProperty, IterationType } from 'data-structure-typed';
 export * from './data-structures/binary-tree/avl-tree';
 export * from './types/data-structures/binary-tree/avl-tree';
-export * from './types/helpers';
+export * from './types/common';

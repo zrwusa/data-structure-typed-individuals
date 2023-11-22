@@ -8,4 +8,4 @@
 // export { Queue, LinkedListQueue } from 'data-structure-typed';
 export * from './data-structures/queue';
 export * from './types/data-structures/queue';
-export * from './types/helpers';
+export * from './types/common';
