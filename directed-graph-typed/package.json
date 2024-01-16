@@ -1,6 +1,6 @@
 {
   "name": "directed-graph-typed",
-  "version": "1.47.3",
+  "version": "1.51.3",
   "description": "Directed Graph. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -147,6 +147,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.47.3"
+    "data-structure-typed": "^1.51.3"
   }
 }

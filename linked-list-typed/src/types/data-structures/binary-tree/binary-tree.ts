@@ -1,35 +1,11 @@
 import { BinaryTree, BinaryTreeNode } from '../../../data-structures';
+import { IterationType } from "../../common";
 
-/**
- * Enum representing different loop types.
- *
- * - `iterative`: Indicates the iterative loop type (with loops that use iterations).
- * - `recursive`: Indicates the recursive loop type (with loops that call themselves).
- */
+export type BinaryTreeNodeNested<K, V> = BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-export enum IterationType {
-  ITERATIVE = 'ITERATIVE',
-  RECURSIVE = 'RECURSIVE'
+export type BinaryTreeNested<K, V, NODE extends BinaryTreeNode<K, V, NODE>> = BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, BinaryTree<K, V, NODE, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+export type BinaryTreeOptions<K> = {
+  iterationType?: IterationType,
+  extractor?: (key: K) => number
 }
-
-export enum FamilyPosition {
-  ROOT = 'ROOT',
-  LEFT = 'LEFT',
-  RIGHT = 'RIGHT',
-  ROOT_LEFT = 'ROOT_LEFT',
-  ROOT_RIGHT = 'ROOT_RIGHT',
-  ISOLATED = 'ISOLATED',
-  MAL_NODE = 'MAL_NODE'
-}
-
-export type BTNKey = number;
-
-export type BiTreeDeleteResult<N> = { deleted: N | null | undefined; needBalanced: N | null | undefined };
-
-export type BinaryTreeNodeNested<T> = BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-export type BinaryTreeNested<T, N extends BinaryTreeNode<T, N>> = BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, BinaryTree<T, N, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-export type BinaryTreeOptions = { iterationType?: IterationType }
-
-export type NodeDisplayLayout = [string[], number, number, number];

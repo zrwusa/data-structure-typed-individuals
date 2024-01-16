@@ -1,10 +1,26 @@
 import { BinaryTree, BinaryTreeNode } from '../data-structures';
-import { BinaryTreeNested, BinaryTreeNodeNested, BiTreeDeleteResult, BTNCallback, BTNKey } from '../types';
+import {
+  BinaryTreeDeleteResult,
+  BinaryTreeNested,
+  BinaryTreeNodeNested,
+  BinaryTreeOptions,
+  BTNCallback,
+  KeyOrNodeOrEntry
+} from '../types';
 
-export interface IBinaryTree<V = any, N extends BinaryTreeNode<V, N> = BinaryTreeNodeNested<V>, TREE extends BinaryTree<V, N, TREE> = BinaryTreeNested<V, N>> {
-  createNode(key: BTNKey, value?: N['value']): N;
+export interface IBinaryTree<
+  K = number,
+  V = any,
+  N extends BinaryTreeNode<K, V, N> = BinaryTreeNodeNested<K, V>,
+  TREE extends BinaryTree<K, V, N, TREE> = BinaryTreeNested<K, V, N>
+> {
+  createNode(key: K, value?: N['value']): N;
 
-  add(keyOrNode: BTNKey | N | null, value?: N['value']): N | null | undefined;
+  createTree(options?: Partial<BinaryTreeOptions<K>>): TREE;
 
-  delete<C extends BTNCallback<N>>(identifier: ReturnType<C> | null, callback: C): BiTreeDeleteResult<N>[];
+  add(keyOrNodeOrEntry: KeyOrNodeOrEntry<K, V, N>, value?: V, count?: number): boolean;
+
+  addMany(nodes: Iterable<KeyOrNodeOrEntry<K, V, N>>, values?: Iterable<V | undefined>): boolean[];
+
+  delete<C extends BTNCallback<N>>(identifier: ReturnType<C> | null, callback: C): BinaryTreeDeleteResult<N>[];
 }

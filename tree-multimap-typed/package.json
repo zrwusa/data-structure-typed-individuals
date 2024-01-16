@@ -1,6 +1,6 @@
 {
   "name": "tree-multimap-typed",
-  "version": "1.47.3",
+  "version": "1.51.3",
   "description": "Tree Multiset, AVLTree, BST, Binary Tree. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -179,6 +179,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.47.3"
+    "data-structure-typed": "^1.51.3"
   }
 }

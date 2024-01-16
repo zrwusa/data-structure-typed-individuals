@@ -1,13 +1,11 @@
 import { BST, BSTNode } from '../../../data-structures';
-import type { BinaryTreeOptions, BTNKey } from './binary-tree';
+import type { BinaryTreeOptions } from './binary-tree';
+import { BSTVariant } from "../../common";
 
-export type BSTComparator = (a: BTNKey, b: BTNKey) => number;
+export type BSTNodeNested<K, V> = BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-// prettier-ignore
-export type BSTNodeNested<T> = BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+export type BSTNested<K, V, N extends BSTNode<K, V, N>> = BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-export type BSTNested<T, N extends BSTNode<T, N>> = BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, BST<T, N, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-export type BSTOptions = BinaryTreeOptions & {
-  comparator?: BSTComparator,
+export type BSTOptions<K> = BinaryTreeOptions<K> & {
+  variant?: BSTVariant
 }

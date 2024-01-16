@@ -46,6 +46,11 @@
       <excludeFolder url="file://$MODULE_DIR$/queue-typed/docs" />
       <excludeFolder url="file://$MODULE_DIR$/tree-multimap-typed/dist" />
       <excludeFolder url="file://$MODULE_DIR$/tree-multimap-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/red-black-tree-typed/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/red-black-tree-typed/coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/red-black-tree-typed/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/red-black-tree-typed/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/tree-multimap-typed/.idea" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
