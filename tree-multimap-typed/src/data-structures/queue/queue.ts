@@ -1,9 +1,9 @@
 /**
  * @license MIT
- * @copyright Tyler Zeng <zrwusa@gmail.com>
+ * @copyright Pablo Zeng <zrwusa@gmail.com>
  * @class
  */
-import type { ElementCallback } from '../../types';
+import type { ElementCallback, QueueOptions } from '../../types';
 import { IterableElementBase } from '../base';
 import { SinglyLinkedList } from '../linked-list';
 
@@ -16,18 +16,16 @@ import { SinglyLinkedList } from '../linked-list';
  * 6. Breadth-First Search (BFS): In traversal algorithms for graphs and trees, queues store elements that are to be visited.
  * 7. Real-time Queuing: Like queuing systems in banks or supermarkets.
  */
-export class Queue<E = any> extends IterableElementBase<E> {
-  /**
-   * The constructor initializes an instance of a class with an optional array of elements and sets the offset to 0.
-   * @param {E[]} [elements] - The `elements` parameter is an optional array of elements of type `E`. If provided, it
-   * will be used to initialize the `_elements` property of the class. If not provided, the `_elements` property will be
-   * initialized as an empty array.
-   */
-  constructor(elements: Iterable<E> = []) {
-    super();
-    if (elements) {
-      for (const el of elements) this.push(el);
+export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, R>> {
+  constructor(elements: Iterable<E> | Iterable<R> = [], options?: QueueOptions<E, R>) {
+    super(options);
+
+    if (options) {
+      const { autoCompactRatio = 0.5 } = options;
+      this._autoCompactRatio = autoCompactRatio;
     }
+
+    this.pushMany(elements);
   }
 
   protected _elements: E[] = [];
@@ -61,11 +59,6 @@ export class Queue<E = any> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(1)
    * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
    *
    * The `first` function returns the first element of the array `_elements` if it exists, otherwise it returns `undefined`.
    * @returns The `get first()` method returns the first element of the data structure, represented by the `_elements` array at
@@ -74,11 +67,6 @@ export class Queue<E = any> extends IterableElementBase<E> {
   get first(): E | undefined {
     return this.size > 0 ? this.elements[this.offset] : undefined;
   }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(1)
@@ -92,10 +80,24 @@ export class Queue<E = any> extends IterableElementBase<E> {
     return this.size > 0 ? this.elements[this.elements.length - 1] : undefined;
   }
 
+  protected _autoCompactRatio: number = 0.5;
+
   /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
+   * This function returns the value of the autoCompactRatio property.
+   * @returns The `autoCompactRatio` property of the object, which is a number.
    */
+  get autoCompactRatio(): number {
+    return this._autoCompactRatio;
+  }
+
+  /**
+   * The above function sets the autoCompactRatio property to a specified number in TypeScript.
+   * @param {number} v - The parameter `v` represents the value that will be assigned to the
+   * `_autoCompactRatio` property.
+   */
+  set autoCompactRatio(v: number) {
+    this._autoCompactRatio = v;
+  }
 
   /**
    * Time Complexity: O(n)
@@ -103,7 +105,6 @@ export class Queue<E = any> extends IterableElementBase<E> {
    *
    * The function "fromArray" creates a new Queue object from an array of elements.Creates a queue from an existing array.
    * @public
-   * @static
    * @param {E[]} elements - The "elements" parameter is an array of elements of type E.
    * @returns The method is returning a new instance of the Queue class, initialized with the elements from the input
    * array.
@@ -115,15 +116,10 @@ export class Queue<E = any> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(1)
    * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
    *
-   * The push function adds an element to the end of the queue and returns the updated queue.Adds an element at the back of the queue.
+   * The push function adds an element to the end of the queue and returns true. Adds an element at the back of the queue.
    * @param {E} element - The `element` parameter represents the element that you want to add to the queue.
-   * @returns The `add` method is returning a `Queue<E>` object.
+   * @returns Always returns true, indicating the element was successfully added.
    */
   push(element: E): boolean {
     this.elements.push(element);
@@ -131,9 +127,24 @@ export class Queue<E = any> extends IterableElementBase<E> {
   }
 
   /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
+   * Time Complexity: O(k)
+   * Space Complexity: O(k)
+   *
+   * The `pushMany` function iterates over elements and pushes them into an array after applying a
+   * transformation function if provided.
+   * @param {Iterable<E> | Iterable<R>} elements - The `elements` parameter in the `pushMany` function
+   * is an iterable containing elements of type `E` or `R`.
+   * @returns The `pushMany` function is returning an array of boolean values indicating whether each
+   * element was successfully pushed into the data structure.
    */
+  pushMany(elements: Iterable<E> | Iterable<R>) {
+    const ans: boolean[] = [];
+    for (const el of elements) {
+      if (this.toElementFn) ans.push(this.push(this.toElementFn(el as R)));
+      else ans.push(this.push(el as E));
+    }
+    return ans;
+  }
 
   /**
    * Time Complexity: O(1)
@@ -149,18 +160,16 @@ export class Queue<E = any> extends IterableElementBase<E> {
     const first = this.first;
     this._offset += 1;
 
-    if (this.offset * 2 < this.elements.length) return first;
-
-    // only delete dequeued elements when reaching half size
-    // to decrease latency of shifting elements.
-    this._elements = this.elements.slice(this.offset);
-    this._offset = 0;
+    if (this.offset / this.elements.length > this.autoCompactRatio) this.compact();
     return first;
   }
 
   /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
    * The delete function removes an element from the list.
-   * @param element: E Specify the element to be deleted
+   * @param {E} element - Specify the element to be deleted
    * @return A boolean value indicating whether the element was successfully deleted or not
    */
   delete(element: E): boolean {
@@ -169,8 +178,11 @@ export class Queue<E = any> extends IterableElementBase<E> {
   }
 
   /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
    * The deleteAt function deletes the element at a given index.
-   * @param index: number Determine the index of the element to be deleted
+   * @param {number} index - Determine the index of the element to be deleted
    * @return A boolean value
    */
   deleteAt(index: number): boolean {
@@ -181,22 +193,17 @@ export class Queue<E = any> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(1)
    * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
    *
-   * @param index
+   * The `at` function returns the element at a specified index adjusted by an offset, or `undefined`
+   * if the index is out of bounds.
+   * @param {number} index - The `index` parameter represents the position of the element you want to
+   * retrieve from the data structure.
+   * @returns The `at` method is returning the element at the specified index adjusted by the offset
+   * `_offset`.
    */
   at(index: number): E | undefined {
-    return this.elements[index];
+    return this.elements[index + this._offset];
   }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(1)
@@ -212,11 +219,6 @@ export class Queue<E = any> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(1)
    * Space Complexity: O(n)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(n)
    *
    * The toArray() function returns an array of elements from the current offset to the end of the _elements array.
    * @returns An array of type E is being returned.
@@ -224,11 +226,6 @@ export class Queue<E = any> extends IterableElementBase<E> {
   toArray(): E[] {
     return this.elements.slice(this.offset);
   }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(1)
@@ -243,9 +240,17 @@ export class Queue<E = any> extends IterableElementBase<E> {
 
   /**
    * Time Complexity: O(n)
-   * Space Complexity: O(n)
-   * where n is the number of elements in the queue. It creates a shallow copy of the internal array. the space required is proportional to the number of elements in the queue.
+   * Space Complexity: O(1)
+   *
+   * The `compact` function in TypeScript slices the elements array based on the offset and resets the
+   * offset to zero.
+   * @returns The `compact()` method is returning a boolean value of `true`.
    */
+  compact(): boolean {
+    this._elements = this.elements.slice(this.offset);
+    this._offset = 0;
+    return true;
+  }
 
   /**
    * Time Complexity: O(n)
@@ -254,14 +259,9 @@ export class Queue<E = any> extends IterableElementBase<E> {
    * The `clone()` function returns a new Queue object with the same elements as the original Queue.
    * @returns The `clone()` method is returning a new instance of the `Queue` class.
    */
-  clone(): Queue<E> {
-    return new Queue(this.elements.slice(this.offset));
+  clone(): Queue<E, R> {
+    return new Queue(this.elements.slice(this.offset), { toElementFn: this.toElementFn });
   }
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
-   */
 
   /**
    * Time Complexity: O(n)
@@ -279,8 +279,8 @@ export class Queue<E = any> extends IterableElementBase<E> {
    * @returns The `filter` method is returning a new `Queue` object that contains the elements that
    * satisfy the given predicate function.
    */
-  filter(predicate: ElementCallback<E, boolean>, thisArg?: any): Queue<E> {
-    const newDeque = new Queue<E>([]);
+  filter(predicate: ElementCallback<E, R, boolean, Queue<E, R>>, thisArg?: any): Queue<E, R> {
+    const newDeque = new Queue<E, R>([], { toElementFn: this.toElementFn });
     let index = 0;
     for (const el of this) {
       if (predicate.call(thisArg, el, index, this)) {
@@ -294,24 +294,27 @@ export class Queue<E = any> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(n)
-   */
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
    *
-   * The `map` function takes a callback function and applies it to each element in the queue,
-   * returning a new queue with the results.
-   * @param callback - The callback parameter is a function that will be called for each element in the
-   * queue. It takes three arguments: the current element, the index of the current element, and the
-   * queue itself. The callback function should return a new value that will be added to the new queue.
-   * @param {any} [thisArg] - The `thisArg` parameter is an optional argument that specifies the value
-   * to be used as `this` when executing the `callback` function. If `thisArg` is provided, it will be
-   * passed as the `this` value to the `callback` function. If `thisArg` is
-   * @returns The `map` function is returning a new `Queue` object with the transformed elements.
+   * The `map` function in TypeScript creates a new Queue by applying a callback function to each
+   * element in the original Queue.
+   * @param callback - The `callback` parameter is a function that will be applied to each element in
+   * the queue. It takes the current element, its index, and the queue itself as arguments, and returns
+   * a new element.
+   * @param [toElementFn] - The `toElementFn` parameter is an optional function that can be provided to
+   * convert a raw element of type `RM` to a new element of type `EM`. This function is used within the
+   * `map` method to transform each raw element before passing it to the `callback` function. If
+   * @param {any} [thisArg] - The `thisArg` parameter in the `map` function is used to specify the
+   * value of `this` when executing the `callback` function. It allows you to set the context (the
+   * value of `this`) within the callback function. If `thisArg` is provided, it will be
+   * @returns A new Queue object containing elements of type EM, which are the result of applying the
+   * callback function to each element in the original Queue object.
    */
-  map<T>(callback: ElementCallback<E, T>, thisArg?: any): Queue<T> {
-    const newDeque = new Queue<T>([]);
+  map<EM, RM>(
+    callback: ElementCallback<E, R, EM, Queue<E, R>>,
+    toElementFn?: (rawElement: RM) => EM,
+    thisArg?: any
+  ): Queue<EM, RM> {
+    const newDeque = new Queue<EM, RM>([], { toElementFn });
     let index = 0;
     for (const el of this) {
       newDeque.push(callback.call(thisArg, el, index, this));
@@ -323,16 +326,11 @@ export class Queue<E = any> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(n)
-   */
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
    *
    * The function `_getIterator` returns an iterable iterator for the elements in the class.
    */
-  protected* _getIterator(): IterableIterator<E> {
-    for (const item of this.elements) {
+  protected *_getIterator(): IterableIterator<E> {
+    for (const item of this.elements.slice(this.offset)) {
       yield item;
     }
   }
@@ -344,12 +342,7 @@ export class Queue<E = any> extends IterableElementBase<E> {
  * 3. Memory Usage: Since each element requires additional space to store a pointer to the next element, linked lists may use more memory compared to arrays.
  * 4. Frequent Enqueuing and Dequeuing Operations: If your application involves frequent enqueuing and dequeuing operations and is less concerned with random access, then LinkedListQueue is a good choice.
  */
-export class LinkedListQueue<E = any> extends SinglyLinkedList<E> {
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
-   */
-
+export class LinkedListQueue<E = any, R = any> extends SinglyLinkedList<E, R> {
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(n)
@@ -358,7 +351,7 @@ export class LinkedListQueue<E = any> extends SinglyLinkedList<E> {
    * @returns The `clone()` method is returning a new instance of `LinkedListQueue` with the same
    * values as the original `LinkedListQueue`.
    */
-  clone(): LinkedListQueue<E> {
-    return new LinkedListQueue<E>(this.values());
+  override clone(): LinkedListQueue<E, R> {
+    return new LinkedListQueue<E, R>(this, { toElementFn: this.toElementFn });
   }
 }

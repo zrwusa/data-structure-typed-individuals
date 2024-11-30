@@ -30,23 +30,12 @@ npm i max-priority-queue --save
 yarn add max-priority-queue
 ```
 
-### methods
-
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/max-priority-queue.png?raw=true)
-
 ### snippet
 
-#### TS
+[//]: # (No deletion!!! Start of Example Replace Section)
 
-```typescript
 
-```
-
-#### JS
-
-```javascript
-
-```
+[//]: # (No deletion!!! End of Example Replace Section)
 
 
 ## API docs & Examples

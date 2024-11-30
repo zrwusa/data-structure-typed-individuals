@@ -1,11 +1,19 @@
-import { BST, BSTNode } from '../../../data-structures';
 import type { BinaryTreeOptions } from './binary-tree';
-import { BSTVariant } from "../../common";
+import { Comparable } from '../../utils';
+import { OptValue } from '../../common';
 
-export type BSTNodeNested<K, V> = BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, BSTNode<K, V, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-export type BSTNested<K, V, N extends BSTNode<K, V, N>> = BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, BST<K, V, N, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-export type BSTOptions<K> = BinaryTreeOptions<K> & {
-  variant?: BSTVariant
+export type BSTOptions<K, V, R> = BinaryTreeOptions<K, V, R> & {
+  specifyComparable?: (key: K) => Comparable
+  isReverse?: boolean;
 }
+
+export type BSTNOptKey<K> = K | undefined;
+
+export type OptNode<NODE> = NODE | undefined;
+
+export type BSTNEntry<K, V> = [BSTNOptKey<K>, OptValue<V>];
+
+export type BSTNOptKeyOrNode<K, NODE> = BSTNOptKey<K> | NODE;
+
+export type BSTNRep<K, V, NODE> = BSTNEntry<K, V> | BSTNOptKeyOrNode<K, NODE>;
+

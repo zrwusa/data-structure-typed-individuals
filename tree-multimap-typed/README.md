@@ -30,23 +30,15 @@ npm i tree-multimap-typed --save
 yarn add tree-multimap-typed
 ```
 
-### methods
-
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/tree-multimap.png?raw=true)
-
 ### snippet
 
-#### TS
 
-```typescript
 
-```
+[//]: # (No deletion!!! Start of Example Replace Section)
 
-#### JS
 
-```javascript
+[//]: # (No deletion!!! End of Example Replace Section)
 
-```
 
 
 ## API docs & Examples

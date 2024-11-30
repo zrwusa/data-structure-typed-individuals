@@ -1,6 +1,6 @@
 {
   "name": "undirected-graph-typed",
-  "version": "1.51.3",
+  "version": "1.54.1",
   "description": "Undirected Graph. Javascript & Typescript Data Structure.",
   "main": "dist/index.js",
   "scripts": {
@@ -121,7 +121,7 @@
     "documentation",
     "visualization"
   ],
-  "author": "Tyler Zeng zrwusa@gmail.com",
+  "author": "Pablo Zeng zrwusa@gmail.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/zrwusa/data-structure-typed/issues"
@@ -145,6 +145,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.51.3"
+    "data-structure-typed": "^1.54.1"
   }
 }

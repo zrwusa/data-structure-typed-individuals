@@ -30,10 +30,6 @@ npm i min-heap-typed --save
 yarn add min-heap-typed
 ```
 
-### methods
-
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/min-heap.png?raw=true)
-
 ### snippet
 
 #### TS
@@ -84,7 +80,11 @@ yarn add min-heap-typed
     minNumHeap.sort()        //  [2, 5, 6, 9]
 ```
 
-## API docs & Examples
+[//]: # (No deletion!!! Start of Example Replace Section)
+
+
+[//]: # (No deletion!!! End of Example Replace Section)
+
 
 ## API docs & Examples
 

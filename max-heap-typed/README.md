@@ -30,10 +30,6 @@ npm i max-heap-typed --save
 yarn add max-heap-typed
 ```
 
-### methods
-
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/max-heap.png?raw=true)
-
 ### snippet
 
 #### TS
@@ -115,6 +111,11 @@ yarn add max-heap-typed
         i++;
     }
 ```
+
+[//]: # (No deletion!!! Start of Example Replace Section)
+
+
+[//]: # (No deletion!!! End of Example Replace Section)
 
 
 ## API docs & Examples

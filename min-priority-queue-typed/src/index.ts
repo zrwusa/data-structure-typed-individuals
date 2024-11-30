@@ -1,11 +1,16 @@
 /**
  * data-structure-typed
  *
- * @author Tyler Zeng
- * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
+ * @author Pablo Zeng
+ * @copyright Copyright (c) 2022 Pablo Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-// export { MinPriorityQueue } from 'data-structure-typed';
 export * from './data-structures/priority-queue/min-priority-queue';
+export * from './data-structures/priority-queue/priority-queue';
+export * from './data-structures/heap/heap';
 export * from './types/data-structures/priority-queue/min-priority-queue';
+export * from './types/data-structures/priority-queue/priority-queue';
+export * from './types/data-structures/heap/heap';
 export * from './types/common';
+export * from './types/utils';
+export * from './common';

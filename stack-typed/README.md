@@ -30,23 +30,13 @@ npm i stack-typed --save
 yarn add stack-typed
 ```
 
-### methods
-
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/stack.png?raw=true)
-
 ### snippet
 
-#### TS
 
-```typescript
+[//]: # (No deletion!!! Start of Example Replace Section)
 
-```
 
-#### JS
-
-```javascript
-
-```
+[//]: # (No deletion!!! End of Example Replace Section)
 
 
 ## API docs & Examples

@@ -1,3 +1,6 @@
 import { Comparator } from '../../common';
+import { IterableElementBaseOptions } from '../base';
 
-export type HeapOptions<T> = { comparator?: Comparator<T> };
+export type HeapOptions<E, R> = IterableElementBaseOptions<E, R> & {
+  comparator?: Comparator<E>;
+};

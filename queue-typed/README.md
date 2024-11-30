@@ -52,13 +52,6 @@ npm i queue-typed --save
 yarn add queue-typed
 ```
 
-### methods
-
-Queue
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/array-queue.png?raw=true)
-LinkedListQueue
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/queue.png?raw=true)
-
 ### snippet
 
 #### TS
@@ -98,6 +91,11 @@ for (let i = 0; i < magnitude; i++) {
     console.log(queue.getAt(i));        // 0, 1, 2, 3, ...
 }
 ```
+
+[//]: # (No deletion!!! Start of Example Replace Section)
+
+
+[//]: # (No deletion!!! End of Example Replace Section)
 
 
 ## API docs & Examples

@@ -30,23 +30,12 @@ npm i deque-typed --save
 yarn add deque-typed
 ```
 
-### methods
-
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/deque.png?raw=true)
-
 ### snippet
 
-#### TS
+[//]: # (No deletion!!! Start of Example Replace Section)
 
-```typescript
 
-```
-
-#### JS
-
-```javascript
-
-```
+[//]: # (No deletion!!! End of Example Replace Section)
 
 
 ## API docs & Examples

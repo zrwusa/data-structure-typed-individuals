@@ -30,23 +30,104 @@ npm i trie-typed --save
 yarn add trie-typed
 ```
 
-### methods
-
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/trie.png?raw=true)
-
 ### snippet
 
-#### TS
 
+[//]: # (No deletion!!! Start of Example Replace Section)
+
+### Autocomplete: Prefix validation and checking
 ```typescript
+    const autocomplete = new Trie<string>(['gmail.com', 'gmail.co.nz', 'gmail.co.jp', 'yahoo.com', 'outlook.com']);
 
+    // Get all completions for a prefix
+    const gmailCompletions = autocomplete.getWords('gmail');
+    console.log(gmailCompletions); // ['gmail.com', 'gmail.co.nz', 'gmail.co.jp']
 ```
 
-#### JS
+### File System Path Operations
+```typescript
+    const fileSystem = new Trie<string>([
+      '/home/user/documents/file1.txt',
+      '/home/user/documents/file2.txt',
+      '/home/user/pictures/photo.jpg',
+      '/home/user/pictures/vacation/',
+      '/home/user/downloads'
+    ]);
 
-```javascript
+    // Find common directory prefix
+    console.log(fileSystem.getLongestCommonPrefix()); // '/home/user/'
 
+    // List all files in a directory
+    const documentsFiles = fileSystem.getWords('/home/user/documents/');
+    console.log(documentsFiles); // ['/home/user/documents/file1.txt', '/home/user/documents/file2.txt']
 ```
+
+### Autocomplete: Basic word suggestions
+```typescript
+    // Create a trie for autocomplete
+    const autocomplete = new Trie<string>([
+      'function',
+      'functional',
+      'functions',
+      'class',
+      'classes',
+      'classical',
+      'closure',
+      'const',
+      'constructor'
+    ]);
+
+    // Test autocomplete with different prefixes
+    console.log(autocomplete.getWords('fun')); // ['functional', 'functions', 'function']
+    console.log(autocomplete.getWords('cla')); // ['classes', 'classical', 'class']
+    console.log(autocomplete.getWords('con')); // ['constructor', 'const']
+
+    // Test with non-matching prefix
+    console.log(autocomplete.getWords('xyz')); // []
+```
+
+### Dictionary: Case-insensitive word lookup
+```typescript
+    // Create a case-insensitive dictionary
+    const dictionary = new Trie<string>([], { caseSensitive: false });
+
+    // Add words with mixed casing
+    dictionary.add('Hello');
+    dictionary.add('WORLD');
+    dictionary.add('JavaScript');
+
+    // Test lookups with different casings
+    console.log(dictionary.has('hello')); // true
+    console.log(dictionary.has('HELLO')); // true
+    console.log(dictionary.has('Hello')); // true
+    console.log(dictionary.has('javascript')); // true
+    console.log(dictionary.has('JAVASCRIPT')); // true
+```
+
+### IP Address Routing Table
+```typescript
+    // Add IP address prefixes and their corresponding routes
+    const routes = {
+      '192.168.1': 'LAN_SUBNET_1',
+      '192.168.2': 'LAN_SUBNET_2',
+      '10.0.0': 'PRIVATE_NETWORK_1',
+      '10.0.1': 'PRIVATE_NETWORK_2'
+    };
+
+    const ipRoutingTable = new Trie<string>(Object.keys(routes));
+
+    // Check IP address prefix matching
+    console.log(ipRoutingTable.hasPrefix('192.168.1')); // true
+    console.log(ipRoutingTable.hasPrefix('192.168.2')); // true
+
+    // Validate IP address belongs to subnet
+    const ip = '192.168.1.100';
+    const subnet = ip.split('.').slice(0, 3).join('.');
+    console.log(ipRoutingTable.hasPrefix(subnet)); // true
+```
+
+[//]: # (No deletion!!! End of Example Replace Section)
+
 
 
 ## API docs & Examples

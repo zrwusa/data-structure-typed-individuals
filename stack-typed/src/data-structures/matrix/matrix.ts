@@ -1,12 +1,15 @@
 /**
  * data-structure-typed
  *
- * @author Tyler Zeng
- * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
+ * @author Pablo Zeng
+ * @copyright Copyright (c) 2022 Pablo Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
 import type { MatrixOptions } from '../../types';
 
+/**
+ *
+ */
 export class Matrix {
   /**
    * The constructor function initializes a matrix object with the provided data and options, or with

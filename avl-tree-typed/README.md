@@ -30,10 +30,6 @@ npm i avl-tree-typed --save
 yarn add avl-tree-typed
 ```
 
-### methods
-
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/avl-tree.png?raw=true)
-
 ### snippet
 
 #### TS
@@ -234,6 +230,10 @@ const lastBFSNodes = avlTree.BFS('node');
 lastBFSNodes[0].id                          // 12
 ```
 
+[//]: # (No deletion!!! Start of Example Replace Section)
+
+
+[//]: # (No deletion!!! End of Example Replace Section)
 
 ## API docs & Examples
 

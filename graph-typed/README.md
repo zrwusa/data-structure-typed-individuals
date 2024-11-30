@@ -30,13 +30,6 @@ npm i graph-typed --save
 yarn add graph-typed
 ```
 
-### methods
-
-Directed Graph
-![directed-graph](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/directed-graph.png?raw=true)
-Undirected Graph
-![undirected-graph](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/undirected-graph.png?raw=true)
-
 ### snippet
 
 #### TS
@@ -183,6 +176,10 @@ expect(surinToSaanenGoatFarmViaDij?.minPath.map(v => v.id)).toEqual(expected2);
 expect(surinToSaanenGoatFarmViaDij?.minDist).toBe(25.2);
 ```
 
+[//]: # (No deletion!!! Start of Example Replace Section)
+
+
+[//]: # (No deletion!!! End of Example Replace Section)
 
 ## API docs & Examples
 

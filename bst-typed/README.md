@@ -30,9 +30,6 @@ npm i bst-typed --save
 yarn add bst-typed
 ```
 
-### methods
-
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/bst.png?raw=true)
 
 ### snippet
 
@@ -346,6 +343,71 @@ bfsNodes[1].id;                                                // 12
 bfsNodes[2].id;                                                // 16
 ```
 
+[//]: # (No deletion!!! Start of Example Replace Section)
+
+### Merge 3 sorted datasets
+```typescript
+    const dataset1 = new BST<number, string>([
+      [1, 'A'],
+      [7, 'G']
+    ]);
+    const dataset2 = [
+      [2, 'B'],
+      [6, 'F']
+    ];
+    const dataset3 = new BST<number, string>([
+      [3, 'C'],
+      [5, 'E'],
+      [4, 'D']
+    ]);
+
+    // Merge datasets into a single BinarySearchTree
+    const merged = new BST<number, string>(dataset1);
+    merged.addMany(dataset2);
+    merged.merge(dataset3);
+
+    // Verify merged dataset is in sorted order
+    console.log([...merged.values()]); // ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+```
+
+### Find elements in a range
+```typescript
+    const bst = new BST<number>([10, 5, 15, 3, 7, 12, 18]);
+    console.log(bst.search(new Range(5, 10))); // [10, 5, 7]
+    console.log(bst.rangeSearch([4, 12], node => node.key.toString())); // ['10', '12', '5', '7']
+    console.log(bst.search(new Range(4, 12, true, false))); // [10, 5, 7]
+    console.log(bst.rangeSearch([15, 20])); // [15, 18]
+    console.log(bst.search(new Range(15, 20, false))); // [18]
+```
+
+### Find lowest common ancestor
+```typescript
+    const bst = new BST<number>([20, 10, 30, 5, 15, 25, 35, 3, 7, 12, 18]);
+
+    // LCA helper function
+    const findLCA = (num1: number, num2: number): number | undefined => {
+      const path1 = bst.getPathToRoot(num1);
+      const path2 = bst.getPathToRoot(num2);
+      // Find the first common ancestor
+      return findFirstCommon(path1, path2);
+    };
+
+    function findFirstCommon(arr1: number[], arr2: number[]): number | undefined {
+      for (const num of arr1) {
+        if (arr2.indexOf(num) !== -1) {
+          return num;
+        }
+      }
+      return undefined;
+    }
+
+    // Assertions
+    console.log(findLCA(3, 10)); // 7
+    console.log(findLCA(5, 35)); // 15
+    console.log(findLCA(20, 30)); // 25
+```
+
+[//]: # (No deletion!!! End of Example Replace Section)
 
 ## API docs & Examples
 

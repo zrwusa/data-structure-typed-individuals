@@ -30,130 +30,189 @@ npm i heap-typed --save
 yarn add heap-typed
 ```
 
-### methods
-
-Min Heap
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/min-heap.png?raw=true)
-Max Heap
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/max-heap.png?raw=true)
-
 ### snippet
 
-#### TS
+[//]: # (No deletion!!! Start of Example Replace Section)
 
+### Use Heap to sort an array
 ```typescript
-    import {MinHeap, MaxHeap} from 'data-structure-typed';
-    // /* or if you prefer */ import {MinHeap, MaxHeap} from 'heap-typed';
-
-    const minNumHeap = new MinHeap<number>();
-    minNumHeap.add(1).add(6).add(2).add(0).add(5).add(9);
-    minNumHeap.has(1)        //  true
-    minNumHeap.has(2)        //  true
-    minNumHeap.poll()        //  0
-    minNumHeap.poll()        //  1
-    minNumHeap.peek()        //  2
-    minNumHeap.has(1);       // false
-    minNumHeap.has(2);       // true
-    const arrFromHeap = minNumHeap.toArray();
-    arrFromHeap.length       //  4
-    arrFromHeap[0]           //  2
-    arrFromHeap[1]           //  5
-    arrFromHeap[2]           //  9
-    arrFromHeap[3]           //  6
-    minNumHeap.sort()        //  [2, 5, 6, 9]
-    
-    
-    const maxHeap = new MaxHeap<{ keyA: string }>();
-    const myObj1 = {keyA: 'a1'}, myObj6 = {keyA: 'a6'}, myObj5 = {keyA: 'a5'}, myObj2 = {keyA: 'a2'},
-        myObj0 = {keyA: 'a0'}, myObj9 = {keyA: 'a9'};
-    maxHeap.add(1, myObj1);
-    maxHeap.has(myObj1)  // true
-    maxHeap.has(myObj9)  // false
-    maxHeap.add(6, myObj6);
-    maxHeap.has(myObj6)  // true
-    maxHeap.add(5, myObj5);
-    maxHeap.has(myObj5)  // true
-    maxHeap.add(2, myObj2);
-    maxHeap.has(myObj2)  // true
-    maxHeap.has(myObj6)  // true
-    maxHeap.add(0, myObj0);
-    maxHeap.has(myObj0)  // true
-    maxHeap.has(myObj9)  // false
-    maxHeap.add(9, myObj9);
-    maxHeap.has(myObj9)  // true
-    
-    const peek9 = maxHeap.peek(true);
-    peek9 && peek9.val && peek9.val.keyA  // 'a9'
-    
-    const heapToArr = maxHeap.toArray(true);
-    heapToArr.map(item => item?.val?.keyA)  // ['a9', 'a2', 'a6', 'a1', 'a0', 'a5']
-    
-    const values = ['a9', 'a6', 'a5', 'a2', 'a1', 'a0'];
-    let i = 0;
-    while (maxHeap.size > 0) {
-        const polled = maxHeap.poll(true);
-        polled && polled.val && polled.val.keyA  // values[i]
-        i++;
+    function heapSort(arr: number[]): number[] {
+      const heap = new Heap<number>(arr, { comparator: (a, b) => a - b });
+      const sorted: number[] = [];
+      while (!heap.isEmpty()) {
+        sorted.push(heap.poll()!); // Poll minimum element
+      }
+      return sorted;
     }
+
+    const array = [5, 3, 8, 4, 1, 2];
+    console.log(heapSort(array)); // [1, 2, 3, 4, 5, 8]
 ```
 
-#### JS
-
-```javascript
-    const {MinHeap, MaxHeap} = require('data-structure-typed');
-    // /* or if you prefer */ const {MinHeap, MaxHeap} = require('heap-typed');
-
-    const minNumHeap = new MinHeap();
-    minNumHeap.add(1).add(6).add(2).add(0).add(5).add(9);
-    minNumHeap.has(1)        //  true
-    minNumHeap.has(2)        //  true
-    minNumHeap.poll()        //  0
-    minNumHeap.poll()        //  1
-    minNumHeap.peek()        //  2
-    minNumHeap.has(1);       // false
-    minNumHeap.has(2);       // true
-    const arrFromHeap = minNumHeap.toArray();
-    arrFromHeap.length       //  4
-    arrFromHeap[0]           //  2
-    arrFromHeap[1]           //  5
-    arrFromHeap[2]           //  9
-    arrFromHeap[3]           //  6
-    minNumHeap.sort()        //  [2, 5, 6, 9]
-    
-    
-    const maxHeap = new MaxHeap();
-    const myObj1 = {keyA: 'a1'}, myObj6 = {keyA: 'a6'}, myObj5 = {keyA: 'a5'}, myObj2 = {keyA: 'a2'},
-        myObj0 = {keyA: 'a0'}, myObj9 = {keyA: 'a9'};
-    maxHeap.add(1, myObj1);
-    maxHeap.has(myObj1)  // true
-    maxHeap.has(myObj9)  // false
-    maxHeap.add(6, myObj6);
-    maxHeap.has(myObj6)  // true
-    maxHeap.add(5, myObj5);
-    maxHeap.has(myObj5)  // true
-    maxHeap.add(2, myObj2);
-    maxHeap.has(myObj2)  // true
-    maxHeap.has(myObj6)  // true
-    maxHeap.add(0, myObj0);
-    maxHeap.has(myObj0)  // true
-    maxHeap.has(myObj9)  // false
-    maxHeap.add(9, myObj9);
-    maxHeap.has(myObj9)  // true
-    
-    const peek9 = maxHeap.peek(true);
-    peek9 && peek9.val && peek9.val.keyA  // 'a9'
-    
-    const heapToArr = maxHeap.toArray(true);
-    heapToArr.map(item => item?.val?.keyA)  // ['a9', 'a2', 'a6', 'a1', 'a0', 'a5']
-    
-    const values = ['a9', 'a6', 'a5', 'a2', 'a1', 'a0'];
-    let i = 0;
-    while (maxHeap.size > 0) {
-        const polled = maxHeap.poll(true);
-        polled && polled.val && polled.val.keyA  // values[i]
-        i++;
+### Use Heap to solve top k problems
+```typescript
+    function topKElements(arr: number[], k: number): number[] {
+      const heap = new Heap<number>([], { comparator: (a, b) => b - a }); // Max heap
+      arr.forEach(num => {
+        heap.add(num);
+        if (heap.size > k) heap.poll(); // Keep the heap size at K
+      });
+      return heap.toArray();
     }
+
+    const numbers = [10, 30, 20, 5, 15, 25];
+    console.log(topKElements(numbers, 3)); // [15, 10, 5]
 ```
+
+### Use Heap to merge sorted sequences
+```typescript
+    function mergeSortedSequences(sequences: number[][]): number[] {
+      const heap = new Heap<{ value: number; seqIndex: number; itemIndex: number }>([], {
+        comparator: (a, b) => a.value - b.value // Min heap
+      });
+
+      // Initialize heap
+      sequences.forEach((seq, seqIndex) => {
+        if (seq.length) {
+          heap.add({ value: seq[0], seqIndex, itemIndex: 0 });
+        }
+      });
+
+      const merged: number[] = [];
+      while (!heap.isEmpty()) {
+        const { value, seqIndex, itemIndex } = heap.poll()!;
+        merged.push(value);
+
+        if (itemIndex + 1 < sequences[seqIndex].length) {
+          heap.add({
+            value: sequences[seqIndex][itemIndex + 1],
+            seqIndex,
+            itemIndex: itemIndex + 1
+          });
+        }
+      }
+
+      return merged;
+    }
+
+    const sequences = [
+      [1, 4, 7],
+      [2, 5, 8],
+      [3, 6, 9]
+    ];
+    console.log(mergeSortedSequences(sequences)); // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+### Use Heap to dynamically maintain the median
+```typescript
+    class MedianFinder {
+      private low: MaxHeap<number>; // Max heap, stores the smaller half
+      private high: MinHeap<number>; // Min heap, stores the larger half
+
+      constructor() {
+        this.low = new MaxHeap<number>([]);
+        this.high = new MinHeap<number>([]);
+      }
+
+      addNum(num: number): void {
+        if (this.low.isEmpty() || num <= this.low.peek()!) this.low.add(num);
+        else this.high.add(num);
+
+        // Balance heaps
+        if (this.low.size > this.high.size + 1) this.high.add(this.low.poll()!);
+        else if (this.high.size > this.low.size) this.low.add(this.high.poll()!);
+      }
+
+      findMedian(): number {
+        if (this.low.size === this.high.size) return (this.low.peek()! + this.high.peek()!) / 2;
+        return this.low.peek()!;
+      }
+    }
+
+    const medianFinder = new MedianFinder();
+    medianFinder.addNum(10);
+    console.log(medianFinder.findMedian()); // 10
+    medianFinder.addNum(20);
+    console.log(medianFinder.findMedian()); // 15
+    medianFinder.addNum(30);
+    console.log(medianFinder.findMedian()); // 20
+    medianFinder.addNum(40);
+    console.log(medianFinder.findMedian()); // 25
+    medianFinder.addNum(50);
+    console.log(medianFinder.findMedian()); // 30
+```
+
+### Use Heap for load balancing
+```typescript
+    function loadBalance(requests: number[], servers: number): number[] {
+      const serverHeap = new Heap<{ id: number; load: number }>([], { comparator: (a, b) => a.load - b.load }); // min heap
+      const serverLoads = new Array(servers).fill(0);
+
+      for (let i = 0; i < servers; i++) {
+        serverHeap.add({ id: i, load: 0 });
+      }
+
+      requests.forEach(req => {
+        const server = serverHeap.poll()!;
+        serverLoads[server.id] += req;
+        server.load += req;
+        serverHeap.add(server); // The server after updating the load is re-entered into the heap
+      });
+
+      return serverLoads;
+    }
+
+    const requests = [5, 2, 8, 3, 7];
+    console.log(loadBalance(requests, 3)); // [12, 8, 5]
+```
+
+### Use Heap to schedule tasks
+```typescript
+    type Task = [string, number];
+
+    function scheduleTasks(tasks: Task[], machines: number): Map<number, Task[]> {
+      const machineHeap = new Heap<{ id: number; load: number }>([], { comparator: (a, b) => a.load - b.load }); // Min heap
+      const allocation = new Map<number, Task[]>();
+
+      // Initialize the load on each machine
+      for (let i = 0; i < machines; i++) {
+        machineHeap.add({ id: i, load: 0 });
+        allocation.set(i, []);
+      }
+
+      // Assign tasks
+      tasks.forEach(([task, load]) => {
+        const machine = machineHeap.poll()!;
+        allocation.get(machine.id)!.push([task, load]);
+        machine.load += load;
+        machineHeap.add(machine); // The machine after updating the load is re-entered into the heap
+      });
+
+      return allocation;
+    }
+
+    const tasks: Task[] = [
+      ['Task1', 3],
+      ['Task2', 1],
+      ['Task3', 2],
+      ['Task4', 5],
+      ['Task5', 4]
+    ];
+    const expectedMap = new Map<number, Task[]>();
+    expectedMap.set(0, [
+      ['Task1', 3],
+      ['Task4', 5]
+    ]);
+    expectedMap.set(1, [
+      ['Task2', 1],
+      ['Task3', 2],
+      ['Task5', 4]
+    ]);
+    console.log(scheduleTasks(tasks, 2)); // expectedMap
+```
+
+[//]: # (No deletion!!! End of Example Replace Section)
+
 
 
 ## API docs & Examples

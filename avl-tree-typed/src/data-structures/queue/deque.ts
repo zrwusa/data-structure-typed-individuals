@@ -1,8 +1,8 @@
 /**
  * data-structure-typed
  *
- * @author Tyler Zeng
- * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
+ * @author Pablo Zeng
+ * @copyright Copyright (c) 2022 Pablo Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
 import type { DequeOptions, ElementCallback, IterableWithSizeOrLength } from '../../types';
@@ -16,9 +16,9 @@ import { calcMinUnitsRequired, rangeCheck } from '../../utils';
  * 4. Efficiency: Adding and removing elements at both ends of a deque is usually very fast. However, when the dynamic array needs to expand, it may involve copying the entire array to a larger one, and this operation has a time complexity of O(n).
  * 5. Performance jitter: Deque may experience performance jitter, but DoublyLinkedList will not
  */
-export class Deque<E> extends IterableElementBase<E> {
+export class Deque<E = any, R = any> extends IterableElementBase<E, R, Deque<E, R>> {
   /**
-   * The constructor initializes a Deque object with an optional iterable of elements and options.
+   * The constructor initializes a Deque object with optional iterable of elements and options.
    * @param elements - An iterable object (such as an array or a Set) that contains the initial
    * elements to be added to the deque. It can also be an object with a `length` or `size` property
    * that represents the number of elements in the iterable object. If no elements are provided, an
@@ -28,12 +28,13 @@ export class Deque<E> extends IterableElementBase<E> {
    * which determines the size of each bucket in the deque. If the `bucketSize` option is not provided
    * or is not a number
    */
-  constructor(elements: IterableWithSizeOrLength<E> = [], options?: DequeOptions) {
-    super();
+  constructor(elements: IterableWithSizeOrLength<E> | IterableWithSizeOrLength<R> = [], options?: DequeOptions<E, R>) {
+    super(options);
 
     if (options) {
-      const { bucketSize } = options;
+      const { bucketSize, maxLen } = options;
       if (typeof bucketSize === 'number') this._bucketSize = bucketSize;
+      if (typeof maxLen === 'number' && maxLen > 0 && maxLen % 1 === 0) this._maxLen = maxLen;
     }
 
     let _size: number;
@@ -52,10 +53,7 @@ export class Deque<E> extends IterableElementBase<E> {
     const needBucketNum = calcMinUnitsRequired(_size, this._bucketSize);
     this._bucketFirst = this._bucketLast = (this._bucketCount >> 1) - (needBucketNum >> 1);
     this._firstInBucket = this._lastInBucket = (this._bucketSize - (_size % this._bucketSize)) >> 1;
-
-    for (const element of elements) {
-      this.push(element);
-    }
+    this.pushMany(elements);
   }
 
   protected _bucketSize: number = 1 << 12;
@@ -67,6 +65,17 @@ export class Deque<E> extends IterableElementBase<E> {
    */
   get bucketSize() {
     return this._bucketSize;
+  }
+
+  protected _maxLen: number = -1;
+
+  /**
+   * The maxLen function returns the max length of the deque.
+   *
+   * @return The max length of the deque
+   */
+  get maxLen() {
+    return this._maxLen;
   }
 
   protected _bucketFirst = 0;
@@ -147,7 +156,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns The first element of the collection, of type E, is being returned.
    */
   get first(): E | undefined {
-    if (this.size === 0) return;
+    if (this._size === 0) return;
     return this._buckets[this._bucketFirst][this._firstInBucket];
   }
 
@@ -156,14 +165,9 @@ export class Deque<E> extends IterableElementBase<E> {
    * @return The last element in the array
    */
   get last(): E | undefined {
-    if (this.size === 0) return;
+    if (this._size === 0) return;
     return this._buckets[this._bucketLast][this._lastInBucket];
   }
-
-  /**
-   * Time Complexity - Amortized O(1) (possible reallocation)
-   * Space Complexity - O(n) (due to potential resizing).
-   */
 
   /**
    * Time Complexity - Amortized O(1) (possible reallocation),
@@ -175,7 +179,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns The size of the data structure after the element has been pushed.
    */
   push(element: E): boolean {
-    if (this.size) {
+    if (this._size) {
       if (this._lastInBucket < this._bucketSize - 1) {
         this._lastInBucket += 1;
       } else if (this._bucketLast < this._bucketCount - 1) {
@@ -189,13 +193,9 @@ export class Deque<E> extends IterableElementBase<E> {
     }
     this._size += 1;
     this._buckets[this._bucketLast][this._lastInBucket] = element;
+    if (this._maxLen > 0 && this._size > this._maxLen) this.shift();
     return true;
   }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(1)
@@ -206,9 +206,9 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns The element that was removed from the data structure is being returned.
    */
   pop(): E | undefined {
-    if (this.size === 0) return;
+    if (this._size === 0) return;
     const element = this._buckets[this._bucketLast][this._lastInBucket];
-    if (this.size !== 1) {
+    if (this._size !== 1) {
       if (this._lastInBucket > 0) {
         this._lastInBucket -= 1;
       } else if (this._bucketLast > 0) {
@@ -224,44 +224,6 @@ export class Deque<E> extends IterableElementBase<E> {
   }
 
   /**
-   * Time Complexity: Amortized O(1)
-   * Space Complexity: O(n)
-   */
-
-  /**
-   * Time Complexity: Amortized O(1)
-   * Space Complexity: O(n)
-   *
-   * The `unshift` function adds an element to the beginning of an array-like data structure and
-   * returns the new size of the structure.
-   * @param {E} element - The `element` parameter represents the element that you want to add to the
-   * beginning of the data structure.
-   * @returns The size of the data structure after the element has been added.
-   */
-  unshift(element: E): boolean {
-    if (this.size) {
-      if (this._firstInBucket > 0) {
-        this._firstInBucket -= 1;
-      } else if (this._bucketFirst > 0) {
-        this._bucketFirst -= 1;
-        this._firstInBucket = this._bucketSize - 1;
-      } else {
-        this._bucketFirst = this._bucketCount - 1;
-        this._firstInBucket = this._bucketSize - 1;
-      }
-      if (this._bucketFirst === this._bucketLast && this._firstInBucket === this._lastInBucket) this._reallocate();
-    }
-    this._size += 1;
-    this._buckets[this._bucketFirst][this._firstInBucket] = element;
-    return true;
-  }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
-
-  /**
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
@@ -271,9 +233,9 @@ export class Deque<E> extends IterableElementBase<E> {
    * returned.
    */
   shift(): E | undefined {
-    if (this.size === 0) return;
+    if (this._size === 0) return;
     const element = this._buckets[this._bucketFirst][this._firstInBucket];
-    if (this.size !== 1) {
+    if (this._size !== 1) {
       if (this._firstInBucket < this._bucketSize - 1) {
         this._firstInBucket += 1;
       } else if (this._bucketFirst < this._bucketCount - 1) {
@@ -289,9 +251,84 @@ export class Deque<E> extends IterableElementBase<E> {
   }
 
   /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
+   * Time Complexity: Amortized O(1)
+   * Space Complexity: O(n)
+   *
+   * The `unshift` function adds an element to the beginning of an array-like data structure and
+   * returns the new size of the structure.
+   * @param {E} element - The `element` parameter represents the element that you want to add to the
+   * beginning of the data structure.
+   * @returns The size of the data structure after the element has been added.
    */
+  unshift(element: E): boolean {
+    if (this._size) {
+      if (this._firstInBucket > 0) {
+        this._firstInBucket -= 1;
+      } else if (this._bucketFirst > 0) {
+        this._bucketFirst -= 1;
+        this._firstInBucket = this._bucketSize - 1;
+      } else {
+        this._bucketFirst = this._bucketCount - 1;
+        this._firstInBucket = this._bucketSize - 1;
+      }
+      if (this._bucketFirst === this._bucketLast && this._firstInBucket === this._lastInBucket) this._reallocate();
+    }
+    this._size += 1;
+    this._buckets[this._bucketFirst][this._firstInBucket] = element;
+    if (this._maxLen > 0 && this._size > this._maxLen) this.pop();
+    return true;
+  }
+
+  /**
+   * Time Complexity: O(k)
+   * Space Complexity: O(k)
+   *
+   * The function `pushMany` iterates over elements and pushes them into an array after applying a
+   * transformation function if provided.
+   * @param {IterableWithSizeOrLength<E> | IterableWithSizeOrLength<R>} elements - The `elements`
+   * parameter in the `pushMany` function is expected to be an iterable containing elements of type `E`
+   * or `R`. It can be either an `IterableWithSizeOrLength<E>` or an `IterableWithSizeOrLength<R>`. The
+   * function iterates over each element
+   * @returns The `pushMany` function is returning an array of boolean values, where each value
+   * represents the result of calling the `push` method on the current object instance with the
+   * corresponding element from the input `elements` iterable.
+   */
+  pushMany(elements: IterableWithSizeOrLength<E> | IterableWithSizeOrLength<R>) {
+    const ans: boolean[] = [];
+    for (const el of elements) {
+      if (this.toElementFn) {
+        ans.push(this.push(this.toElementFn(el as R)));
+      } else {
+        ans.push(this.push(el as E));
+      }
+    }
+    return ans;
+  }
+
+  /**
+   * Time Complexity: O(k)
+   * Space Complexity: O(k)
+   *
+   * The `unshiftMany` function in TypeScript iterates over elements and adds them to the beginning of
+   * an array, optionally converting them using a provided function.
+   * @param {IterableWithSizeOrLength<E> | IterableWithSizeOrLength<R>} elements - The `elements`
+   * parameter in the `unshiftMany` function is an iterable containing elements of type `E` or `R`. It
+   * can be an array or any other iterable data structure that has a known size or length. The function
+   * iterates over each element in the `elements` iterable and
+   * @returns The `unshiftMany` function returns an array of boolean values indicating whether each
+   * element was successfully added to the beginning of the array.
+   */
+  unshiftMany(elements: IterableWithSizeOrLength<E> | IterableWithSizeOrLength<R> = []) {
+    const ans: boolean[] = [];
+    for (const el of elements) {
+      if (this.toElementFn) {
+        ans.push(this.unshift(this.toElementFn(el as R)));
+      } else {
+        ans.push(this.unshift(el as E));
+      }
+    }
+    return ans;
+  }
 
   /**
    * Time Complexity: O(1)
@@ -301,13 +338,8 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns A boolean value indicating whether the size of the object is 0 or not.
    */
   isEmpty(): boolean {
-    return this.size === 0;
+    return this._size === 0;
   }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(1)
@@ -326,9 +358,9 @@ export class Deque<E> extends IterableElementBase<E> {
   /**
    * The below function is a generator that yields elements from a collection one by one.
    */
-  * begin(): Generator<E> {
+  *begin(): Generator<E> {
     let index = 0;
-    while (index < this.size) {
+    while (index < this._size) {
       yield this.at(index);
       index++;
     }
@@ -338,18 +370,13 @@ export class Deque<E> extends IterableElementBase<E> {
    * The function `reverseBegin()` is a generator that yields elements in reverse order starting from
    * the last element.
    */
-  * reverseBegin(): Generator<E> {
-    let index = this.size - 1;
+  *reverseBegin(): Generator<E> {
+    let index = this._size - 1;
     while (index >= 0) {
       yield this.at(index);
       index--;
     }
   }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(1)
@@ -362,15 +389,10 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns The element at the specified position in the data structure is being returned.
    */
   at(pos: number): E {
-    rangeCheck(pos, 0, this.size - 1);
+    rangeCheck(pos, 0, this._size - 1);
     const { bucketIndex, indexInBucket } = this._getBucketAndPosition(pos);
     return this._buckets[bucketIndex][indexInBucket]!;
   }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(1)
@@ -383,16 +405,11 @@ export class Deque<E> extends IterableElementBase<E> {
    * position in the data structure.
    */
   setAt(pos: number, element: E): boolean {
-    rangeCheck(pos, 0, this.size - 1);
+    rangeCheck(pos, 0, this._size - 1);
     const { bucketIndex, indexInBucket } = this._getBucketAndPosition(pos);
     this._buckets[bucketIndex][indexInBucket] = element;
     return true;
   }
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
-   */
 
   /**
    * Time Complexity: O(n)
@@ -410,15 +427,15 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns The size of the array after the insertion is being returned.
    */
   addAt(pos: number, element: E, num = 1): boolean {
-    const length = this.size;
+    const length = this._size;
     rangeCheck(pos, 0, length);
     if (pos === 0) {
       while (num--) this.unshift(element);
-    } else if (pos === this.size) {
+    } else if (pos === this._size) {
       while (num--) this.push(element);
     } else {
       const arr: E[] = [];
-      for (let i = pos; i < this.size; ++i) {
+      for (let i = pos; i < this._size; ++i) {
         arr.push(this.at(i));
       }
       this.cut(pos - 1, true);
@@ -427,11 +444,6 @@ export class Deque<E> extends IterableElementBase<E> {
     }
     return true;
   }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(1)
@@ -469,11 +481,6 @@ export class Deque<E> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(1)
    * Space Complexity: O(1) or O(n)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1) or O(n)
    *
    * The `cutRest` function cuts the elements from a specified position in a deque and returns a new
    * deque with the cut elements.
@@ -489,7 +496,6 @@ export class Deque<E> extends IterableElementBase<E> {
   cutRest(pos: number, isCutSelf = false): Deque<E> {
     if (isCutSelf) {
       if (pos < 0) {
-        this.clear();
         return this;
       }
       const { bucketIndex, indexInBucket } = this._getBucketAndPosition(pos);
@@ -499,19 +505,14 @@ export class Deque<E> extends IterableElementBase<E> {
       return this;
     } else {
       const newDeque = new Deque<E>([], { bucketSize: this._bucketSize });
-
-      for (let i = pos; i < this.size; i++) {
+      if (pos < 0) pos = 0;
+      for (let i = pos; i < this._size; i++) {
         newDeque.push(this.at(i));
       }
 
       return newDeque;
     }
   }
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(1) or O(n)
-   */
 
   /**
    * Time Complexity: O(n)
@@ -525,11 +526,11 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns The size of the data structure after the deletion operation is performed.
    */
   deleteAt(pos: number): boolean {
-    rangeCheck(pos, 0, this.size - 1);
+    rangeCheck(pos, 0, this._size - 1);
     if (pos === 0) this.shift();
-    else if (pos === this.size - 1) this.pop();
+    else if (pos === this._size - 1) this.pop();
     else {
-      const length = this.size - 1;
+      const length = this._size - 1;
       let { bucketIndex: curBucket, indexInBucket: curPointer } = this._getBucketAndPosition(pos);
       for (let i = pos; i < length; ++i) {
         const { bucketIndex: nextBucket, indexInBucket: nextPointer } = this._getBucketAndPosition(pos + 1);
@@ -545,11 +546,6 @@ export class Deque<E> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(1)
    *
    * The `delete` function removes all occurrences of a specified element from an array-like data
    * structure.
@@ -558,7 +554,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns The size of the data structure after the element has been deleted.
    */
   delete(element: E): boolean {
-    const size = this.size;
+    const size = this._size;
     if (size === 0) return false;
     let i = 0;
     let index = 0;
@@ -573,11 +569,6 @@ export class Deque<E> extends IterableElementBase<E> {
     this.cut(index - 1, true);
     return true;
   }
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(n)
@@ -603,23 +594,18 @@ export class Deque<E> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(1)
    *
    * The `unique()` function removes duplicate elements from an array-like data structure and returns
    * the number of unique elements.
    * @returns The size of the modified array is being returned.
    */
   unique(): this {
-    if (this.size <= 1) {
+    if (this._size <= 1) {
       return this;
     }
     let index = 1;
     let prev = this.at(0);
-    for (let i = 1; i < this.size; ++i) {
+    for (let i = 1; i < this._size; ++i) {
       const cur = this.at(i);
       if (cur !== prev) {
         prev = cur;
@@ -633,11 +619,6 @@ export class Deque<E> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(n log n)
    * Space Complexity: O(n)
-   */
-
-  /**
-   * Time Complexity: O(n log n)
-   * Space Complexity: O(n)
    *
    * The `sort` function sorts the elements in a data structure using a provided comparator function.
    * @param [comparator] - The `comparator` parameter is a function that takes in two elements `x` and
@@ -647,11 +628,11 @@ export class Deque<E> extends IterableElementBase<E> {
    */
   sort(comparator?: (x: E, y: E) => number): this {
     const arr: E[] = [];
-    for (let i = 0; i < this.size; ++i) {
+    for (let i = 0; i < this._size; ++i) {
       arr.push(this.at(i));
     }
     arr.sort(comparator);
-    for (let i = 0; i < this.size; ++i) {
+    for (let i = 0; i < this._size; ++i) {
       this.setAt(i, arr[i]);
     }
     return this;
@@ -660,19 +641,14 @@ export class Deque<E> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(n)
-   */
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
    *
    * The `shrinkToFit` function reorganizes the elements in an array-like data structure to minimize
    * memory usage.
    * @returns Nothing is being returned. The function is using the `return` statement to exit early if
-   * `this.size` is 0, but it does not return any value.
+   * `this._size` is 0, but it does not return any value.
    */
   shrinkToFit(): void {
-    if (this.size === 0) return;
+    if (this._size === 0) return;
     const newBuckets = [];
     if (this._bucketFirst === this._bucketLast) return;
     else if (this._bucketFirst < this._bucketLast) {
@@ -695,11 +671,6 @@ export class Deque<E> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(1)
    *
    * The function "indexOf" returns the index of the first occurrence of a given element in an array,
    * or -1 if the element is not found.
@@ -709,18 +680,13 @@ export class Deque<E> extends IterableElementBase<E> {
    * in the data structure. If the element is not found, it returns -1.
    */
   indexOf(element: E): number {
-    for (let i = 0; i < this.size; ++i) {
+    for (let i = 0; i < this._size; ++i) {
       if (this.at(i) === element) {
         return i;
       }
     }
     return -1;
   }
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
-   */
 
   /**
    * Time Complexity: O(n)
@@ -736,25 +702,15 @@ export class Deque<E> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(n)
-   */
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
    *
    * The `clone()` function returns a new instance of the `Deque` class with the same elements and
    * bucket size as the original instance.
    * @returns The `clone()` method is returning a new instance of the `Deque` class with the same
    * elements as the original deque (`this`) and the same bucket size.
    */
-  clone(): Deque<E> {
-    return new Deque<E>([...this], { bucketSize: this.bucketSize });
+  clone(): Deque<E, R> {
+    return new Deque<E, R>(this, { bucketSize: this.bucketSize, toElementFn: this.toElementFn });
   }
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
-   */
 
   /**
    * Time Complexity: O(n)
@@ -772,8 +728,8 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns The `filter` method is returning a new `Deque` object that contains the elements that
    * satisfy the given predicate function.
    */
-  filter(predicate: ElementCallback<E, boolean>, thisArg?: any): Deque<E> {
-    const newDeque = new Deque<E>([], { bucketSize: this._bucketSize });
+  filter(predicate: ElementCallback<E, R, boolean, Deque<E, R>>, thisArg?: any): Deque<E, R> {
+    const newDeque = new Deque<E, R>([], { bucketSize: this._bucketSize, toElementFn: this.toElementFn });
     let index = 0;
     for (const el of this) {
       if (predicate.call(thisArg, el, index, this)) {
@@ -787,22 +743,27 @@ export class Deque<E> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(n)
-   */
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
    *
-   * The `map` function creates a new Deque by applying a callback function to each element of the
-   * original Deque.
-   * @param callback - The `callback` parameter is a function that will be called for each element in
-   * the deque. It takes three arguments:
-   * @param {any} [thisArg] - The `thisArg` parameter is an optional argument that specifies the value
-   * to be used as `this` when executing the `callback` function. If `thisArg` is provided, it will be
-   * passed as the `this` value to the `callback` function. If `thisArg` is
-   * @returns a new Deque object with the mapped values.
+   * The `map` function takes a callback function and applies it to each element in the deque,
+   * returning a new deque with the results.
+   * @param callback - The callback parameter is a function that will be called for each element in the
+   * deque. It takes three arguments: the current element, the index of the element, and the deque
+   * itself. It should return a value of type EM.
+   * @param [toElementFn] - The `toElementFn` parameter is an optional function that can be used to
+   * transform the raw element (`RM`) into a new element (`EM`) before adding it to the new deque. If
+   * provided, this function will be called for each raw element in the original deque.
+   * @param {any} [thisArg] - The `thisArg` parameter is an optional argument that allows you to
+   * specify the value of `this` within the callback function. It is used to set the context or scope
+   * in which the callback function will be executed. If `thisArg` is provided, it will be used as the
+   * value of
+   * @returns a new Deque object with elements of type EM and raw elements of type RM.
    */
-  map<T>(callback: ElementCallback<E, T>, thisArg?: any): Deque<T> {
-    const newDeque = new Deque<T>([], { bucketSize: this._bucketSize });
+  map<EM, RM>(
+    callback: ElementCallback<E, R, EM, Deque<E, R>>,
+    toElementFn?: (rawElement: RM) => EM,
+    thisArg?: any
+  ): Deque<EM, RM> {
+    const newDeque = new Deque<EM, RM>([], { bucketSize: this._bucketSize, toElementFn });
     let index = 0;
     for (const el of this) {
       newDeque.push(callback.call(thisArg, el, index, this));
@@ -814,25 +775,15 @@ export class Deque<E> extends IterableElementBase<E> {
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(1)
-   * /
-
-   /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(1)
    *
    * The above function is an implementation of the iterator protocol in TypeScript, allowing the
    * object to be iterated over using a for...of loop.
    */
-  protected* _getIterator(): IterableIterator<E> {
-    for (let i = 0; i < this.size; ++i) {
+  protected *_getIterator(): IterableIterator<E> {
+    for (let i = 0; i < this._size; ++i) {
       yield this.at(i);
     }
   }
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
-   */
 
   /**
    * Time Complexity: O(n)
@@ -864,11 +815,6 @@ export class Deque<E> extends IterableElementBase<E> {
     this._buckets = newBuckets;
     this._bucketCount = newBuckets.length;
   }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(1)

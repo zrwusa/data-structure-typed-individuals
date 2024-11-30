@@ -30,23 +30,13 @@ npm i singly-linked-list-typed --save
 yarn add singly-linked-list-typed
 ```
 
-### methods
-
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/singly-linked-list.png?raw=true)
-
 ### snippet
 
-#### TS
+[//]: # (No deletion!!! Start of Example Replace Section)
 
-```typescript
 
-```
+[//]: # (No deletion!!! End of Example Replace Section)
 
-#### JS
-
-```javascript
-
-```
 
 
 ## API docs & Examples

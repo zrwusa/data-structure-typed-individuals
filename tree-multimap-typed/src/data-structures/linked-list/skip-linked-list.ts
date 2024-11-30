@@ -1,8 +1,8 @@
 /**
  * data-structure-typed
  *
- * @author Tyler Zeng
- * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
+ * @author Pablo Zeng
+ * @copyright Copyright (c) 2022 Pablo Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
 import type { SkipLinkedListOptions } from '../../types';
@@ -19,6 +19,9 @@ export class SkipListNode<K, V> {
   }
 }
 
+/**
+ *
+ */
 export class SkipList<K, V> {
   /**
    * The constructor function initializes a SkipLinkedList object with optional options and elements.
@@ -81,11 +84,6 @@ export class SkipList<K, V> {
   }
 
   /**
-   * Time Complexity: O(log n)
-   * Space Complexity: O(1)
-   */
-
-  /**
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
@@ -96,11 +94,6 @@ export class SkipList<K, V> {
     const firstNode = this.head.forward[0];
     return firstNode ? firstNode.value : undefined;
   }
-
-  /**
-   * Time Complexity: O(log n)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(log n)
@@ -118,11 +111,6 @@ export class SkipList<K, V> {
     }
     return current.value;
   }
-
-  /**
-   * Time Complexity: O(log n)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(log n)
@@ -158,11 +146,6 @@ export class SkipList<K, V> {
   /**
    * Time Complexity: O(log n)
    * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(log n)
-   * Space Complexity: O(1)
    *
    * The function `get` retrieves the value associated with a given key from a skip list data structure.
    * @param {K} key - The `key` parameter is the key of the element that we want to retrieve from the data structure.
@@ -189,9 +172,7 @@ export class SkipList<K, V> {
   /**
    * Time Complexity: O(log n)
    * Space Complexity: O(1)
-   */
-
-  /**
+   *
    * The function checks if a key exists in a data structure.
    * @param {K} key - The parameter "key" is of type K, which represents the type of the key being
    * checked.
@@ -200,11 +181,6 @@ export class SkipList<K, V> {
   has(key: K): boolean {
     return this.get(key) !== undefined;
   }
-
-  /**
-   * Time Complexity: O(log n)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(log n)
@@ -247,11 +223,6 @@ export class SkipList<K, V> {
   /**
    * Time Complexity: O(log n)
    * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(log n)
-   * Space Complexity: O(1)
    *
    * Get the value of the first element in the Skip List that is greater than the given key.
    * @param key - the given key.
@@ -267,11 +238,6 @@ export class SkipList<K, V> {
     const nextNode = current.forward[0];
     return nextNode ? nextNode.value : undefined;
   }
-
-  /**
-   * Time Complexity: O(log n)
-   * Space Complexity: O(1)
-   */
 
   /**
    * Time Complexity: O(log n)
@@ -296,12 +262,6 @@ export class SkipList<K, V> {
 
     return lastLess ? lastLess.value : undefined;
   }
-
-  /**
-   * Time Complexity: O(maxLevel)
-   * Space Complexity: O(1)
-   * where maxLevel is the maximum level of the SkipList, as it may iterate up to maxLevel times in the worst case.
-   */
 
   /**
    * Time Complexity: O(maxLevel)

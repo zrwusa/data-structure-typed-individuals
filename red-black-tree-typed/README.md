@@ -30,9 +30,6 @@ npm i red-black-tree-typed --save
 yarn add red-black-tree-typed
 ```
 
-### methods
-
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/red-black-tree.png?raw=true)
 
 ### snippet
 
@@ -224,6 +221,64 @@ lastBFSIds[0]                               // 12
 const lastBFSNodes = rbTree.bfs('node');
 lastBFSNodes[0].id                          // 12
 ```
+
+[//]: # (No deletion!!! Start of Example Replace Section)
+
+### Find elements in a range
+```typescript
+    const bst = new RedBlackTree<number>([10, 5, 15, 3, 7, 12, 18]);
+    console.log(bst.search(new Range(5, 10))); // [5, 10, 7]
+    console.log(bst.search(new Range(4, 12))); // [5, 10, 12, 7]
+    console.log(bst.search(new Range(15, 20))); // [15, 18]
+```
+
+### using Red-Black Tree as a price-based index for stock data
+```typescript
+    // Define the structure of individual stock records
+    interface StockRecord {
+      price: number; // Stock price (key for indexing)
+      symbol: string; // Stock ticker symbol
+      volume: number; // Trade volume
+    }
+
+    // Simulate stock market data as it might come from an external feed
+    const marketStockData: StockRecord[] = [
+      { price: 142.5, symbol: 'AAPL', volume: 1000000 },
+      { price: 335.2, symbol: 'MSFT', volume: 800000 },
+      { price: 3285.04, symbol: 'AMZN', volume: 500000 },
+      { price: 267.98, symbol: 'META', volume: 750000 },
+      { price: 234.57, symbol: 'GOOGL', volume: 900000 }
+    ];
+
+    // Extend the stock record type to include metadata for database usage
+    type StockTableRecord = StockRecord & { lastUpdated: Date };
+
+    // Create a Red-Black Tree to index stock records by price
+    // Simulates a database index with stock price as the key for quick lookups
+    const priceIndex = new RedBlackTree<number, StockTableRecord, StockRecord>(marketStockData, {
+      toEntryFn: stockRecord => [
+        stockRecord.price, // Use stock price as the key
+        {
+          ...stockRecord,
+          lastUpdated: new Date() // Add a timestamp for when the record was indexed
+        }
+      ]
+    });
+
+    // Query the stock with the highest price
+    const highestPricedStock = priceIndex.getRightMost();
+    console.log(priceIndex.get(highestPricedStock)?.symbol); // 'AMZN' // Amazon has the highest price
+
+    // Query stocks within a specific price range (200 to 400)
+    const stocksInRange = priceIndex.rangeSearch(
+      [200, 400], // Price range
+      node => priceIndex.get(node)?.symbol // Extract stock symbols for the result
+    );
+    console.log(stocksInRange); // ['GOOGL', 'MSFT', 'META']
+```
+
+[//]: # (No deletion!!! End of Example Replace Section)
+
 
 
 ## API docs & Examples

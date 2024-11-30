@@ -30,15 +30,6 @@ npm i priority-queue-typed --save
 yarn add priority-queue-typed
 ```
 
-### methods
-
-Priority Queue
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/priority-queue.png?raw=true)
-Min Priority Queue
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/min-priority-queue.png?raw=true)
-Max Priority Queue
-![](https://github.com/zrwusa/assets/blob/master/images/data-structure-typed/methods-8bit/max-priority-queue.png?raw=true)
-
 ### snippet
 
 #### TS
@@ -108,6 +99,11 @@ Max Priority Queue
     minPQ1.DFS('post')              //  [4, 3, 5, 2, 8, 7, 6, 1]
     minPQ1.DFS('pre')               //  [1, 2, 3, 4, 5, 6, 8, 7]
 ```
+
+[//]: # (No deletion!!! Start of Example Replace Section)
+
+
+[//]: # (No deletion!!! End of Example Replace Section)
 
 
 ## API docs & Examples
