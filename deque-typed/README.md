@@ -34,6 +34,97 @@ yarn add deque-typed
 
 [//]: # (No deletion!!! Start of Example Replace Section)
 
+### prize roulette
+```typescript
+    class PrizeRoulette {
+      private deque: Deque<string>;
+
+      constructor(prizes: string[]) {
+        // Initialize the deque with prizes
+        this.deque = new Deque<string>(prizes);
+      }
+
+      // Rotate clockwise to the right (forward)
+      rotateClockwise(steps: number): void {
+        const n = this.deque.length;
+        if (n === 0) return;
+
+        for (let i = 0; i < steps; i++) {
+          const last = this.deque.pop(); // Remove the last element
+          this.deque.unshift(last!); // Add it to the front
+        }
+      }
+
+      // Rotate counterclockwise to the left (backward)
+      rotateCounterClockwise(steps: number): void {
+        const n = this.deque.length;
+        if (n === 0) return;
+
+        for (let i = 0; i < steps; i++) {
+          const first = this.deque.shift(); // Remove the first element
+          this.deque.push(first!); // Add it to the back
+        }
+      }
+
+      // Display the current prize at the head
+      display() {
+        return this.deque.first;
+      }
+    }
+
+    // Example usage
+    const prizes = ['Car', 'Bike', 'Laptop', 'Phone', 'Watch', 'Headphones']; // Initialize the prize list
+    const roulette = new PrizeRoulette(prizes);
+
+    // Display the initial state
+    console.log(roulette.display()); // 'Car' // Car
+
+    // Rotate clockwise by 3 steps
+    roulette.rotateClockwise(3);
+    console.log(roulette.display()); // 'Phone' // Phone
+
+    // Rotate counterclockwise by 2 steps
+    roulette.rotateCounterClockwise(2);
+    console.log(roulette.display()); // 'Headphones'
+```
+
+### sliding window
+```typescript
+    // Maximum function of sliding window
+    function maxSlidingWindow(nums: number[], k: number): number[] {
+      const n = nums.length;
+      if (n * k === 0) return [];
+
+      const deq = new Deque<number>();
+      const result: number[] = [];
+
+      for (let i = 0; i < n; i++) {
+        // Delete indexes in the queue that are not within the window range
+        if (deq.length > 0 && deq.first! === i - k) {
+          deq.shift();
+        }
+
+        // Remove all indices less than the current value from the tail of the queue
+        while (deq.length > 0 && nums[deq.last!] < nums[i]) {
+          deq.pop();
+        }
+
+        // Add the current index to the end of the queue
+        deq.push(i);
+
+        // Add the maximum value of the window to the results
+        if (i >= k - 1) {
+          result.push(nums[deq.first!]);
+        }
+      }
+
+      return result;
+    }
+
+    const nums = [1, 3, -1, -3, 5, 3, 6, 7];
+    const k = 3;
+    console.log(maxSlidingWindow(nums, k)); // [3, 3, 5, 5, 6, 7]
+```
 
 [//]: # (No deletion!!! End of Example Replace Section)
 

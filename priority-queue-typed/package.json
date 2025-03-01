@@ -1,7 +1,7 @@
 {
   "name": "priority-queue-typed",
-  "version": "1.54.1",
-  "description": "Priority Queue, Min Priority Queue, Max Priority Queue. Javascript & Typescript Data Structure.",
+  "version": "2.0.3",
+  "description": "Priority Queue",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && npx tsc",
@@ -120,6 +120,6 @@
     "typedoc": "^0.25.1"
   },
   "dependencies": {
-    "data-structure-typed": "^1.54.1"
+    "data-structure-typed": "^2.0.3"
   }
 }

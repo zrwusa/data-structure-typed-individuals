@@ -1,7 +1,7 @@
 {
   "name": "queue-typed",
-  "version": "1.54.1",
-  "description": "Queue, ArrayQueue. Javascript & Typescript Data Structure.",
+  "version": "2.0.3",
+  "description": "Queue data structure",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && npx tsc",
@@ -115,6 +115,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.54.1"
+    "data-structure-typed": "^2.0.3"
   }
 }

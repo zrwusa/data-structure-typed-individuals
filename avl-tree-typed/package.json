@@ -1,7 +1,7 @@
 {
   "name": "avl-tree-typed",
-  "version": "1.54.1",
-  "description": "AVLTree(Adelson-Velsky and Landis Tree). Javascript & Typescript Data Structure.",
+  "version": "2.0.3",
+  "description": "Standard AVL tree",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && npx tsc",
@@ -163,6 +163,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.54.1"
+    "data-structure-typed": "^2.0.3"
   }
 }

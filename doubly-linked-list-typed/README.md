@@ -111,7 +111,7 @@ yarn add doubly-linked-list-typed
         const initialNode = this.currentSong;
 
         // Loop through the playlist twice
-        for (let i = 0; i < this.playlist.size * 2; i++) {
+        for (let i = 0; i < this.playlist.length * 2; i++) {
           playedSongs.push(this.currentSong!.value);
           this.currentSong = this.currentSong!.next || this.playlist.head; // Loop back to the start if needed
         }
@@ -234,7 +234,7 @@ yarn add doubly-linked-list-typed
         }
 
         // Check capacity
-        if (this.list.size >= this.capacity) {
+        if (this.list.length >= this.capacity) {
           // Delete the least recently used element (the tail of the linked list)
           const removedNode = this.list.tail;
           if (removedNode) {
@@ -279,9 +279,9 @@ yarn add doubly-linked-list-typed
         this.map.clear();
       }
 
-      // Get the current cache size
-      get size(): number {
-        return this.list.size;
+      // Get the current cache length
+      get length(): number {
+        return this.list.length;
       }
 
       // Check if it is empty
@@ -340,7 +340,7 @@ yarn add doubly-linked-list-typed
 
     console.log(cache.delete('a')); // true
     console.log(cache.get('a')); // undefined
-    console.log(cache.size); // 1
+    console.log(cache.length); // 1
 
     // Should support clearing cache
     cache.clear();
@@ -348,7 +348,7 @@ yarn add doubly-linked-list-typed
     cache.set('b', 2);
     cache.clear();
 
-    console.log(cache.size); // 0
+    console.log(cache.length); // 0
     console.log(cache.isEmpty); // true
 ```
 

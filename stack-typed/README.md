@@ -35,6 +35,140 @@ yarn add stack-typed
 
 [//]: # (No deletion!!! Start of Example Replace Section)
 
+### Balanced Parentheses or Brackets
+```typescript
+    type ValidCharacters = ')' | '(' | ']' | '[' | '}' | '{';
+
+    const stack = new Stack<string>();
+    const input: ValidCharacters[] = '[({})]'.split('') as ValidCharacters[];
+    const matches: { [key in ValidCharacters]?: ValidCharacters } = { ')': '(', ']': '[', '}': '{' };
+    for (const char of input) {
+      if ('([{'.includes(char)) {
+        stack.push(char);
+      } else if (')]}'.includes(char)) {
+        if (stack.pop() !== matches[char]) {
+          fail('Parentheses are not balanced');
+        }
+      }
+    }
+    console.log(stack.isEmpty()); // true
+```
+
+### Expression Evaluation and Conversion
+```typescript
+    const stack = new Stack<number>();
+    const expression = [5, 3, '+']; // Equivalent to 5 + 3
+    expression.forEach(token => {
+      if (typeof token === 'number') {
+        stack.push(token);
+      } else {
+        const b = stack.pop()!;
+        const a = stack.pop()!;
+        stack.push(token === '+' ? a + b : 0); // Only handling '+' here
+      }
+    });
+    console.log(stack.pop()); // 8
+```
+
+### Depth-First Search (DFS)
+```typescript
+    const stack = new Stack<number>();
+    const graph: { [key in number]: number[] } = { 1: [2, 3], 2: [4], 3: [5], 4: [], 5: [] };
+    const visited: number[] = [];
+    stack.push(1);
+    while (!stack.isEmpty()) {
+      const node = stack.pop()!;
+      if (!visited.includes(node)) {
+        visited.push(node);
+        graph[node].forEach(neighbor => stack.push(neighbor));
+      }
+    }
+    console.log(visited); // [1, 3, 5, 2, 4]
+```
+
+### Backtracking Algorithms
+```typescript
+    const stack = new Stack<[number, number]>();
+    const maze = [
+      ['S', ' ', 'X'],
+      ['X', ' ', 'X'],
+      [' ', ' ', 'E']
+    ];
+    const start: [number, number] = [0, 0];
+    const end = [2, 2];
+    const directions = [
+      [0, 1], // To the right
+      [1, 0], // down
+      [0, -1], // left
+      [-1, 0] // up
+    ];
+
+    const visited = new Set<string>(); // Used to record visited nodes
+    stack.push(start);
+    const path: number[][] = [];
+
+    while (!stack.isEmpty()) {
+      const [x, y] = stack.pop()!;
+      if (visited.has(`${x},${y}`)) continue; // Skip already visited nodes
+      visited.add(`${x},${y}`);
+
+      path.push([x, y]);
+
+      if (x === end[0] && y === end[1]) {
+        break; // Find the end point and exit
+      }
+
+      for (const [dx, dy] of directions) {
+        const nx = x + dx;
+        const ny = y + dy;
+        if (
+          maze[nx]?.[ny] === ' ' || // feasible path
+          maze[nx]?.[ny] === 'E' // destination
+        ) {
+          stack.push([nx, ny]);
+        }
+      }
+    }
+
+    expect(path).toContainEqual(end);
+```
+
+### Function Call Stack
+```typescript
+    const functionStack = new Stack<string>();
+    functionStack.push('main');
+    functionStack.push('foo');
+    functionStack.push('bar');
+    console.log(functionStack.pop()); // 'bar'
+    console.log(functionStack.pop()); // 'foo'
+    console.log(functionStack.pop()); // 'main'
+```
+
+### Simplify File Paths
+```typescript
+    const stack = new Stack<string>();
+    const path = '/a/./b/../../c';
+    path.split('/').forEach(segment => {
+      if (segment === '..') stack.pop();
+      else if (segment && segment !== '.') stack.push(segment);
+    });
+    console.log(stack.elements.join('/')); // 'c'
+```
+
+### Stock Span Problem
+```typescript
+    const stack = new Stack<number>();
+    const prices = [100, 80, 60, 70, 60, 75, 85];
+    const spans: number[] = [];
+    prices.forEach((price, i) => {
+      while (!stack.isEmpty() && prices[stack.peek()!] <= price) {
+        stack.pop();
+      }
+      spans.push(stack.isEmpty() ? i + 1 : i - stack.peek()!);
+      stack.push(i);
+    });
+    console.log(spans); // [1, 1, 1, 2, 1, 4, 6]
+```
 
 [//]: # (No deletion!!! End of Example Replace Section)
 

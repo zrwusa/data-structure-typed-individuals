@@ -4,8 +4,8 @@
  * @class
  */
 import type { ElementCallback, QueueOptions } from '../../types';
-import { IterableElementBase } from '../base';
 import { SinglyLinkedList } from '../linked-list';
+import { LinearBase } from '../base/linear-base';
 
 /**
  * 1. First In, First Out (FIFO): The core feature of a queue is its first in, first out nature. The element added to the queue first will be the one to be removed first.
@@ -15,8 +15,55 @@ import { SinglyLinkedList } from '../linked-list';
  * 5. Data Buffering: Acting as a buffer for data packets in network communication.
  * 6. Breadth-First Search (BFS): In traversal algorithms for graphs and trees, queues store elements that are to be visited.
  * 7. Real-time Queuing: Like queuing systems in banks or supermarkets.
+ * @example
+ * // Sliding Window using Queue
+ *     const nums = [2, 3, 4, 1, 5];
+ *     const k = 2;
+ *     const queue = new Queue<number>();
+ *
+ *     let maxSum = 0;
+ *     let currentSum = 0;
+ *
+ *     nums.forEach((num) => {
+ *       queue.push(num);
+ *       currentSum += num;
+ *
+ *       if (queue.length > k) {
+ *         currentSum -= queue.shift()!;
+ *       }
+ *
+ *       if (queue.length === k) {
+ *         maxSum = Math.max(maxSum, currentSum);
+ *       }
+ *     });
+ *
+ *     console.log(maxSum); // 7
+ * @example
+ * // Breadth-First Search (BFS) using Queue
+ *     const graph: { [key in number]: number[] } = {
+ *       1: [2, 3],
+ *       2: [4, 5],
+ *       3: [],
+ *       4: [],
+ *       5: []
+ *     };
+ *
+ *     const queue = new Queue<number>();
+ *     const visited: number[] = [];
+ *
+ *     queue.push(1);
+ *
+ *     while (!queue.isEmpty()) {
+ *       const node = queue.shift()!;
+ *       if (!visited.includes(node)) {
+ *         visited.push(node);
+ *         graph[node].forEach(neighbor => queue.push(neighbor));
+ *       }
+ *     }
+ *
+ *     console.log(visited); // [1, 2, 3, 4, 5]
  */
-export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, R>> {
+export class Queue<E = any, R = any> extends LinearBase<E, R> {
   constructor(elements: Iterable<E> | Iterable<R> = [], options?: QueueOptions<E, R>) {
     super(options);
 
@@ -30,30 +77,28 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
 
   protected _elements: E[] = [];
 
-  /**
-   * The elements function returns the elements of this set.
-   * @return An array of the elements in the stack
-   */
   get elements(): E[] {
     return this._elements;
   }
 
   protected _offset: number = 0;
 
-  /**
-   * The offset function returns the offset of the current page.
-   * @return The value of the protected variable _offset
-   */
   get offset(): number {
     return this._offset;
   }
 
-  /**
-   * The size function returns the number of elements in an array.
-   * @returns {number} The size of the array, which is the difference between the length of the array and the offset.
-   */
-  get size(): number {
+  get length(): number {
     return this.elements.length - this.offset;
+  }
+
+  protected _autoCompactRatio: number = 0.5;
+
+  get autoCompactRatio(): number {
+    return this._autoCompactRatio;
+  }
+
+  set autoCompactRatio(v: number) {
+    this._autoCompactRatio = v;
   }
 
   /**
@@ -62,10 +107,10 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
    *
    * The `first` function returns the first element of the array `_elements` if it exists, otherwise it returns `undefined`.
    * @returns The `get first()` method returns the first element of the data structure, represented by the `_elements` array at
-   * the `_offset` index. If the data structure is empty (size is 0), it returns `undefined`.
+   * the `_offset` index. If the data structure is empty (length is 0), it returns `undefined`.
    */
   get first(): E | undefined {
-    return this.size > 0 ? this.elements[this.offset] : undefined;
+    return this.length > 0 ? this.elements[this.offset] : undefined;
   }
 
   /**
@@ -77,26 +122,7 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
    * array is empty, it returns `undefined`.
    */
   get last(): E | undefined {
-    return this.size > 0 ? this.elements[this.elements.length - 1] : undefined;
-  }
-
-  protected _autoCompactRatio: number = 0.5;
-
-  /**
-   * This function returns the value of the autoCompactRatio property.
-   * @returns The `autoCompactRatio` property of the object, which is a number.
-   */
-  get autoCompactRatio(): number {
-    return this._autoCompactRatio;
-  }
-
-  /**
-   * The above function sets the autoCompactRatio property to a specified number in TypeScript.
-   * @param {number} v - The parameter `v` represents the value that will be assigned to the
-   * `_autoCompactRatio` property.
-   */
-  set autoCompactRatio(v: number) {
-    this._autoCompactRatio = v;
+    return this.length > 0 ? this.elements[this.elements.length - 1] : undefined;
   }
 
   /**
@@ -123,6 +149,7 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
    */
   push(element: E): boolean {
     this.elements.push(element);
+    if (this._maxLen > 0 && this.length > this._maxLen) this.shift();
     return true;
   }
 
@@ -155,7 +182,7 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
    * @returns The function `shift()` returns either the first element in the queue or `undefined` if the queue is empty.
    */
   shift(): E | undefined {
-    if (this.size === 0) return undefined;
+    if (this.length === 0) return undefined;
 
     const first = this.first;
     this._offset += 1;
@@ -174,7 +201,7 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
    */
   delete(element: E): boolean {
     const index = this.elements.indexOf(element);
-    return this.deleteAt(index);
+    return !!this.deleteAt(index);
   }
 
   /**
@@ -185,9 +212,10 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
    * @param {number} index - Determine the index of the element to be deleted
    * @return A boolean value
    */
-  deleteAt(index: number): boolean {
-    const spliced = this.elements.splice(index, 1);
-    return spliced.length === 1;
+  deleteAt(index: number): E | undefined {
+    const deleted = this.elements[index];
+    this.elements.splice(index, 1);
+    return deleted;
   }
 
   /**
@@ -206,25 +234,68 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
   }
 
   /**
-   * Time Complexity: O(1)
+   * Time Complexity: O(n)
    * Space Complexity: O(1)
    *
-   * The function checks if a data structure is empty by comparing its size to zero.
-   * @returns {boolean} A boolean value indicating whether the size of the object is 0 or not.
+   * The `reverse` function in TypeScript reverses the elements of an array starting from a specified
+   * offset.
+   * @returns The `reverse()` method is returning the modified object itself (`this`) after reversing
+   * the elements in the array and resetting the offset to 0.
    */
-  isEmpty(): boolean {
-    return this.size === 0;
+  reverse(): this {
+    this._elements = this.elements.slice(this.offset).reverse();
+    this._offset = 0;
+    return this;
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
+   * The function `addAt` inserts a new element at a specified index in an array, returning true if
+   * successful and false if the index is out of bounds.
+   * @param {number} index - The `index` parameter represents the position at which the `newElement`
+   * should be added in the array.
+   * @param {E} newElement - The `newElement` parameter represents the element that you want to insert
+   * into the array at the specified index.
+   * @returns The `addAt` method returns a boolean value - `true` if the new element was successfully
+   * added at the specified index, and `false` if the index is out of bounds (less than 0 or greater
+   * than the length of the array).
+   */
+  addAt(index: number, newElement: E): boolean {
+    if (index < 0 || index > this.length) return false;
+    this._elements.splice(this.offset + index, 0, newElement);
+    return true;
   }
 
   /**
    * Time Complexity: O(1)
-   * Space Complexity: O(n)
+   * Space Complexity: O(1)
    *
-   * The toArray() function returns an array of elements from the current offset to the end of the _elements array.
-   * @returns An array of type E is being returned.
+   * The function `setAt` updates an element at a specified index in an array-like data structure.
+   * @param {number} index - The `index` parameter is a number that represents the position in the
+   * array where the new element will be set.
+   * @param {E} newElement - The `newElement` parameter represents the new value that you want to set
+   * at the specified index in the array.
+   * @returns The `setAt` method returns a boolean value - `true` if the element was successfully set
+   * at the specified index, and `false` if the index is out of bounds (less than 0 or greater than the
+   * length of the array).
    */
-  toArray(): E[] {
-    return this.elements.slice(this.offset);
+  setAt(index: number, newElement: E): boolean {
+    if (index < 0 || index > this.length) return false;
+    this._elements[this.offset + index] = newElement;
+    return true;
+  }
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The function checks if a data structure is empty by comparing its length to zero.
+   * @returns {boolean} A boolean value indicating whether the length of the object is 0 or not.
+   */
+  isEmpty(): boolean {
+    return this.length === 0;
   }
 
   /**
@@ -256,11 +327,45 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
    * Time Complexity: O(n)
    * Space Complexity: O(n)
    *
+   * The function overrides the splice method to remove and insert elements in a queue-like data
+   * structure.
+   * @param {number} start - The `start` parameter in the `splice` method specifies the index at which
+   * to start changing the array. Items will be added or removed starting from this index.
+   * @param {number} [deleteCount=0] - The `deleteCount` parameter in the `splice` method specifies the
+   * number of elements to remove from the array starting at the specified `start` index. If
+   * `deleteCount` is not provided, it defaults to 0, meaning no elements will be removed but new
+   * elements can still be inserted at
+   * @param {E[]} items - The `items` parameter in the `splice` method represents the elements that
+   * will be added to the array at the specified `start` index. These elements will replace the
+   * existing elements starting from the `start` index for the `deleteCount` number of elements.
+   * @returns The `splice` method is returning the `removedQueue`, which is an instance of the same
+   * class as the original object.
+   */
+  override splice(start: number, deleteCount: number = 0, ...items: E[]): this {
+    const removedQueue = this._createInstance();
+
+    start = Math.max(0, Math.min(start, this.length));
+    deleteCount = Math.max(0, Math.min(deleteCount, this.length - start));
+
+    const globalStartIndex = this.offset + start;
+
+    const removedElements = this._elements.splice(globalStartIndex, deleteCount, ...items);
+    removedQueue.pushMany(removedElements);
+
+    this.compact();
+
+    return removedQueue;
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   *
    * The `clone()` function returns a new Queue object with the same elements as the original Queue.
    * @returns The `clone()` method is returning a new instance of the `Queue` class.
    */
-  clone(): Queue<E, R> {
-    return new Queue(this.elements.slice(this.offset), { toElementFn: this.toElementFn });
+  clone(): this {
+    return new Queue(this.elements.slice(this.offset), { toElementFn: this.toElementFn, maxLen: this._maxLen }) as this;
   }
 
   /**
@@ -279,8 +384,12 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
    * @returns The `filter` method is returning a new `Queue` object that contains the elements that
    * satisfy the given predicate function.
    */
-  filter(predicate: ElementCallback<E, R, boolean, Queue<E, R>>, thisArg?: any): Queue<E, R> {
-    const newDeque = new Queue<E, R>([], { toElementFn: this.toElementFn });
+  filter(predicate: ElementCallback<E, R, boolean>, thisArg?: any): Queue<E, R> {
+    const newDeque = this._createInstance({
+      toElementFn: this._toElementFn,
+      autoCompactRatio: this._autoCompactRatio,
+      maxLen: this._maxLen
+    });
     let index = 0;
     for (const el of this) {
       if (predicate.call(thisArg, el, index, this)) {
@@ -309,12 +418,12 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
    * @returns A new Queue object containing elements of type EM, which are the result of applying the
    * callback function to each element in the original Queue object.
    */
-  map<EM, RM>(
-    callback: ElementCallback<E, R, EM, Queue<E, R>>,
-    toElementFn?: (rawElement: RM) => EM,
-    thisArg?: any
-  ): Queue<EM, RM> {
-    const newDeque = new Queue<EM, RM>([], { toElementFn });
+  map<EM, RM>(callback: ElementCallback<E, R, EM>, toElementFn?: (rawElement: RM) => EM, thisArg?: any): Queue<EM, RM> {
+    const newDeque = new Queue<EM, RM>([], {
+      toElementFn,
+      autoCompactRatio: this._autoCompactRatio,
+      maxLen: this._maxLen
+    });
     let index = 0;
     for (const el of this) {
       newDeque.push(callback.call(thisArg, el, index, this));
@@ -334,6 +443,30 @@ export class Queue<E = any, R = any> extends IterableElementBase<E, R, Queue<E, 
       yield item;
     }
   }
+
+  /**
+   * The function `_createInstance` returns a new instance of the `Queue` class with the specified
+   * options.
+   * @param [options] - The `options` parameter in the `_createInstance` method is of type
+   * `QueueOptions<E, R>`, which is used to configure the behavior of the queue being created. It
+   * allows you to specify settings or properties that can influence how the queue operates.
+   * @returns An instance of the `Queue` class with an empty array and the provided options is being
+   * returned.
+   */
+  protected override _createInstance(options?: QueueOptions<E, R>): this {
+    return new Queue<E, R>([], options) as this;
+  }
+
+  /**
+   * The function `_getReverseIterator` returns an iterator that iterates over elements in reverse
+   * order.
+   */
+  protected *_getReverseIterator(): IterableIterator<E> {
+    for (let i = this.length - 1; i >= 0; i--) {
+      const cur = this.at(i); // `at()` handles the offset.
+      if (cur !== undefined) yield cur;
+    }
+  }
 }
 
 /**
@@ -351,7 +484,7 @@ export class LinkedListQueue<E = any, R = any> extends SinglyLinkedList<E, R> {
    * @returns The `clone()` method is returning a new instance of `LinkedListQueue` with the same
    * values as the original `LinkedListQueue`.
    */
-  override clone(): LinkedListQueue<E, R> {
-    return new LinkedListQueue<E, R>(this, { toElementFn: this.toElementFn });
+  override clone(): this {
+    return new LinkedListQueue<E, R>(this, { toElementFn: this.toElementFn, maxLen: this._maxLen }) as this;
   }
 }

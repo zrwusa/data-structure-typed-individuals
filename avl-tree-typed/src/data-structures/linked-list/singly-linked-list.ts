@@ -6,117 +6,142 @@
  * @license MIT License
  */
 import type { ElementCallback, SinglyLinkedListOptions } from '../../types';
-import { IterableElementBase } from '../base';
+import { LinearLinkedBase, LinkedListNode } from '../base/linear-base';
 
-export class SinglyLinkedListNode<E = any> {
+export class SinglyLinkedListNode<E = any> extends LinkedListNode<E> {
   /**
    * The constructor function initializes an instance of a class with a given value and sets the next property to undefined.
    * @param {E} value - The "value" parameter is of type E, which means it can be any data type. It represents the value that
    * will be stored in the node of a linked list.
    */
   constructor(value: E) {
+    super(value);
     this._value = value;
     this._next = undefined;
   }
 
-  protected _value: E;
+  protected override _next: SinglyLinkedListNode<E> | undefined;
 
-  /**
-   * The function returns the value of a protected variable.
-   * @returns The value of the variable `_value` is being returned.
-   */
-  get value(): E {
-    return this._value;
-  }
-
-  /**
-   * The above function sets the value of a variable.
-   * @param {E} value - The parameter "value" is of type E, which means it can be any type.
-   */
-  set value(value: E) {
-    this._value = value;
-  }
-
-  protected _next: SinglyLinkedListNode<E> | undefined;
-
-  /**
-   * The `next` function returns the next node in a singly linked list.
-   * @returns The `next` property is being returned. It can be either a `SinglyLinkedListNode<E>`
-   * object or `undefined`.
-   */
-  get next(): SinglyLinkedListNode<E> | undefined {
+  override get next(): SinglyLinkedListNode<E> | undefined {
     return this._next;
   }
 
-  /**
-   * The "next" property of a SinglyLinkedListNode is set to the provided value.
-   * @param {SinglyLinkedListNode<E> | undefined} value - The `value` parameter is of type
-   * `SinglyLinkedListNode<E> | undefined`. This means that it can accept either a
-   * `SinglyLinkedListNode` object or `undefined` as its value.
-   */
-  set next(value: SinglyLinkedListNode<E> | undefined) {
+  override set next(value: SinglyLinkedListNode<E> | undefined) {
     this._next = value;
   }
 }
 
 /**
+ * 1. Node Structure: Each node contains three parts: a data field, a pointer (or reference) to the previous node, and a pointer to the next node. This structure allows traversal of the linked list in both directions.
+ * 2. Bidirectional Traversal: Unlike doubly linked lists, singly linked lists can be easily traversed forwards but not backwards.
+ * 3. No Centralized Index: Unlike arrays, elements in a linked list are not stored contiguously, so there is no centralized index. Accessing elements in a linked list typically requires traversing from the head or tail node.
+ * 4. High Efficiency in Insertion and Deletion: Adding or removing elements in a linked list does not require moving other elements, making these operations more efficient than in arrays.
+ * Caution: Although our linked list classes provide methods such as at, setAt, addAt, and indexOf that are based on array indices, their time complexity, like that of the native Array.lastIndexOf, is 𝑂(𝑛). If you need to use these methods frequently, you might want to consider other data structures, such as Deque or Queue (designed for random access). Similarly, since the native Array.shift method has a time complexity of 𝑂(𝑛), using an array to simulate a queue can be inefficient. In such cases, you should use Queue or Deque, as these data structures leverage deferred array rearrangement, effectively reducing the average time complexity to 𝑂(1).
  *
+ * @example
+ * // implementation of a basic text editor
+ *     class TextEditor {
+ *       private content: SinglyLinkedList<string>;
+ *       private cursorIndex: number;
+ *       private undoStack: Stack<{ operation: string; data?: any }>;
+ *
+ *       constructor() {
+ *         this.content = new SinglyLinkedList<string>();
+ *         this.cursorIndex = 0; // Cursor starts at the beginning
+ *         this.undoStack = new Stack<{ operation: string; data?: any }>(); // Stack to keep track of operations for undo
+ *       }
+ *
+ *       insert(char: string) {
+ *         this.content.addAt(this.cursorIndex, char);
+ *         this.cursorIndex++;
+ *         this.undoStack.push({ operation: 'insert', data: { index: this.cursorIndex - 1 } });
+ *       }
+ *
+ *       delete() {
+ *         if (this.cursorIndex === 0) return; // Nothing to delete
+ *         const deleted = this.content.deleteAt(this.cursorIndex - 1);
+ *         this.cursorIndex--;
+ *         this.undoStack.push({ operation: 'delete', data: { index: this.cursorIndex, char: deleted } });
+ *       }
+ *
+ *       moveCursor(index: number) {
+ *         this.cursorIndex = Math.max(0, Math.min(index, this.content.length));
+ *       }
+ *
+ *       undo() {
+ *         if (this.undoStack.size === 0) return; // No operations to undo
+ *         const lastAction = this.undoStack.pop();
+ *
+ *         if (lastAction!.operation === 'insert') {
+ *           this.content.deleteAt(lastAction!.data.index);
+ *           this.cursorIndex = lastAction!.data.index;
+ *         } else if (lastAction!.operation === 'delete') {
+ *           this.content.addAt(lastAction!.data.index, lastAction!.data.char);
+ *           this.cursorIndex = lastAction!.data.index + 1;
+ *         }
+ *       }
+ *
+ *       getText(): string {
+ *         return [...this.content].join('');
+ *       }
+ *     }
+ *
+ *     // Example Usage
+ *     const editor = new TextEditor();
+ *     editor.insert('H');
+ *     editor.insert('e');
+ *     editor.insert('l');
+ *     editor.insert('l');
+ *     editor.insert('o');
+ *     console.log(editor.getText()); // 'Hello' // Output: "Hello"
+ *
+ *     editor.delete();
+ *     console.log(editor.getText()); // 'Hell' // Output: "Hell"
+ *
+ *     editor.undo();
+ *     console.log(editor.getText()); // 'Hello' // Output: "Hello"
+ *
+ *     editor.moveCursor(1);
+ *     editor.insert('a');
+ *     console.log(editor.getText()); // 'Haello'
  */
-export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R, SinglyLinkedList<E, R>> {
+export class SinglyLinkedList<E = any, R = any> extends LinearLinkedBase<E, R, SinglyLinkedListNode<E>> {
   constructor(
     elements: Iterable<E> | Iterable<R> | Iterable<SinglyLinkedListNode<E>> = [],
     options?: SinglyLinkedListOptions<E, R>
   ) {
     super(options);
+
+    if (options) {
+    }
+
     this.pushMany(elements);
   }
 
   protected _head: SinglyLinkedListNode<E> | undefined;
 
-  /**
-   * The `head` function returns the first node of a singly linked list.
-   * @returns The method is returning either a SinglyLinkedListNode object or undefined.
-   */
   get head(): SinglyLinkedListNode<E> | undefined {
     return this._head;
   }
 
   protected _tail: SinglyLinkedListNode<E> | undefined;
 
-  /**
-   * The `tail` function returns the last node of a singly linked list.
-   * @returns The method is returning either a SinglyLinkedListNode object or undefined.
-   */
   get tail(): SinglyLinkedListNode<E> | undefined {
     return this._tail;
   }
 
-  /**
-   * The above function returns the value of the first element in a linked list, or undefined if the
-   * list is empty.
-   * @returns The value of the first node in the linked list, or undefined if the linked list is empty.
-   */
   get first(): E | undefined {
     return this.head?.value;
   }
 
-  /**
-   * The function returns the value of the last element in a linked list, or undefined if the list is
-   * empty.
-   * @returns The value of the last node in the linked list, or undefined if the linked list is empty.
-   */
   get last(): E | undefined {
     return this.tail?.value;
   }
 
-  protected _size: number = 0;
+  protected _length: number = 0;
 
-  /**
-   * The function returns the size of an object.
-   * @returns The size of the object, which is a number.
-   */
-  get size(): number {
-    return this._size;
+  get length(): number {
+    return this._length;
   }
 
   /**
@@ -154,7 +179,8 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
       this.tail!.next = newNode;
       this._tail = newNode;
     }
-    this._size++;
+    this._length++;
+    if (this._maxLen > 0 && this.length > this._maxLen) this.shift();
     return true;
   }
 
@@ -172,7 +198,7 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
       const value = this.head.value;
       this._head = undefined;
       this._tail = undefined;
-      this._size--;
+      this._length--;
       return value;
     }
 
@@ -183,7 +209,7 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
     const value = this.tail!.value;
     current.next = undefined;
     this._tail = current;
-    this._size--;
+    this._length--;
     return value;
   }
 
@@ -198,7 +224,7 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
     if (!this.head) return undefined;
     const removedNode = this.head;
     this._head = this.head.next;
-    this._size--;
+    this._length--;
     return removedNode.value;
   }
 
@@ -222,7 +248,7 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
       newNode.next = this.head;
       this._head = newNode;
     }
-    this._size++;
+    this._length++;
     return true;
   }
 
@@ -310,7 +336,7 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
    * `undefined` if the index is out of bounds.
    */
   at(index: number): E | undefined {
-    if (index < 0 || index >= this._size) return undefined;
+    if (index < 0 || index >= this._length) return undefined;
     let current = this.head;
     for (let i = 0; i < index; i++) {
       current = current!.next;
@@ -365,22 +391,27 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
    * @returns The method `deleteAt` returns the value of the node that was deleted, or `undefined` if the index is out of
    * bounds.
    */
-  deleteAt(index: number): boolean {
-    if (index < 0 || index >= this._size) return false;
+  deleteAt(index: number): E | undefined {
+    if (index < 0 || index >= this._length) return;
+    let deleted: E | undefined;
     if (index === 0) {
+      deleted = this.first;
       this.shift();
-      return true;
-    }
-    if (index === this._size - 1) {
-      this.pop();
-      return true;
+      return deleted;
     }
 
-    const prevNode = this.getNodeAt(index - 1);
-    const removedNode = prevNode!.next;
-    prevNode!.next = removedNode!.next;
-    this._size--;
-    return true;
+    const targetNode = this.getNodeAt(index);
+    const prevNode = this._getPrevNode(targetNode!);
+
+    if (prevNode && targetNode) {
+      deleted = targetNode.value;
+      prevNode.next = targetNode.next;
+      if (targetNode === this.tail) this._tail = prevNode;
+      this._length--;
+      return deleted;
+    }
+
+    return;
   }
 
   /**
@@ -394,37 +425,25 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
    * successfully deleted from the linked list, and `false` if the value or node is not found in the linked list.
    */
   delete(elementOrNode: E | SinglyLinkedListNode<E> | undefined): boolean {
-    if (elementOrNode === undefined) return false;
-    let value: E;
-    if (elementOrNode instanceof SinglyLinkedListNode) {
-      value = elementOrNode.value;
+    if (elementOrNode === undefined || !this.head) return false;
+
+    const node = this.isNode(elementOrNode) ? elementOrNode : this.getNode(elementOrNode);
+
+    if (!node) return false;
+
+    const prevNode = this._getPrevNode(node);
+
+    if (!prevNode) {
+      // The node is the head
+      this._head = node.next;
+      if (node === this.tail) this._tail = undefined;
     } else {
-      value = elementOrNode;
-    }
-    let current = this.head,
-      prev = undefined;
-
-    while (current) {
-      if (current.value === value) {
-        if (prev === undefined) {
-          this._head = current.next;
-          if (current === this.tail) {
-            this._tail = undefined;
-          }
-        } else {
-          prev.next = current.next;
-          if (current === this.tail) {
-            this._tail = prev;
-          }
-        }
-        this._size--;
-        return true;
-      }
-      prev = current;
-      current = current.next;
+      prevNode.next = node.next;
+      if (node === this.tail) this._tail = prevNode;
     }
 
-    return false;
+    this._length--;
+    return true;
   }
 
   /**
@@ -443,13 +462,13 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
    * successfully added at the specified index, and `false` if the index is out of bounds.
    */
   addAt(index: number, newElementOrNode: E | SinglyLinkedListNode<E>): boolean {
-    if (index < 0 || index > this._size) return false;
+    if (index < 0 || index > this._length) return false;
 
     if (index === 0) {
       this.unshift(newElementOrNode);
       return true;
     }
-    if (index === this._size) {
+    if (index === this._length) {
       this.push(newElementOrNode);
       return true;
     }
@@ -458,8 +477,31 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
     const prevNode = this.getNodeAt(index - 1);
     newNode.next = prevNode!.next;
     prevNode!.next = newNode;
-    this._size++;
+    this._length++;
     return true;
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
+   * The function setAt(index, value) updates the value at a specified index in a data structure if the
+   * index exists.
+   * @param {number} index - The `index` parameter in the `setAt` method refers to the position in the
+   * data structure where you want to set a new value.
+   * @param {E} value - The `value` parameter in the `setAt` method represents the new value that you
+   * want to set at the specified index in the data structure.
+   * @returns The `setAt` method returns a boolean value - `true` if the value at the specified index
+   * is successfully updated, and `false` if the index is out of bounds (i.e., the node at that index
+   * does not exist).
+   */
+  setAt(index: number, value: E): boolean {
+    const node = this.getNodeAt(index);
+    if (node) {
+      node.value = value;
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -471,7 +513,7 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
    * @returns A boolean value indicating whether the length of the object is equal to 0.
    */
   isEmpty(): boolean {
-    return this._size === 0;
+    return this._length === 0;
   }
 
   /**
@@ -483,24 +525,7 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
   clear(): void {
     this._head = undefined;
     this._tail = undefined;
-    this._size = 0;
-  }
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(n)
-   *
-   * The `toArray` function converts a linked list into an array.
-   * @returns The `toArray()` method is returning an array of type `E[]`.
-   */
-  toArray(): E[] {
-    const array: E[] = [];
-    let current = this.head;
-    while (current) {
-      array.push(current.value);
-      current = current.next;
-    }
-    return array;
+    this._length = 0;
   }
 
   /**
@@ -532,35 +557,6 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
    * Time Complexity: O(n)
    * Space Complexity: O(1)
    *
-   * The `indexOf` function in TypeScript searches for a specific element or node in a singly linked
-   * list and returns its index if found.
-   * @param {E | SinglyLinkedListNode<E> | ((node: SinglyLinkedListNode<E>) => boolean)} elementNodeOrPredicate
-   * elementNodeOrPredicate - The `elementNodeOrPredicate` parameter in the `indexOf` method can be one
-   * of the following types:
-   * @returns The `indexOf` method returns the index of the first occurrence of the element that
-   * matches the provided predicate in the singly linked list. If no matching element is found, it
-   * returns -1.
-   */
-  indexOf(elementNodeOrPredicate: E | SinglyLinkedListNode<E> | ((node: SinglyLinkedListNode<E>) => boolean)): number {
-    const predicate = this._ensurePredicate(elementNodeOrPredicate);
-    let index = 0;
-    let current = this.head;
-
-    while (current) {
-      if (predicate(current)) {
-        return index;
-      }
-      index++;
-      current = current.next;
-    }
-
-    return -1;
-  }
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(1)
-   *
    * The function `getNode` in TypeScript searches for a node in a singly linked list based on a given
    * element, node, or predicate.
    * @param {E | SinglyLinkedListNode<E> | ((node: SinglyLinkedListNode<E>) => boolean) | undefined} elementNodeOrPredicate
@@ -574,6 +570,7 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
     elementNodeOrPredicate: E | SinglyLinkedListNode<E> | ((node: SinglyLinkedListNode<E>) => boolean) | undefined
   ): SinglyLinkedListNode<E> | undefined {
     if (elementNodeOrPredicate === undefined) return;
+    if (this.isNode(elementNodeOrPredicate)) return elementNodeOrPredicate;
     const predicate = this._ensurePredicate(elementNodeOrPredicate);
     let current = this.head;
 
@@ -607,32 +604,22 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
     existingElementOrNode: E | SinglyLinkedListNode<E>,
     newElementOrNode: E | SinglyLinkedListNode<E>
   ): boolean {
-    if (!this.head) return false;
+    const existingNode = this.getNode(existingElementOrNode);
+    if (!existingNode) return false;
 
-    let existingValue: E;
-    if (this.isNode(existingElementOrNode)) {
-      existingValue = existingElementOrNode.value;
+    const prevNode = this._getPrevNode(existingNode);
+    const newNode = this._ensureNode(newElementOrNode);
+
+    if (!prevNode) {
+      // Add at the head
+      this.unshift(newNode);
     } else {
-      existingValue = existingElementOrNode;
-    }
-    if (this.head.value === existingValue) {
-      this.unshift(newElementOrNode);
-      return true;
+      prevNode.next = newNode;
+      newNode.next = existingNode;
+      this._length++;
     }
 
-    let current = this.head;
-    while (current.next) {
-      if (current.next.value === existingValue) {
-        const newNode = this._ensureNode(newElementOrNode);
-        newNode.next = current.next;
-        current.next = newNode;
-        this._size++;
-        return true;
-      }
-      current = current.next;
-    }
-
-    return false;
+    return true;
   }
 
   /**
@@ -661,11 +648,80 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
       if (existingNode === this.tail) {
         this._tail = newNode;
       }
-      this._size++;
+      this._length++;
       return true;
     }
 
     return false;
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
+   * The function `splice` in TypeScript overrides the default behavior to remove and insert elements
+   * in a singly linked list while handling boundary cases.
+   * @param {number} start - The `start` parameter in the `splice` method indicates the index at which
+   * to start modifying the list. It specifies the position where elements will be added or removed.
+   * @param {number} [deleteCount=0] - The `deleteCount` parameter in the `splice` method specifies the
+   * number of elements to remove from the array starting at the specified `start` index. If
+   * `deleteCount` is not provided, it defaults to 0, meaning no elements will be removed but new
+   * elements can still be inserted at
+   * @param {E[]} items - The `items` parameter in the `splice` method represents the elements to be
+   * inserted into the list at the specified `start` index. These elements will be inserted in place of
+   * the elements that are removed from the list. The `splice` method allows you to add new elements to
+   * the list while
+   * @returns The `splice` method is returning a `SinglyLinkedList` containing the elements that were
+   * removed from the original list during the splice operation.
+   */
+  override splice(start: number, deleteCount: number = 0, ...items: E[]): this {
+    const removedList = this._createInstance({ toElementFn: this._toElementFn, maxLen: this._maxLen });
+
+    // If `start` is out of range, perform boundary processing
+    start = Math.max(0, Math.min(start, this.length));
+    deleteCount = Math.max(0, deleteCount);
+
+    // Find the predecessor node of `start`
+    const prevNode = start === 0 ? undefined : this.getNodeAt(start - 1);
+    const startNode = prevNode ? prevNode.next : this.head;
+
+    let current = startNode;
+    for (let i = 0; i < deleteCount && current; i++) {
+      removedList.push(current.value);
+      current = current.next;
+    }
+
+    const nextNode = current;
+    let lastInsertedNode: SinglyLinkedListNode<E> | undefined = undefined;
+
+    for (const item of items) {
+      const newNode = this._ensureNode(item);
+      if (!lastInsertedNode) {
+        if (prevNode) {
+          prevNode.next = newNode;
+        } else {
+          this._head = newNode;
+        }
+      } else {
+        lastInsertedNode.next = newNode;
+      }
+      lastInsertedNode = newNode;
+    }
+
+    // Connect new node to `nextNode`
+    if (lastInsertedNode) {
+      lastInsertedNode.next = nextNode;
+    } else if (prevNode) {
+      prevNode.next = nextNode;
+    }
+
+    // Update tail node and length
+    if (!nextNode) {
+      this._tail = lastInsertedNode || prevNode;
+    }
+    this._length += items.length - removedList.length;
+
+    return removedList as this;
   }
 
   /**
@@ -703,8 +759,8 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
    * @returns The `clone()` method is returning a new instance of the `SinglyLinkedList` class, which
    * is a clone of the original list.
    */
-  clone(): SinglyLinkedList<E, R> {
-    return new SinglyLinkedList<E, R>(this, { toElementFn: this.toElementFn });
+  clone(): this {
+    return new SinglyLinkedList<E, R>(this, { toElementFn: this.toElementFn, maxLen: this._maxLen }) as this;
   }
 
   /**
@@ -724,8 +780,8 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
    * @returns The `filter` method is returning a new `SinglyLinkedList` object that contains the
    * elements that pass the filter condition specified by the `callback` function.
    */
-  filter(callback: ElementCallback<E, R, boolean, SinglyLinkedList<E, R>>, thisArg?: any): SinglyLinkedList<E, R> {
-    const filteredList = new SinglyLinkedList<E, R>([], { toElementFn: this.toElementFn });
+  filter(callback: ElementCallback<E, R, boolean>, thisArg?: any): SinglyLinkedList<E, R> {
+    const filteredList = this._createInstance({ toElementFn: this.toElementFn, maxLen: this._maxLen });
     let index = 0;
     for (const current of this) {
       if (callback.call(thisArg, current, index, this)) {
@@ -757,11 +813,11 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
    * @returns a new instance of the `SinglyLinkedList` class with the mapped elements.
    */
   map<EM, RM>(
-    callback: ElementCallback<E, R, EM, SinglyLinkedList<E, R>>,
+    callback: ElementCallback<E, R, EM>,
     toElementFn?: (rawElement: RM) => EM,
     thisArg?: any
   ): SinglyLinkedList<EM, RM> {
-    const mappedList = new SinglyLinkedList<EM, RM>([], { toElementFn });
+    const mappedList = new SinglyLinkedList<EM, RM>([], { toElementFn, maxLen: this._maxLen });
     let index = 0;
     for (const current of this) {
       mappedList.push(callback.call(thisArg, current, index, this));
@@ -769,6 +825,20 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
     }
 
     return mappedList;
+  }
+
+  /**
+   * The function `_createInstance` returns a new instance of `SinglyLinkedList` with the specified
+   * options.
+   * @param [options] - The `options` parameter in the `_createInstance` method is of type
+   * `SinglyLinkedListOptions<E, R>`, which is used to configure the behavior of the `SinglyLinkedList`
+   * instance being created. It is an optional parameter, meaning it can be omitted when calling the
+   * method.
+   * @returns An instance of the `SinglyLinkedList` class with an empty array and the provided options
+   * is being returned.
+   */
+  protected override _createInstance(options?: SinglyLinkedListOptions<E, R>): this {
+    return new SinglyLinkedList<E, R>([], options) as this;
   }
 
   /**
@@ -782,6 +852,38 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
       current = current.next;
     }
   }
+
+  /**
+   * The function returns an iterator that iterates over the elements of a collection in reverse order.
+   */
+  protected *_getReverseIterator(): IterableIterator<E> {
+    const reversedArr = [...this].reverse();
+
+    for (const item of reversedArr) {
+      yield item;
+    }
+  }
+
+  /**
+   * The function `_getNodeIterator` returns an iterator that iterates over the nodes of a singly
+   * linked list.
+   */
+  protected *_getNodeIterator(): IterableIterator<SinglyLinkedListNode<E>> {
+    let current = this.head;
+
+    while (current) {
+      yield current;
+      current = current.next;
+    }
+  }
+
+  // protected *_getReverseNodeIterator(): IterableIterator<SinglyLinkedListNode<E>> {
+  //   const reversedArr = [...this._getNodeIterator()].reverse();
+  //
+  //   for (const item of reversedArr) {
+  //     yield item;
+  //   }
+  // }
 
   /**
    * The _isPredicate function in TypeScript checks if the input is a function that takes a
@@ -830,5 +932,25 @@ export class SinglyLinkedList<E = any, R = any> extends IterableElementBase<E, R
     if (this._isPredicate(elementNodeOrPredicate)) return elementNodeOrPredicate;
 
     return (node: SinglyLinkedListNode<E>) => node.value === elementNodeOrPredicate;
+  }
+
+  /**
+   * The function `_getPrevNode` returns the node before a given node in a singly linked list.
+   * @param node - The `node` parameter in the `_getPrevNode` method is a reference to a node in a
+   * singly linked list. The method is used to find the node that comes before the given node in the
+   * linked list.
+   * @returns The `_getPrevNode` method returns either the previous node of the input node in a singly
+   * linked list or `undefined` if the input node is the head of the list or if the input node is not
+   * found in the list.
+   */
+  protected _getPrevNode(node: SinglyLinkedListNode<E>): SinglyLinkedListNode<E> | undefined {
+    if (!this.head || this.head === node) return undefined;
+
+    let current = this.head;
+    while (current.next && current.next !== node) {
+      current = current.next;
+    }
+
+    return current.next === node ? current : undefined;
   }
 }

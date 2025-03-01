@@ -224,14 +224,6 @@ lastBFSNodes[0].id                          // 12
 
 [//]: # (No deletion!!! Start of Example Replace Section)
 
-### Find elements in a range
-```typescript
-    const bst = new RedBlackTree<number>([10, 5, 15, 3, 7, 12, 18]);
-    console.log(bst.search(new Range(5, 10))); // [5, 10, 7]
-    console.log(bst.search(new Range(4, 12))); // [5, 10, 12, 7]
-    console.log(bst.search(new Range(15, 20))); // [15, 18]
-```
-
 ### using Red-Black Tree as a price-based index for stock data
 ```typescript
     // Define the structure of individual stock records
@@ -274,7 +266,7 @@ lastBFSNodes[0].id                          // 12
       [200, 400], // Price range
       node => priceIndex.get(node)?.symbol // Extract stock symbols for the result
     );
-    console.log(stocksInRange); // ['GOOGL', 'MSFT', 'META']
+    console.log(stocksInRange); // ['GOOGL', 'META', 'MSFT']
 ```
 
 [//]: # (No deletion!!! End of Example Replace Section)

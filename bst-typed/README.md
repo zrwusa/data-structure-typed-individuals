@@ -373,9 +373,9 @@ bfsNodes[2].id;                                                // 16
 ### Find elements in a range
 ```typescript
     const bst = new BST<number>([10, 5, 15, 3, 7, 12, 18]);
-    console.log(bst.search(new Range(5, 10))); // [10, 5, 7]
-    console.log(bst.rangeSearch([4, 12], node => node.key.toString())); // ['10', '12', '5', '7']
-    console.log(bst.search(new Range(4, 12, true, false))); // [10, 5, 7]
+    console.log(bst.search(new Range(5, 10))); // [5, 7, 10]
+    console.log(bst.rangeSearch([4, 12], node => node.key.toString())); // ['5', '7', '10', '12']
+    console.log(bst.search(new Range(4, 12, true, false))); // [5, 7, 10]
     console.log(bst.rangeSearch([15, 20])); // [15, 18]
     console.log(bst.search(new Range(15, 20, false))); // [18]
 ```

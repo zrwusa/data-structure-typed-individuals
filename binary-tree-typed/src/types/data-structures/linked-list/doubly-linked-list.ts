@@ -1,3 +1,3 @@
-import { IterableElementBaseOptions } from '../base';
+import { LinearBaseOptions } from '../base';
 
-export type DoublyLinkedListOptions<E, R> = IterableElementBaseOptions<E, R> & {};
+export type DoublyLinkedListOptions<E, R> = LinearBaseOptions<E, R> & {};

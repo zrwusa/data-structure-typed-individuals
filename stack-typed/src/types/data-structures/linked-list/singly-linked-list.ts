@@ -1,3 +1,3 @@
-import { IterableElementBaseOptions } from '../base';
+import { LinearBaseOptions } from '../base';
 
-export type SinglyLinkedListOptions<E, R> = IterableElementBaseOptions<E, R> & {};
+export type SinglyLinkedListOptions<E, R> = LinearBaseOptions<E, R> & {};

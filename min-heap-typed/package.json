@@ -1,7 +1,7 @@
 {
   "name": "min-heap-typed",
-  "version": "1.54.1",
-  "description": "Min Heap. Javascript & Typescript Data Structure.",
+  "version": "2.0.3",
+  "description": "Min Heap",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && npx tsc",
@@ -132,6 +132,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "data-structure-typed": "^1.54.1"
+    "data-structure-typed": "^2.0.3"
   }
 }

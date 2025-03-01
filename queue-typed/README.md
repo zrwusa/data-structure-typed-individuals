@@ -94,6 +94,56 @@ for (let i = 0; i < magnitude; i++) {
 
 [//]: # (No deletion!!! Start of Example Replace Section)
 
+### Sliding Window using Queue
+```typescript
+    const nums = [2, 3, 4, 1, 5];
+    const k = 2;
+    const queue = new Queue<number>();
+
+    let maxSum = 0;
+    let currentSum = 0;
+
+    nums.forEach((num) => {
+      queue.push(num);
+      currentSum += num;
+
+      if (queue.length > k) {
+        currentSum -= queue.shift()!;
+      }
+
+      if (queue.length === k) {
+        maxSum = Math.max(maxSum, currentSum);
+      }
+    });
+
+    console.log(maxSum); // 7
+```
+
+### Breadth-First Search (BFS) using Queue
+```typescript
+    const graph: { [key in number]: number[] } = {
+      1: [2, 3],
+      2: [4, 5],
+      3: [],
+      4: [],
+      5: []
+    };
+
+    const queue = new Queue<number>();
+    const visited: number[] = [];
+
+    queue.push(1);
+
+    while (!queue.isEmpty()) {
+      const node = queue.shift()!;
+      if (!visited.includes(node)) {
+        visited.push(node);
+        graph[node].forEach(neighbor => queue.push(neighbor));
+      }
+    }
+
+    console.log(visited); // [1, 2, 3, 4, 5]
+```
 
 [//]: # (No deletion!!! End of Example Replace Section)
 
