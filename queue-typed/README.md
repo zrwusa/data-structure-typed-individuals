@@ -103,7 +103,7 @@ for (let i = 0; i < magnitude; i++) {
     let maxSum = 0;
     let currentSum = 0;
 
-    nums.forEach((num) => {
+    nums.forEach(num => {
       queue.push(num);
       currentSum += num;
 
